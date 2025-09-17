@@ -1,1 +1,0 @@
-{"version":3,"file":"sections.js","sourceRoot":"","sources":["../../../src/models/schemas/sections.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,EAAE,EAAE,MAAM,EAAE,MAAM,UAAU,CAAC;AAI5C,MAAM,cAAc,GAAG,IAAI,MAAM,CAAY;IAC3C,IAAI,EAAE,EAAE,IAAI,EAAE,MAAM,EAAE,QAAQ,EAAE,IAAI,EAAE;CACvC,CAAC,CAAC;AAEH,MAAM,CAAC,MAAM,QAAQ,GAAqB,QAAQ,CAAC,KAAK,CACtD,UAAU,EACV,cAAc,CACf,CAAC"}
