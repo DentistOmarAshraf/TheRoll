@@ -1,6 +1,6 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import templateDAO from "./DAO/daos/templateDAO.js";
-import fieldDAO from "./DAO/daos/fieldsDAO.js";
+// import fieldDAO from "./DAO/daos/fieldsDAO.js";
 // import sectionDAO from "./DAO/daos/sectionsDAO.js";
 
 async function connectToDB(): Promise<void> {
@@ -17,10 +17,7 @@ async function connectToDB(): Promise<void> {
   // const newSec = await sectionDAO.createNewSection({name: "الاحوال"})
   // console.log(newSec);
   // section_id = "68caf417bfc1b3f5de73df4a"
-  // fields_id = "68caf4707255a075fcd9d059"c
-  const f = await fieldDAO.getFieldById("68caf4707255a075fcd9d059");
-  console.log(f)
-  const sec_id = new Types.ObjectId("68caf417bfc1b3f5de73df4a")
-  const tem = await templateDAO.getTemplatesBySectionID(sec_id, 1, 10);
-  console.log(JSON.stringify(tem, null, 2));
+  // fields_id = "68caf4707255a075fcd9d059"
+  const deleted = await templateDAO.deleteTemplateById("68caf50dba63e1024e2c0bce");
+  console.log(deleted);
 })();

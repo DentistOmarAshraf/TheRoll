@@ -3,6 +3,9 @@ import type { IFieldDAO } from "../interfaces/IFieldDAO.js";
 import type { IField } from "../../models/interfaces/IField.js";
 import type { Types } from "mongoose";
 
+/**
+ * Updater missing here - will be fixed in final
+ */
 class FieldDAO {
   async getFieldById(id: string | Types.ObjectId): Promise<IField | null> {
     try {
