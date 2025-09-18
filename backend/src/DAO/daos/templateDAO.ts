@@ -42,7 +42,7 @@ class TemplateDAO {
     id: string | Types.ObjectId
   ): Promise<ITemplate | null> {
     try {
-      const template = await Templates.findById(id);
+      const template = await Templates.findById(id).populate("fields");
       return template;
     } catch (e) {
       throw new Error(`TemplateDAO.getTemplateById ${e}`);
@@ -64,11 +64,13 @@ class TemplateDAO {
     }
   }
 
-  async deleteTemplateById(id: string | Types.ObjectId): Promise<ITemplate | null> {
+  async deleteTemplateById(
+    id: string | Types.ObjectId
+  ): Promise<ITemplate | null> {
     try {
       const deleted = await Templates.findByIdAndDelete(id);
       return deleted;
-    }catch (e) {
+    } catch (e) {
       throw new Error(`TemplateDAO.deleteTemplateById ${e}`);
     }
   }
