@@ -1,10 +1,27 @@
 import { Templates } from "../../models/schemas/tmeplates.js";
+import { Sections } from "../../models/schemas/sections.js";
 import type { ITemplateDAO } from "../interfaces/ITemplateDAO.js";
 import type { ITemplate } from "../../models/interfaces/ITemplate.js";
 import type { Types } from "mongoose";
+import { Fields } from "../../models/schemas/fields.js";
 
 class TemplateDAO {
   async createNewTemplate(template: ITemplateDAO): Promise<ITemplate | null> {
+    const sectionIsExist = await Sections.exists({ _id: template.section });
+    if (!sectionIsExist) {
+      throw new Error("Section is Not Exist");
+    }
+    if (!template.fields?.length) {
+      throw new Error("Fields must be added");
+    }
+
+    const count = await Fields.countDocuments({
+      _id: { $in: template.fields },
+    });
+    if (count !== template.fields.length) {
+      throw new Error("One or more field IDs are invalid");
+    }
+    
     try {
       const newTemplate = await Templates.create(template);
       return newTemplate;

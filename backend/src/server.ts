@@ -4,6 +4,7 @@ import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import filedRoutes from "./routes/fieldRoutes.js";
 import sectionsRoutes from "./routes/sectionsRoutes.js";
+import templateRoutes from "./routes/templateRoutes.js";
 
 
 // Setup Express server
@@ -14,6 +15,7 @@ app.use(cors())
 // Registration of Endpoint
 filedRoutes(app);
 sectionsRoutes(app);
+templateRoutes(app);
 
 // Not Found method
 app.use((req: Request, res: Response) => {
