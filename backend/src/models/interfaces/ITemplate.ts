@@ -11,4 +11,6 @@ export interface ITemplate extends Document {
   final?: string,
   summary?: string,
   fields: (Types.ObjectId) | IField,
+  tags?: [{type: string}],
+  verbs?: Map<string, { male: string; female: string }>;
 }

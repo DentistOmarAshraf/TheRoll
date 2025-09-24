@@ -9,7 +9,12 @@ const templateSchema = new Schema<ITemplate>({
   middle: String,
   final: String,
   summary: String,
-  fields: [{ type: Types.ObjectId, ref: "Fields" }],
+  fields: [{ type: Types.ObjectId, ref: "Fields", required: true }],
+  tags: [String],
+  verbs: {
+    type: Map,
+    of: new Schema({ male: String, female: String }, { _id: false }),
+  },
 });
 
 export const Templates: Model<ITemplate> = mongoose.model(

@@ -11,8 +11,8 @@ class FieldDAO {
     try {
       const result = await Fields.findById(id);
       return result;
-    } catch (e) {
-      throw new Error(`FieldDAO.getFiledById: ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -21,8 +21,8 @@ class FieldDAO {
     try {
       const result = await Fields.find().skip(start).limit(limit);
       return result;
-    } catch (e) {
-      throw new Error(`FieldDAO.getAllFields: ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -30,8 +30,8 @@ class FieldDAO {
     try {
       const result = await Fields.create(field);
       return result;
-    } catch (e) {
-      throw new Error(`FieldDAO.createNewField: ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -39,8 +39,8 @@ class FieldDAO {
     try {
       const deleted = await Fields.findByIdAndDelete(id);
       return deleted;
-    } catch (e) {
-      throw new Error(`FieldDAO.deleteFieldByID: ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 }

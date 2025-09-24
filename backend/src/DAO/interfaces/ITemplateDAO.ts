@@ -8,4 +8,6 @@ export interface ITemplateDAO {
   final?: string,
   summary?: string,
   fields: Types.ObjectId[],
+  tags?: string[],
+  verbs?: Map<string, { male: string; female: string }>;
 }

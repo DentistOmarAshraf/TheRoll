@@ -4,29 +4,31 @@ import type { ITemplateDAO } from "../interfaces/ITemplateDAO.js";
 import type { ITemplate } from "../../models/interfaces/ITemplate.js";
 import type { Types } from "mongoose";
 import { Fields } from "../../models/schemas/fields.js";
+import NotFoundError from "../../errors/NotFoundError.js";
+import BadRequestError from "../../errors/BadRequestError.js";
 
 class TemplateDAO {
   async createNewTemplate(template: ITemplateDAO): Promise<ITemplate | null> {
     const sectionIsExist = await Sections.exists({ _id: template.section });
     if (!sectionIsExist) {
-      throw new Error("Section is Not Exist");
+      throw new NotFoundError("Section is Not Exist");
     }
     if (!template.fields?.length) {
-      throw new Error("Fields must be added");
+      throw new BadRequestError("Fields must be added");
     }
 
     const count = await Fields.countDocuments({
       _id: { $in: template.fields },
     });
     if (count !== template.fields.length) {
-      throw new Error("One or more field IDs are invalid");
+      throw new BadRequestError("One or more field IDs are invalid");
     }
-    
+
     try {
       const newTemplate = await Templates.create(template);
       return newTemplate;
-    } catch (e) {
-      throw new Error(`TemplateDAO.createNewTemplate ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -41,8 +43,8 @@ class TemplateDAO {
         .skip(start)
         .limit(limit);
       return listOfTemplates;
-    } catch (e) {
-      throw new Error(`TemplateDAO.getTemplatesBySectionID ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
   async getAllTemplate(page: number, limit: number): Promise<ITemplate[]> {
@@ -50,8 +52,8 @@ class TemplateDAO {
     try {
       const listOfTemplates = await Templates.find().skip(start).limit(limit);
       return listOfTemplates;
-    } catch (e) {
-      throw new Error(`TemplateDAO.getAllTemplate ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -61,8 +63,8 @@ class TemplateDAO {
     try {
       const template = await Templates.findById(id).populate("fields");
       return template;
-    } catch (e) {
-      throw new Error(`TemplateDAO.getTemplateById ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -70,14 +72,29 @@ class TemplateDAO {
     id: string | Types.ObjectId,
     newData: Partial<ITemplateDAO>
   ): Promise<ITemplate | null> {
+    if (newData.section) {
+      const sectionIsExist = await Sections.exists({ _id: newData.section });
+      if (!sectionIsExist) {
+        throw new NotFoundError("Section is Not Exist");
+      }
+    }
+    if (newData.fields) {
+      const count = await Fields.countDocuments({
+        _id: { $in: newData.fields },
+      });
+      if (count !== newData.fields.length) {
+        throw new BadRequestError("One or more field IDs are invalid");
+      }
+    }
+
     try {
       const updated = await Templates.findByIdAndUpdate(id, newData, {
         new: true,
         runValidators: true,
       });
       return updated;
-    } catch (e) {
-      throw new Error(`TemplateDAO.updateTemplateById ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 
@@ -87,8 +104,8 @@ class TemplateDAO {
     try {
       const deleted = await Templates.findByIdAndDelete(id);
       return deleted;
-    } catch (e) {
-      throw new Error(`TemplateDAO.deleteTemplateById ${e}`);
+    } catch (err) {
+      throw err;
     }
   }
 }
