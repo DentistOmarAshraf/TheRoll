@@ -1,13 +1,13 @@
 import type { Types } from "mongoose";
 
 export interface ITemplateDAO {
-  section: Types.ObjectId,
-  title: string,
-  intro?: string,
-  middle?: string,
-  final?: string,
-  summary?: string,
-  fields: Types.ObjectId[],
-  tags?: string[],
-  verbs?: Map<string, { male: string; female: string }>;
+  section: Types.ObjectId;
+  title: string;
+  intro?: string;
+  middle?: string;
+  final?: string;
+  summary?: string;
+  fields: Types.ObjectId[];
+  tags?: string[];
+  verbs?: { [key: string]: { male: string; female: string } };
 }
