@@ -2,46 +2,39 @@ import { Fields } from "../../models/schemas/fields.js";
 import type { IFieldDAO } from "../interfaces/IFieldDAO.js";
 import type { IField } from "../../models/interfaces/IField.js";
 import type { Types } from "mongoose";
+import NotFoundError from "../../errors/NotFoundError.js";
 
-/**
- * Updater missing here - will be fixed in final
- */
 class FieldDAO {
+  async countDocument(): Promise<number> {
+    const count = await Fields.countDocuments();
+    return count;
+  }
+
   async getFieldById(id: string | Types.ObjectId): Promise<IField | null> {
-    try {
-      const result = await Fields.findById(id);
-      return result;
-    } catch (err) {
-      throw err;
+    const result = await Fields.findById(id);
+    if (!result) {
+      throw new NotFoundError("Field Not Found");
     }
+    return result;
   }
 
   async getAllFields(page: number, limit: number): Promise<IField[] | null> {
     const start = (page - 1) * limit;
-    try {
-      const result = await Fields.find().skip(start).limit(limit);
-      return result;
-    } catch (err) {
-      throw err;
-    }
+    const result = await Fields.find().skip(start).limit(limit);
+    return result;
   }
 
   async createNewField(field: IFieldDAO): Promise<IField | null> {
-    try {
-      const result = await Fields.create(field);
-      return result;
-    } catch (err) {
-      throw err;
-    }
+    const result = await Fields.create(field);
+    return result;
   }
 
   async deleteFieldByID(id: string | Types.ObjectId): Promise<IField | null> {
-    try {
-      const deleted = await Fields.findByIdAndDelete(id);
-      return deleted;
-    } catch (err) {
-      throw err;
+    const deleted = await Fields.findByIdAndDelete(id);
+    if (!deleted) {
+      throw new NotFoundError("Field Not Found");
     }
+    return deleted;
   }
 }
 

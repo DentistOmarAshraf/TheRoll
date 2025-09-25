@@ -16,6 +16,8 @@ const FieldSchema = new Schema<IField>({
   sub: [SubFieldSchema], // embedded array of subfields
 });
 
+FieldSchema.index({ name: 1, legend: 1, repet: 1 }, { unique: true });
+
 export const Fields: Model<IField> = mongoose.model<IField>(
   "Fields",
   FieldSchema
