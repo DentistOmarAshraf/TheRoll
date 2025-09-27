@@ -9,23 +9,11 @@ export default class TemplateController {
     if (!isValidObjectId(id)) {
       return res.status(400).json({ error: "Invalid ID" });
     }
-    try {
-      const template = await templateDAO.getTemplateById(id as string);
-      if (!template) {
-        return res.status(404).json({ error: "Not Found" });
-      }
-      return res.status(200).json(template);
-    } catch (e) {
-      const message = e instanceof Error ? e.message : "Unknown error";
-      return res.status(500).json({ error: message });
-    }
+    const template = await templateDAO.getTemplateById(id as string);
+    return res.status(200).json(template);
   }
 
   static async createTemplate(req: Request, res: Response) {
-    if (!req.body) {
-      return res.status(400).json({ error: "Invalid body" });
-    }
-
     const {
       section,
       title,
@@ -34,49 +22,40 @@ export default class TemplateController {
       final = "",
       fields,
       tags = [],
+      verbs = {},
     } = req.body;
 
     if (!section || !isValidObjectId(section)) {
-      return res.status(400).json({ error: "Invalid SectionId" });
+      return res.status(400).json({ error: "Invalid Section Id" });
     }
     if (!title) {
       return res.status(400).json({ error: "title missing" });
     }
     if (!fields || !Array.isArray(fields) || !fields.length) {
-      return res.status(400).json({ error: "Field Array Invalid" });
+      return res.status(400).json({ error: "Fields Array Invalid" });
     }
     if (!Array.isArray(tags)) {
       return res.status(400).json({ error: "Tags must be array of string" });
     }
-    try {
-      const newTemplate = await templateDAO.createNewTemplate({
-        section: new Types.ObjectId(section),
-        title,
-        intro,
-        middle,
-        final,
-        fields: fields.map((f) => new Types.ObjectId(f)),
-        tags,
-      });
-      return res.status(201).json(newTemplate);
-    } catch (e) {
-      const message = e instanceof Error ? e.message : "Unknown error";
-      return res.status(500).json({ error: message });
-    }
+    const newTemplate = await templateDAO.createNewTemplate({
+      section: new Types.ObjectId(section),
+      title,
+      intro,
+      middle,
+      final,
+      fields: fields.map((f) => new Types.ObjectId(f)),
+      tags,
+      verbs,
+    });
+    return res.status(201).json(newTemplate);
   }
 
   static async updateTemplateById(req: Request, res: Response) {
-    const { id } = req.params;
+    const { id, section, title, intro, middle, final, fields, summary, tags } =
+      req.body;
     if (!id || !isValidObjectId(id)) {
       return res.status(400).json({ error: "Invalid ID" });
     }
-
-    if (!req.body) {
-      return res.status(400).json({ error: "No Body" });
-    }
-
-    const { section, title, intro, middle, final, fields, summary, tags } =
-      req.body;
     if (section && !isValidObjectId(section)) {
       return res.status(400).json({ error: "Invalid sectionID" });
     }
@@ -100,8 +79,8 @@ export default class TemplateController {
     }
 
     const newData: Partial<ITemplateDAO> = {};
-    if(section) newData.section = section;
-    if (title) newData.title = title
+    if (section) newData.section = section;
+    if (title) newData.title = title;
     if (intro) newData.intro = intro;
     if (middle) newData.middle = middle;
     if (final) newData.final = final;
@@ -109,32 +88,16 @@ export default class TemplateController {
     if (fields) newData.fields = fields;
     if (tags) newData.tags = tags;
 
-    try {
-      const updated = await templateDAO.updateTemplateById(id, newData);
-      if (!updated) {
-        return res.status(404).json({ error: "not found" });
-      }
-      return res.status(200).json({ updated });
-    } catch (e) {
-      const message = e instanceof Error ? e.message : "Unknown error";
-      return res.status(500).json({ error: message });
-    }
+    const updated = await templateDAO.updateTemplateById(id, newData);
+    return res.status(200).json({ updated });
   }
 
   static async deleteTemplateById(req: Request, res: Response) {
-    const { id } = req.params;
+    const { id } = req.body;
     if (!id || !isValidObjectId(id)) {
       return res.status(400).json({ error: "Invalid template Id" });
     }
-    try {
-      const deleted = await templateDAO.deleteTemplateById(id);
-      if (!deleted) {
-        return res.status(404).json({ error: "Not Found" });
-      }
-      return res.status(200).json({ deleted });
-    } catch (e) {
-      const message = e instanceof Error ? e.message : "Unknown error";
-      return res.status(500).json({ error: message });
-    }
+    const deleted = await templateDAO.deleteTemplateById(id);
+    return res.status(200).json({ deleted });
   }
 }

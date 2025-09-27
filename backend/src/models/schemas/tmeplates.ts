@@ -9,7 +9,10 @@ const templateSchema = new Schema<ITemplate>({
   middle: String,
   final: String,
   summary: String,
-  fields: [{ type: Types.ObjectId, ref: "Fields", required: true }],
+  fields: {
+    type: [{ type: Types.ObjectId, ref: "Fields", required: true }],
+    set: (v: Types.ObjectId[]) => [...new Set(v)],
+  },
   tags: [String],
   verbs: { type: Object },
 });

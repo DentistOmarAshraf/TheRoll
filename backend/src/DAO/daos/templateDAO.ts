@@ -24,12 +24,8 @@ class TemplateDAO {
       throw new BadRequestError("One or more field IDs are invalid");
     }
 
-    try {
-      const newTemplate = await Templates.create(template);
-      return newTemplate;
-    } catch (err) {
-      throw err;
-    }
+    const newTemplate = await Templates.create(template);
+    return newTemplate;
   }
 
   async getTemplatesBySectionID(
@@ -60,12 +56,9 @@ class TemplateDAO {
   async getTemplateById(
     id: string | Types.ObjectId
   ): Promise<ITemplate | null> {
-    try {
-      const template = await Templates.findById(id).populate("fields");
-      return template;
-    } catch (err) {
-      throw err;
-    }
+    const template = await Templates.findById(id).populate("fields");
+    if (!template) throw new NotFoundError("Template Not Found");
+    return template;
   }
 
   async updateTemplateById(
@@ -86,27 +79,20 @@ class TemplateDAO {
         throw new BadRequestError("One or more field IDs are invalid");
       }
     }
-
-    try {
-      const updated = await Templates.findByIdAndUpdate(id, newData, {
-        new: true,
-        runValidators: true,
-      });
-      return updated;
-    } catch (err) {
-      throw err;
-    }
+    const updated = await Templates.findByIdAndUpdate(id, newData, {
+      new: true,
+      runValidators: true,
+    });
+    if (!updated) throw new NotFoundError("Template Not Found");
+    return updated;
   }
 
   async deleteTemplateById(
     id: string | Types.ObjectId
   ): Promise<ITemplate | null> {
-    try {
-      const deleted = await Templates.findByIdAndDelete(id);
-      return deleted;
-    } catch (err) {
-      throw err;
-    }
+    const deleted = await Templates.findByIdAndDelete(id);
+    if (!deleted) throw new NotFoundError("Template Not Found");
+    return deleted;
   }
 }
 
