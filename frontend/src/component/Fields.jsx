@@ -32,6 +32,7 @@ function Fields() {
   return (
     <>
       <div className="fields_container">
+        {fields.length == 0 && <h1>looding...</h1>}
         {fields.length > 0 &&
           fields.map((item) => (
             <button id={item._id} key={item._id} onClick={handleClick}>
