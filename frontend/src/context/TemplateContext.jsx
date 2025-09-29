@@ -4,11 +4,13 @@ const TemplateContext = createContext();
 
 export default function TemplateContextProvider({ children }) {
   const [templateData, setTemplateData] = useState({
+    section: "",
     title: "",
     intro: "",
     middle: "",
     final: "",
     summary: "",
+    tags: "",
     fields: [],
     fieldsButtons: [],
     focus: "",

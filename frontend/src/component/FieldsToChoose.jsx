@@ -54,7 +54,7 @@ export default function FieldsToChoose() {
           <button onClick={() => handleDelete(item)}>X</button>
         </div>
       ))}
-      <button onClick={() => {console.log(templateData)}}>CHECK OUT DATA</button>
+      <button onClick={() => {console.log({...templateData, tags: templateData.tags.split(" ")})}}>CHECK OUT DATA</button>
     </>
   );
 }

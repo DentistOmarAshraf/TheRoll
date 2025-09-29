@@ -11,15 +11,21 @@ export default function TextAndPlaceHolder() {
   };
 
   const handleFocus = (e) => {
-    const {name} = e.target;
-    setTemplateData((prev) => ({...prev, focus: name}));
-  }
+    const { name } = e.target;
+    setTemplateData((prev) => ({ ...prev, focus: name }));
+  };
 
   const handleSelect = (e) => {
-    setTemplateData((prev) => ({...prev, cursorPostion: e.target.selectionStart}))
-  }
+    setTemplateData((prev) => ({
+      ...prev,
+      cursorPostion: e.target.selectionStart,
+    }));
+  };
   return (
-    <div className="text_container" style={{display:"flex", flexDirection: "column"}}>
+    <div
+      className="text_container"
+      style={{ display: "flex", flexDirection: "column" }}
+    >
       <label>
         العنوان
         <input
@@ -70,6 +76,14 @@ export default function TextAndPlaceHolder() {
           onFocus={handleFocus}
           onSelect={handleSelect}
         />
+      </label>
+      <label>
+        كلمات مفتاحيه
+        <input
+          name="tags"
+          value={templateData.tags}
+          onChange={handleChange}
+        ></input>
       </label>
     </div>
   );
