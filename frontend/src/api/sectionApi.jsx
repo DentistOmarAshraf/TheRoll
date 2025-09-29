@@ -1,23 +1,23 @@
 import apiClient from "./apiClient";
 
-const getAllSection = async (page = 1, limit = 20) =>{
+const getAllSection = async (page = 1, limit = 20) => {
   try {
     const response = await apiClient.get("/sections");
     return response.data;
   } catch (error) {
     console.error(error);
-    throw(error);
+    throw error;
   }
-}
+};
 
 const createNewSection = async (name) => {
   try {
-    const response = await apiClient.post("/section");
+    const response = await apiClient.post("/section", { name });
     return response.data;
   } catch (error) {
     console.error(error);
-    throw(error);
+    throw error;
   }
-}
+};
 
-export default {createNewSection, getAllSection};
+export default { createNewSection, getAllSection };
