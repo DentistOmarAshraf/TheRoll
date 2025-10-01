@@ -22,7 +22,10 @@ export default function FieldContainer() {
       setTemplateData((prev) => ({ ...prev, fields: [...prev.fields, id] }));
       setTemplateStructure((prev) => ({
         ...prev,
-        fieldsButtons: fields.listOfFields.filter((f) => f._id === id),
+        fieldsButtons: [
+          ...prev.fieldsButtons,
+          ...fields.listOfFields.filter((f) => f._id === id),
+        ],
       }));
     }
   };

@@ -1,0 +1,11 @@
+.fields_insertion {
+  border: 1px solid black;
+  height: 200px;
+  width: 600px;
+  overflow-y: auto;
+}
+.fields_button_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}

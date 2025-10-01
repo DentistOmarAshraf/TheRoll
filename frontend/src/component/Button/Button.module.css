@@ -37,3 +37,40 @@
   opacity: 30%;
   pointer-events: none;
 }
+
+.fields_insertion__button--major {
+  background-color: rgba(28, 86, 168, 0.808);
+  margin: 10px;
+}
+
+.fields_insertion__button--major:hover {
+  transition: background 0.7s ease, color 0.7s ease;
+  background-color: rgba(8, 56, 124, 0.915);
+  color: black;
+}
+
+.fields_insertion__button--minor {
+  background-color: rgba(97, 210, 254, 0.419);
+  margin: 5px;
+}
+
+.fields_insertion__button--minor:hover {
+  transition: background 0.7s ease, color 0.7s ease;
+  background-color: rgba(48, 172, 220, 0.784);
+  color: black;
+}
+
+.fields_insertion__button--close {
+  background-color: rgba(255, 0, 0, 0.496);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  margin: 10px;
+}
+
+.fields_insertion__button--close:hover {
+  transition: background 0.7s ease, color 0.7s ease;
+  background-color:rgba(255, 0, 0, 0.859);
+  color: white;
+}
