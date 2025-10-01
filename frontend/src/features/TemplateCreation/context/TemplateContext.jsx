@@ -12,12 +12,21 @@ export default function TemplateContextProvider({ children }) {
     summary: "",
     tags: "",
     fields: [],
+  });
+  const [templateStructure, setTemplateStructure] = useState({
     fieldsButtons: [],
     focus: "",
     cursorPostion: 0,
   });
   return (
-    <TemplateContext.Provider value={{ templateData, setTemplateData }}>
+    <TemplateContext.Provider
+      value={{
+        templateData,
+        setTemplateData,
+        templateStructure,
+        setTemplateStructure,
+      }}
+    >
       {children}
     </TemplateContext.Provider>
   );

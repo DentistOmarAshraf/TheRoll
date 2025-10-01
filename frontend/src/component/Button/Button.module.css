@@ -1,0 +1,28 @@
+.button {
+  height: 50px;
+  width: 100px;
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #b0afaf7c;
+  font-family: "Cairo", cursive;
+  font-weight: 650;
+  font-style: normal;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+
+.button:active {
+  background-color: #ccc;
+  transform: scale(0.97);
+}
+
+.button:hover {
+  transition: background 0.7s ease, color 0.7s ease;
+  background-color: black;
+  color: #ccc;
+}
+
+.fields_container__button {
+  margin-left: 5px;
+  margin-right: 5px;
+}

@@ -1,13 +1,14 @@
 .fields_container {
   border: 1px solid black;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  align-items: center;
   width: 500px;
-  height: 120px
+  height: 120px;
 }
 
-.fields_container button {
-  width: 80px;
-  height: 50px;
+.fields_container img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
 }
