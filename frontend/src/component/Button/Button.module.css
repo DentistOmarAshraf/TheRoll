@@ -22,7 +22,18 @@
   color: #ccc;
 }
 
-.fields_container__button {
+.fields_list__button {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.fields_pagnation__button {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.fields_pagnation__button--disabeld {
+  opacity: 30%;
+  pointer-events: none;
 }
