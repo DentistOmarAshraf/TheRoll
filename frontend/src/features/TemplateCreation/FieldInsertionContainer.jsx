@@ -9,6 +9,33 @@ export default function FieldInsertionContainer() {
     templateData,
     setTemplateData,
   } = useTemp();
+
+  const handleClickMajor = (val) => {
+    const { focus, cursorPostion } = templateStructure;
+    if (focus) {
+      const text = templateData[focus];
+      setTemplateData((prev) => ({
+        ...prev,
+        [focus]: `${text.slice(0, cursorPostion)}{{#${val.name}}}{{/${
+          val.name
+        }}}${text.slice(cursorPostion)}`,
+      }));
+    }
+  };
+
+  const handleClickMinor = (val) => {
+    const { focus, cursorPostion } = templateStructure;
+    if (focus) {
+      const text = templateData[focus];
+      setTemplateData((prev) => ({
+        ...prev,
+        [focus]: `${text.slice(0, cursorPostion)}{{${val.name}}}${text.slice(
+          cursorPostion
+        )}`,
+      }));
+    }
+  };
+
   const handleDelete = (e) => {
     const { id } = e.target;
     setTemplateStructure((prev) => {
@@ -23,7 +50,11 @@ export default function FieldInsertionContainer() {
   return (
     <div className={styles.fields_insertion}>
       {templateStructure.fieldsButtons.map((item) => (
-        <div className={styles.fields_button_container} key={item._id} id={item._id}>
+        <div
+          className={styles.fields_button_container}
+          key={item._id}
+          id={item._id}
+        >
           <Button
             className={"fields_insertion__button--major"}
             id={item._id}
