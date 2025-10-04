@@ -1,0 +1,19 @@
+.selection {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 600px;
+  align-items: center;
+  font-family: "Cairo", cursive;
+  height: 125px;
+  justify-content: space-around;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+
+.selection select{
+  font-family: "Cairo", cursive;
+  width: 500px;
+  height: 40px;
+  border-radius: 5px;
+}

@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import Button from "../../component/Button/Button";
-import { useTemp } from "./context/TemplateContext";
+import Button from "../../../component/Button/Button";
+import { useTemp } from "../context/TemplateContext";
 import styles from "./TextAndPlaceHolder.module.css";
 
 export default function TextAndPlaceHolder() {

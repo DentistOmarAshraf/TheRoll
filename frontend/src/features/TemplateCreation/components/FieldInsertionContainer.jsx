@@ -1,6 +1,6 @@
-import { useTemp } from "./context/TemplateContext";
+import { useTemp } from "../context/TemplateContext";
 import styles from "./FieldInsertionContainer.module.css";
-import Button from "../../component/Button/Button";
+import Button from "../../../component/Button/Button";
 
 export default function FieldInsertionContainer() {
   const {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Button from "../../component/Button/Button";
-import getAllFields from "../../api/fieldsApi";
-import { useTemp } from "./context/TemplateContext";
+import Button from "../../../component/Button/Button";
+import getAllFields from "../../../api/fieldsApi";
+import { useTemp } from "../context/TemplateContext";
 import styles from "./FieldContainer.module.css";
-import Looding from "../../assets/looding.gif";
+import Looding from "../../../assets/looding.gif";
 
 export default function FieldContainer() {
   const [fields, setFileds] = useState({ page: 1, pages: 1, listOfFields: [] });
