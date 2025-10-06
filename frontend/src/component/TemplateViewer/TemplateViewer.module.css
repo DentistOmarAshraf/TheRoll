@@ -1,0 +1,120 @@
+.container {
+    /* Tall container example: 200px wide x 600px high */
+    width: 700px;
+    height: 1300px;
+    position: relative;
+    /* Essential for absolute positioning */
+    border: 2px solid blue;
+}
+
+.paper_container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    aspect-ratio: 210 / 297;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    container-type: size;
+}
+
+.content_container {
+    width: 95%;
+    height: 95%;
+    box-shadow: 0 0 0 0.7cqw black;
+    container-type: size;
+    position: relative;
+}
+
+.content_header {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 0 0 0.3cqw rgb(0, 0, 0);
+}
+
+.content_creator {
+    height: 100%;
+    width: 30%;
+    /* border: 1px solid purple; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    container-type: size;
+}
+
+.content_creator p {
+    padding: 0;
+    margin: 0;
+    font-size: 8cqw;
+    font-family: "Cairo", cursive;
+    font-weight: 800;
+    text-align: center;
+}
+
+.content_creator_logo {
+    height: 100%;
+    width: 20%;
+    /* border: 1px solid purple; */
+}
+
+.content_creator_logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.content_begining {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    height: 30%;
+    border: 1px solid red;
+    display: flex;
+    container-type: size;
+}
+
+.content_begining .intro_flex_container {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+}
+
+.content_begining .summury_fixed_container {
+    width: 22%;
+    height: 100%;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    transition: all 0.3s ease;
+}
+
+.summury_fixed_container.hidden {
+    width: 0%;
+    height: 0%;
+}
+
+.content_footer {
+    width: 100%;
+    height: 5%;
+    position: absolute;
+    bottom: 0%;
+    box-shadow: 0 0 0 0.3cqw rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content_footer p {
+    padding: 0;
+    margin: 0;
+    font-size: 2.5cqw;
+    font-family: "Cairo", cursive;
+    font-weight: 350;
+    text-align: center;
+}

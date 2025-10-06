@@ -1,0 +1,29 @@
+.parent {
+    display: flex;
+    border: 1px solid blue;
+    width: 200px;
+    aspect-ratio: 210 / 297;
+}
+
+.flexable_container {
+    border: 1px solid red;
+    width: 100%;
+    flex: 1;
+    height: 200px;
+}
+
+.fixed_container {
+    border: 1px solid green;
+    width: 100px;
+    height: 200px;
+    transition: all 0.3s ease;
+}
+
+.fixed_container.hidden {
+    width: 0;
+    opacity: 0;
+}
+
+.flexable_container p {
+    white-space: pre-line;
+}

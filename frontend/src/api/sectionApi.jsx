@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 
-const getAllSection = async (page = 1, limit = 20) => {
+export const getAllSection = async (page = 1, limit = 20) => {
   try {
     const response = await apiClient.get("/sections");
     return response.data;
@@ -10,7 +10,7 @@ const getAllSection = async (page = 1, limit = 20) => {
   }
 };
 
-const createNewSection = async (name) => {
+export const createNewSection = async (name) => {
   try {
     const response = await apiClient.post("/section", { name });
     return response.data;
@@ -19,5 +19,3 @@ const createNewSection = async (name) => {
     throw error;
   }
 };
-
-export default { createNewSection, getAllSection };
