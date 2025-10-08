@@ -6,6 +6,7 @@ export default function TemplateTestingCompTemp() {
   const [sum, setSum] = useState("");
   const [middle, setMiddle] = useState("")
   const [final, setFinal] = useState("")
+  const [footer, setFooter] = useState("")
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -27,13 +28,19 @@ export default function TemplateTestingCompTemp() {
     setFinal(value);
   }
 
+  const handleChange5 = (e) => {
+    const {value} = e.target;
+    setFooter(value)
+  }
+
   return (
     <>
       <textarea onChange={handleChange2}></textarea>
       <textarea onChange={handleChange}></textarea>
       <textarea onChange={handleChange3}></textarea>
       <textarea onChange={handleChange4}></textarea>
-      <TemplateViewer intro={intro} summury={sum} middle={middle} final={final} />
+      <textarea onChange={handleChange5}></textarea>
+      <TemplateViewer intro={intro} summary={sum} middle={middle} final={final} footer={footer} />
     </>
   );
 }

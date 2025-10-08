@@ -1,0 +1,25 @@
+.content_footer {
+  width: 100%;
+  height: 5%;
+  position: absolute;
+  bottom: 0%;
+  box-shadow: 0 0 0 0.3cqw rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.content_footer p {
+  padding: 0;
+  margin: 0;
+  font-size: 2.5cqw;
+  font-family: "Cairo", cursive;
+  font-weight: 350;
+  text-align: center;
+}
+
+.content_footer.hidden {
+  width: 0%;
+  height: 0%;
+}

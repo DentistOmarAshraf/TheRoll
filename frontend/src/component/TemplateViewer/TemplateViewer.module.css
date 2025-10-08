@@ -1,7 +1,7 @@
 .container {
     /* Tall container example: 200px wide x 600px high */
-    width: 700px;
-    height: 1100px;
+    width: 300px;
+    height: 600px;
     position: relative;
     /* Essential for absolute positioning */
     border: 2px solid rgb(0, 0, 9);
@@ -14,7 +14,7 @@
     transform: translate(-50%, -50%);
     width: 100%;
     aspect-ratio: 210 / 297;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,186 +27,4 @@
     box-shadow: 0 0 0 0.7cqw black;
     container-type: size;
     position: relative;
-}
-
-.content_header {
-    position: absolute;
-    top: 0%;
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: space-around;
-    box-shadow: 0 0 0 0.3cqw rgb(0, 0, 0);
-}
-
-.content_creator {
-    height: 100%;
-    width: 30%;
-    /* border: 1px solid purple; */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    container-type: size;
-}
-
-.content_creator p {
-    padding: 0;
-    margin: 0;
-    font-size: 8cqw;
-    font-family: "Cairo", cursive;
-    font-weight: 800;
-    text-align: center;
-}
-
-.content_creator_logo {
-    height: 100%;
-    width: 20%;
-    /* border: 1px solid purple; */
-}
-
-.content_creator_logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.content_begining {
-    position: absolute;
-    top: 10%;
-    width: 100%;
-    max-width: 100%;
-    height: 33%;
-    border: 1px solid red;
-    display: flex;
-    container-type: size;
-}
-
-.content_begining .intro_flex_container {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    min-width: 0;
-}
-
-.content_begining .intro_flex_container p {
-    /* border: 1px solid green; */
-    margin: 0;
-    width: 94%;
-    height: 93%;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-top: 3%;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    font-size: 2.5cqw;
-    overflow: hidden;
-}
-
-.content_begining .intro_flex_container p b {
-    font-size: 3.5cqw;
-}
-
-.content_begining .summury_fixed_container {
-    width: 22%;
-    height: 100%;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    transition: all 0.3s ease;
-    flex: 0 0 auto;
-}
-
-.content_begining .summury_fixed_container.hidden {
-    width: 0%;
-    height: 0%;
-}
-
-.content_begining .summury_fixed_container p {
-    margin: 0;
-    padding: 0;
-    padding-top: 3%;
-    width: 100%;
-    height: 97%;
-    max-height: 100%;
-    white-space: pre-wrap;
-    text-align: center;
-    overflow-wrap: break-word;
-    font-size: 2.5cqw;
-    overflow: hidden;
-}
-
-.content_begining .summury_fixed_container p b {
-    font-size: 3cqw;
-}
-
-.content_middle_final {
-    position: absolute;
-    bottom: 5%;
-    width: 100%;
-    height: 51%;
-    border: 1px solid green;
-    display: flex;
-    flex-direction: column;
-}
-
-.content_middle {
-    width: 100%;
-    height: 60%;
-    border: 1px solid rgb(255, 0, 0);
-}
-
-.content_middle p {
-    margin: 0;
-    padding: 0;
-    padding-right: 3%;
-    padding-left: 3%;
-    width: 94%;
-    height: 100%;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    overflow: hidden;
-    font-size: 2.5cqw;
-}
-
-.content_final {
-    width: 100%;
-    height: 40%;
-    border: 1px solid orange;
-}
-
-.content_final p {
-    margin: 0;
-    padding: 0;
-    padding-left: 3%;
-    padding-right: 3%;
-    width: 94%;
-    height: 100%;
-    font-size: 2.5cqw;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    text-align: center;
-    overflow: hidden;
-}
-
-.content_final p b {
-    font-size: 3.5cqw;
-}
-
-.content_footer {
-    width: 100%;
-    height: 5%;
-    position: absolute;
-    bottom: 0%;
-    box-shadow: 0 0 0 0.3cqw rgb(0, 0, 0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.content_footer p {
-    padding: 0;
-    margin: 0;
-    font-size: 2.5cqw;
-    font-family: "Cairo", cursive;
-    font-weight: 350;
-    text-align: center;
 }

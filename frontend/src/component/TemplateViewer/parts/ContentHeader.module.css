@@ -1,0 +1,40 @@
+.content_header {
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 0 0 0.3cqw rgb(0, 0, 0);
+}
+
+.content_creator {
+  height: 100%;
+  width: 30%;
+  /* border: 1px solid purple; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  container-type: size;
+}
+
+.content_creator p {
+  padding: 0;
+  margin: 0;
+  font-size: 8cqw;
+  font-family: "Cairo", cursive;
+  font-weight: 800;
+  text-align: center;
+}
+
+.content_creator_logo {
+  height: 100%;
+  width: 20%;
+  /* border: 1px solid purple; */
+}
+
+.content_creator_logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
