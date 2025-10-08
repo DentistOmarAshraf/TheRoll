@@ -1,12 +1,3 @@
-.container {
-    /* Tall container example: 200px wide x 600px high */
-    width: 300px;
-    height: 600px;
-    position: relative;
-    /* Essential for absolute positioning */
-    border: 2px solid rgb(0, 0, 9);
-}
-
 .paper_container {
     position: absolute;
     top: 50%;
@@ -14,11 +5,11 @@
     transform: translate(-50%, -50%);
     width: 100%;
     aspect-ratio: 210 / 297;
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
     container-type: size;
+    background-color: white;
 }
 
 .content_container {

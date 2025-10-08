@@ -12,7 +12,6 @@ export default function TemplateViewer({ intro, summary, middle, final, footer }
   const sanitizedFinal = DOMPurify.sanitize(final);
   const sanitizedFooter = DOMPurify.sanitize(footer);
   return (
-    <div className={styles.container}>
       <div className={styles.paper_container}>
         <div className={styles.content_container}>
           <ContentHeader />
@@ -21,6 +20,5 @@ export default function TemplateViewer({ intro, summary, middle, final, footer }
           <ContentFooter footer={sanitizedFooter} />
         </div>
       </div>
-    </div>
   );
 }
