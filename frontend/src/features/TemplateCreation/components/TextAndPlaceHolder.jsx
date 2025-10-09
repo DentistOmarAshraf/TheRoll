@@ -64,6 +64,16 @@ export default function TextAndPlaceHolder() {
           />
         </label>
         <label>
+          ملخص
+          <textarea
+            name="summary"
+            value={templateData.summary}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onSelect={handleSelect}
+          />
+        </label>
+        <label>
           وسط
           <textarea
             name="middle"
@@ -84,16 +94,6 @@ export default function TextAndPlaceHolder() {
           />
         </label>
         <label>
-          ملخص
-          <textarea
-            name="summary"
-            value={templateData.summary}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onSelect={handleSelect}
-          />
-        </label>
-        <label>
           كلمات مفتاحيه
           <input
             name="tags"
@@ -103,8 +103,16 @@ export default function TextAndPlaceHolder() {
         </label>
       </div>
       <div className={styles.nav_container}>
-        <Button onClick={scrollPrev} className="text_insertion_container__button" children={"<"} />
-        <Button onClick={scrollNext} className="text_insertion_container__button" children={">"}/>
+        <Button
+          onClick={scrollPrev}
+          className="text_insertion_container__button"
+          children={"<"}
+        />
+        <Button
+          onClick={scrollNext}
+          className="text_insertion_container__button"
+          children={">"}
+        />
       </div>
     </div>
   );

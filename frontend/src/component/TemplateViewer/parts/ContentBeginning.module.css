@@ -26,7 +26,7 @@
   padding-top: 3%;
   white-space: pre-wrap;
   overflow-wrap: break-word;
-  font-size: 2.5cqw;
+  font-size: 2.7cqw;
   overflow: hidden;
 }
 
@@ -63,5 +63,6 @@
 }
 
 .content_beginning .summary_fixed_container p b {
+  border-bottom: 1px solid black;
   font-size: 3cqw;
 }

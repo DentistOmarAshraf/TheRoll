@@ -1,0 +1,14 @@
+.creation_container {
+  width: 1200px;
+  height: 1000px;
+  border: 1px solid red;
+  display: flex;
+}
+
+.left_side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border: 1px solid green
+}
