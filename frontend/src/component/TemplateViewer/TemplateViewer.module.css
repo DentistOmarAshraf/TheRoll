@@ -18,5 +18,8 @@
     height: 95%;
     box-shadow: 0 0 0 0.7cqw black;
     container-type: size;
-    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(20, 5%);
+    overflow: hidden;
 }

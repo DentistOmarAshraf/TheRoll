@@ -5,12 +5,14 @@ import TextAndPlaceHolder from "./components/TextAndPlaceHolder";
 import FieldInsertionContainer from "./components/FieldInsertionContainer";
 import SectionSelection from "./components/SectionSelection"
 import TemplateWrapper from "./components/TemplateWrapper";
+import Verbs from "./components/Verbs";
 
 export default function TemplateCreationPage() {
   return (
     <TemplateContextProvider>
       <div className={styles.creation_container}>
         <div className={styles.right_side}>
+          <Verbs />
           <SectionSelection />
           <TextAndPlaceHolder />
           <FieldContainer />

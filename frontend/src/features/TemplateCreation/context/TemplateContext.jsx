@@ -11,6 +11,7 @@ export default function TemplateContextProvider({ children }) {
     final: "",
     summary: "",
     tags: "",
+    verbs: [],
     fields: [],
   });
   const [templateStructure, setTemplateStructure] = useState({

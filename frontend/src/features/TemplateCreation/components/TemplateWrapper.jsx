@@ -5,7 +5,7 @@ import TemplateViewer from "../../../component/TemplateViewer";
 export default function TemplateWrapper() {
   const { templateData } = useTemp();
   return (
-    <TemplateContainer width={524}>
+    <TemplateContainer width={500}>
       <TemplateViewer
         intro={templateData.intro}
         summary={templateData.summary}
