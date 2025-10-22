@@ -12,13 +12,13 @@ export default function TemplateCreationPage() {
     <TemplateContextProvider>
       <div className={styles.creation_container}>
         <div className={styles.right_side}>
-          <Verbs />
           <SectionSelection />
           <TextAndPlaceHolder />
-          <FieldContainer />
           <FieldInsertionContainer />
+          <Verbs />
         </div>
         <div className={styles.left_side}>
+          <FieldContainer />
           <TemplateWrapper />
         </div>
       </div>

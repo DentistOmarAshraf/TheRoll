@@ -4,8 +4,7 @@ import useObserver from "../../../hooks/ResizeObserver";
 const ResizeContext = createContext(null);
 
 export default function ResizeContextProvider({ children }) {
-  const [size, ref] = useObserver();
-  const sumParRef = ref;
+  const [size, sumParRef] = useObserver();
   const sumRef = useRef(null);
   const introRef = useRef(null);
   const midRef = useRef(null);

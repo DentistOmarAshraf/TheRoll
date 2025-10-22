@@ -8,7 +8,7 @@
   font-family: "Cairo", cursive;
   font-weight: 650;
   font-style: normal;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .button:active {
@@ -38,15 +38,17 @@
   pointer-events: none;
 }
 
-.fields_insertion__button--major {
+.fields_insertion__button--major,
+.verbs_container__button--add {
   background-color: rgba(28, 86, 168, 0.808);
   margin: 10px;
 }
 
-.fields_insertion__button--major:hover {
-  transition: background 0.7s ease, color 0.7s ease;
+.fields_insertion__button--major:hover,
+.verbs_container__button--add:hover {
+  transition: background 0.3s ease, color 0.3s ease;
   background-color: rgba(8, 56, 124, 0.915);
-  color: black;
+  color: white;
 }
 
 .fields_insertion__button--minor {
@@ -55,12 +57,13 @@
 }
 
 .fields_insertion__button--minor:hover {
-  transition: background 0.7s ease, color 0.7s ease;
+  transition: background 0.3s ease, color 0.3s ease;
   background-color: rgba(48, 172, 220, 0.784);
   color: black;
 }
 
-.fields_insertion__button--close {
+.fields_insertion__button--close,
+.verbs_container__button--delete {
   background-color: rgba(255, 0, 0, 0.496);
   color: white;
   width: 30px;
@@ -69,9 +72,10 @@
   margin: 10px;
 }
 
-.fields_insertion__button--close:hover {
+.fields_insertion__button--close:hover,
+.verbs_container__button--delete:hover {
   transition: background 0.7s ease, color 0.7s ease;
-  background-color:rgba(255, 0, 0, 0.859);
+  background-color: rgba(255, 0, 0, 0.859);
   color: white;
 }
 
@@ -81,4 +85,9 @@
   border-radius: 100%;
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.verbs_container__button--add {
+  width: 60px;
+  height: 35px;
 }

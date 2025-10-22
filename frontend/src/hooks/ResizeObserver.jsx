@@ -8,7 +8,6 @@ export default function useObserver() {
     if (!element) return;
     const obs = new ResizeObserver((entries) => {
       const {width, height} = entries[0].contentRect;
-      console.log(width, height)
       setSize({width, height});
     });
     obs.observe(element);
