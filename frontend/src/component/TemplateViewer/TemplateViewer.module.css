@@ -20,6 +20,6 @@
     container-type: size;
     display: grid;
     grid-template-columns: repeat(5, 20%);
-    grid-template-rows: repeat(20, 5%);
+    grid-template-rows: repeat(40, 2.5%);
     overflow: hidden;
 }

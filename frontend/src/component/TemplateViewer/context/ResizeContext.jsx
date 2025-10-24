@@ -4,40 +4,79 @@ import useObserver from "../../../hooks/ResizeObserver";
 const ResizeContext = createContext(null);
 
 export default function ResizeContextProvider({ children }) {
-  const [size, sumParRef] = useObserver();
+  const [sumParaSize, sumParRef] = useObserver();
   const sumRef = useRef(null);
-  const introRef = useRef(null);
-  const midRef = useRef(null);
-  const finRef = useRef(null);
+  const [introParaSize, introParaRef] = useObserver();
+  const introContRef = useRef(null);
+  const [midParaSize, midParaRef] = useObserver();
+  const midContRef = useRef(null);
+  const [finParaSize, finParaRef] = useObserver();
+  const finContRef = useRef(null);
 
-useEffect(() => {
-  if (!sumRef.current || !sumParRef.current) return;
+  useEffect(() => {
+    const parent = sumRef.current.parentElement;
+    const cellHeight = parent.offsetHeight / 40;
 
-  const parent = sumRef.current.parentElement;
+    // if there is no summury then all containers (intro, middle, final) will extend
+    // the column end
+    if (!sumParaSize.width) {
+      introContRef.current.style.gridColumnEnd = 6;
+      midContRef.current.style.gridColumnEnd = 6;
+      finContRef.current.style.gridColumnEnd = 6;
+    }
 
-  // If container width is not set yet
-  if (!size.width) {
-    introRef.current.style.gridColumnEnd = 6;
-    midRef.current.style.gridColumnEnd = 6;
-    finRef.current.style.gridColumnEnd = 6;
-    return;
-  }
+    // intro cell height, set intro container GridRowEnd according to paragraph height
+    let introRowEnd = Math.ceil(introParaSize.height / cellHeight) + 6;
+    introRowEnd = introRowEnd > 41 ? 41 : introRowEnd;
+    introContRef.current.style.gridRowEnd = introRowEnd;
 
-  // Once we have size
-  const cellHeight = parent.offsetHeight / 20;
-  let RowEnd = Math.ceil(size.height / cellHeight) + 3;
-  RowEnd = RowEnd > 21 ? 21 : RowEnd;
-  sumRef.current.style.gridRowEnd = RowEnd;
+    // set middle container height according to intro
+    // it start from intro ending
+    const midCellStart = Number(introContRef.current.style.gridRowEnd); // --> cell start is where intro end
+    midContRef.current.style.gridRowStart = midCellStart;
+    let midRowEnd = Math.ceil(midParaSize.height / cellHeight) + midCellStart;
+    midRowEnd = midRowEnd > 41 ? 41 : midRowEnd;
+    midContRef.current.style.gridRowEnd = midRowEnd;
 
-  // Logic remains the same, but cleaner
-  introRef.current.style.gridColumnEnd = 5;
-  midRef.current.style.gridColumnEnd = RowEnd > 10 ? 5 : 6;
-  finRef.current.style.gridColumnEnd = RowEnd > 15 ? 5 : 6;
-}, [size]);
+    // set final container height according to mid
+    // it start from mid ending
+    const finCellStart = Number(midContRef.current.style.gridRowEnd); // --> cell start is where mid end
+    finContRef.current.style.gridRowStart = finCellStart;
+    let finRowEnd = Math.ceil(finParaSize.height / cellHeight) + finCellStart;
+    finRowEnd = finRowEnd > 41 ? 41 : finRowEnd;
+    finContRef.current.style.gridRowEnd = finRowEnd;
+
+    // set grid row end of summury container
+    // summury container become last becasue
+    // column end of intro and mid and final will be set according to the
+    // height of summury (RowEnd)
+    // if Row End == start any contaniner then it should shring (Column end - 1)
+    let sumRowEnd = Math.ceil(sumParaSize.height / cellHeight) + 6;
+    sumRowEnd = sumRowEnd > 41 ? 41 : sumRowEnd;
+    sumRef.current.style.gridRowEnd = sumRowEnd;
+
+    // here when decide which container or not
+    if (sumParaSize.width) {
+      introContRef.current.style.gridColumnEnd = 5; // ---> intro will always shrink to 5
+      midContRef.current.style.gridColumnEnd =
+        sumRowEnd > Number(midContRef.current.style.gridRowStart) ? 5 : 6;
+      finContRef.current.style.gridColumnEnd =
+        sumRowEnd > Number(finContRef.current.style.gridRowStart) ? 5 : 6;
+    }
+  }, [introParaSize, midParaSize, sumParaSize, finParaSize]);
 
   return (
     <ResizeContext.Provider
-      value={{ size, introRef, sumRef, sumParRef, midRef, finRef }}
+      value={{
+        introContRef,
+        introParaRef,
+        sumRef,
+        sumParRef,
+        midContRef,
+        midParaRef,
+        finParaRef,
+        finContRef,
+      }}
     >
       {children}
     </ResizeContext.Provider>
