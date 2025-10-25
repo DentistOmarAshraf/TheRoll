@@ -11,6 +11,8 @@ export default function TemplateContextProvider({ children }) {
     final: "",
     summary: "",
     tags: "",
+    fontSize: "2.5",
+    textAlign: "unset",
     verbs: [],
     fields: [],
   });

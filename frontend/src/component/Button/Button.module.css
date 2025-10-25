@@ -87,6 +87,14 @@
   margin-right: 20px;
 }
 
+.text_option__button {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 9px;
+}
+
 .verbs_container__button--add {
   width: 60px;
   height: 35px;

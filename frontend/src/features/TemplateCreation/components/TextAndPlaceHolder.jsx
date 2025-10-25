@@ -2,9 +2,21 @@ import { useRef } from "react";
 import Button from "../../../component/Button/Button";
 import { useTemp } from "../context/TemplateContext";
 import styles from "./TextAndPlaceHolder.module.css";
+import {
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
+  Bold,
+} from "lucide-react";
 
 export default function TextAndPlaceHolder() {
-  const { templateData, setTemplateData, setTemplateStructure } = useTemp();
+  const {
+    templateStructure,
+    templateData,
+    setTemplateData,
+    setTemplateStructure,
+  } = useTemp();
   const currentRef = useRef();
 
   const handleChange = (e) => {
@@ -24,6 +36,27 @@ export default function TextAndPlaceHolder() {
       ...prev,
       cursorPostion: e.target.selectionStart,
     }));
+  };
+
+  const handleBoldText = (e) => {
+    const { focus, cursorPostion } = templateStructure;
+    if (focus) {
+      const text = templateData[focus];
+      setTemplateData((prev) => ({
+        ...prev,
+        [focus]: `${text.slice(0, cursorPostion)}<b></b>${text.slice(
+          cursorPostion
+        )}`,
+      }));
+    }
+  };
+
+  const handleTextAlign = (e) => {
+    const align = e.currentTarget.dataset.action;
+    setTemplateData((prev) => {
+      if (prev.textAlign == align) return { ...prev, textAlign: "unset" };
+      return { ...prev, textAlign: align };
+    });
   };
 
   const scrollNext = () => {
@@ -101,6 +134,57 @@ export default function TextAndPlaceHolder() {
             onChange={handleChange}
           ></input>
         </label>
+      </div>
+      <div className={styles.text_option}>
+        <label>
+          <input
+            name="fontSize"
+            type="range"
+            min="2.5"
+            max="4"
+            step="0.1"
+            value={templateData.fontSize}
+            list="marks"
+            onChange={handleChange}
+          />
+        </label>
+        <datalist id="marks">
+          <option value="2.5" label="2.5"></option>
+          <option value="3"></option>
+          <option value="3.5"></option>
+          <option value="4" label="4"></option>
+        </datalist>
+        <Button
+          className="text_option__button"
+          data-action="right"
+          onClick={handleTextAlign}
+        >
+          <AlignRight />
+        </Button>
+        <Button
+          className="text_option__button"
+          data-action="center"
+          onClick={handleTextAlign}
+        >
+          <AlignCenter />
+        </Button>
+        <Button
+          className="text_option__button"
+          data-action="left"
+          onClick={handleTextAlign}
+        >
+          <AlignLeft />
+        </Button>
+        <Button
+          className="text_option__button"
+          data-action="justify"
+          onClick={handleTextAlign}
+        >
+          <AlignJustify />
+        </Button>
+        <Button className="text_option__button" onClick={handleBoldText}>
+          <Bold />
+        </Button>
       </div>
       <div className={styles.nav_container}>
         <Button

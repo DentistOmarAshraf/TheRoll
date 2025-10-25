@@ -1,6 +1,6 @@
 .content_final {
     grid-column-start: 1;
-    /* border: 1px solid green; */
+    border: 1px solid green;
 }
 
 .content_final.hidden {
@@ -8,17 +8,15 @@
 }
 
 .content_final p {
+    --font-size: 2.5cqw;
+    --text-align: "unset";
     margin: 0;
     padding: 0;
     padding-left: 3%;
     padding-right: 3%;
-    font-size: 2.5cqw;
+    font-size: var(--font-size);
+    text-align: var(--text-align);
     white-space: pre-wrap;
     overflow-wrap: break-word;
-    text-align: center;
     overflow: hidden;
-}
-
-.content_final p b {
-    font-size: 3.5cqw;
 }

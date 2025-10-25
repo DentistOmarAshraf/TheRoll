@@ -4,7 +4,7 @@ import ContentHeader from "./parts/ContentHeader";
 import ContentIntro from "./parts/ContentIntro";
 import ContentSummary from "./parts/ContentSummary";
 import ContentMiddle from "./parts/ContentMiddle";
-import ContentFinal from "./parts/ContentFinal"
+import ContentFinal from "./parts/ContentFinal";
 import ContentFooter from "./parts/ContentFooter";
 import ResizeContextProvider from "./context/ResizeContext";
 
@@ -14,6 +14,8 @@ export default function TemplateViewer({
   middle,
   final,
   footer,
+  fontSize,
+  textAlign,
 }) {
   const sanitizedIntro = DOMPurify.sanitize(intro);
   const sanitizedSummary = DOMPurify.sanitize(summary);
@@ -25,10 +27,22 @@ export default function TemplateViewer({
       <div className={styles.paper_container}>
         <div className={styles.content_container}>
           <ContentHeader />
-          <ContentIntro intro={sanitizedIntro} />
-          <ContentSummary summary={sanitizedSummary} />
-          <ContentMiddle middle={sanitizedMiddle} />
-          <ContentFinal final={sanitizedFinal} />
+          <ContentIntro
+            intro={sanitizedIntro}
+            fontSize={fontSize}
+            textAlign={textAlign}
+          />
+          <ContentSummary summary={sanitizedSummary} fontSize={fontSize} />
+          <ContentMiddle
+            middle={sanitizedMiddle}
+            fontSize={fontSize}
+            textAlign={textAlign}
+          />
+          <ContentFinal
+            final={sanitizedFinal}
+            fontSize={fontSize}
+            textAlign={textAlign}
+          />
           <ContentFooter footer={sanitizedFooter} />
         </div>
       </div>

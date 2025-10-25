@@ -11,6 +11,8 @@ export default function TemplateWrapper() {
         summary={templateData.summary}
         middle={templateData.middle}
         final={templateData.final}
+        fontSize={templateData.fontSize}
+        textAlign={templateData.textAlign}
       />
     </TemplateContainer>
   );
