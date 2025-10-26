@@ -1,5 +1,5 @@
 .text_insertion_container {
-  border: 1px solid rgb(233, 4, 4);
+  border: 1px solid gray;
   width: 600px;
   border-radius: 5px;
   height: 450px;
@@ -7,7 +7,7 @@
 }
 
 .text_container {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   display: flex;
   flex-direction: row;
   width: 600px;
@@ -52,7 +52,7 @@
 }
 
 .text_option {
-  border: 1px solid coral;
+  /* border: 1px solid coral; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +76,7 @@
 
 
 .nav_container {
-  border: 1px solid green;
+  /* border: 1px solid green; */
   height: 60px;
   display: flex;
   justify-content: center;

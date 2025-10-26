@@ -8,6 +8,7 @@ import {
   AlignRight,
   AlignJustify,
   Bold,
+  Underline,
 } from "lucide-react";
 
 export default function TextAndPlaceHolder() {
@@ -45,6 +46,19 @@ export default function TextAndPlaceHolder() {
       setTemplateData((prev) => ({
         ...prev,
         [focus]: `${text.slice(0, cursorPostion)}<b></b>${text.slice(
+          cursorPostion
+        )}`,
+      }));
+    }
+  };
+
+  const handleUnderLine = (e) => {
+    const { focus, cursorPostion } = templateStructure;
+    if (focus) {
+      const text = templateData[focus];
+      setTemplateData((prev) => ({
+        ...prev,
+        [focus]: `${text.slice(0, cursorPostion)}<u></u>${text.slice(
           cursorPostion
         )}`,
       }));
@@ -181,6 +195,9 @@ export default function TextAndPlaceHolder() {
           onClick={handleTextAlign}
         >
           <AlignJustify />
+        </Button>
+        <Button className="text_option__button" onClick={handleUnderLine}>
+          <Underline />
         </Button>
         <Button className="text_option__button" onClick={handleBoldText}>
           <Bold />
