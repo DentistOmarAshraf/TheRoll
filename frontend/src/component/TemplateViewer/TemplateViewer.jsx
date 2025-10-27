@@ -7,6 +7,7 @@ import ContentMiddle from "./parts/ContentMiddle";
 import ContentFinal from "./parts/ContentFinal";
 import ContentFooter from "./parts/ContentFooter";
 import ResizeContextProvider from "./context/ResizeContext";
+import TextOption from "./parts/TextOption";
 
 export default function TemplateViewer({
   intro,
@@ -25,6 +26,7 @@ export default function TemplateViewer({
   return (
     <ResizeContextProvider>
       <div className={styles.paper_container}>
+        <TextOption />
         <div className={styles.content_container}>
           <ContentHeader />
           <ContentIntro

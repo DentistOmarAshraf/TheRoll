@@ -1,0 +1,46 @@
+.text_option_container {
+  border: 1px solid rgb(241, 1, 1);
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 230px;
+  position: absolute;
+}
+
+.option_container {
+  background-color: #0E2756;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 30px;
+  width: 120px;
+}
+
+.option_container li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 40%;
+}
+
+.option_container li:hover {
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.7s ease;
+  background-color: #3169AF;
+  border-radius: 5px;
+  color: #ccc;
+}
+
+.option_container li:active {
+  transform: scale(0.95);
+}
+
+.color_picker {
+  --display-st: none;
+  display: var(--display-st);
+}
