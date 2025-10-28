@@ -1,13 +1,20 @@
-.text_option_container {
-  border: 1px solid rgb(241, 1, 1);
+.text_option {
+  /* border: 1px solid red; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  width: 220px;
   height: 230px;
-  position: absolute;
+  width: 200px;
+  justify-content: top;
+  align-items: end;
 }
 
 .option_container {
+  top: 0;
+  left: 0;
   background-color: #0E2756;
   border-radius: 5px;
   margin: 0;
@@ -38,9 +45,4 @@
 
 .option_container li:active {
   transform: scale(0.95);
-}
-
-.color_picker {
-  --display-st: none;
-  display: var(--display-st);
 }

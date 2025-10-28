@@ -1,4 +1,5 @@
 import styles from "./TemplateContainer.module.css";
+import TextOptionProvider from "./context/TextOptionTooltipContext";
 
 export default function TemplateContainer({
   children,
@@ -14,7 +15,7 @@ export default function TemplateContainer({
   if (!finalWidth) {
     finalWidth = 400;
   }
-  
+
   if (finalHeight / finalWidth < A4_ratio || !height) {
     finalHeight = finalWidth * A4_ratio;
   }
@@ -25,11 +26,13 @@ export default function TemplateContainer({
   };
 
   return (
-    <div
-      className={`${styles.template_container} ${className || ""}`}
-      style={finalStyle}
-    >
-      {children}
-    </div>
+    <TextOptionProvider>
+      <div
+        className={`${styles.template_container} ${className || ""}`}
+        style={finalStyle}
+      >
+        {children}
+      </div>
+    </TextOptionProvider>
   );
 }

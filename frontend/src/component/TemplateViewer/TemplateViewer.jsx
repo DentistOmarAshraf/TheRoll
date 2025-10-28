@@ -6,8 +6,9 @@ import ContentSummary from "./parts/ContentSummary";
 import ContentMiddle from "./parts/ContentMiddle";
 import ContentFinal from "./parts/ContentFinal";
 import ContentFooter from "./parts/ContentFooter";
-import ResizeContextProvider from "./context/ResizeContext";
 import TextOption from "./parts/TextOption";
+import ResizeContextProvider from "./context/ResizeContext";
+import { useTextOption } from "./context/TextOptionTooltipContext";
 
 export default function TemplateViewer({
   intro,
@@ -23,31 +24,45 @@ export default function TemplateViewer({
   const sanitizedMiddle = DOMPurify.sanitize(middle);
   const sanitizedFinal = DOMPurify.sanitize(final);
   const sanitizedFooter = DOMPurify.sanitize(footer);
+  
+  const {showTextOpt, hideTextOpt} = useTextOption()
+
+  const handleContainerMouseUp = (e) =>{
+    const selection = window.getSelection();
+    
+    if (selection && !selection.isCollapsed && selection.toString() !== "") {
+      const rect = selection.getRangeAt(0).getBoundingClientRect();
+      showTextOpt(selection, rect);
+    } else {
+      hideTextOpt();
+    }
+  }
+
   return (
     <ResizeContextProvider>
-      <div className={styles.paper_container}>
         <TextOption />
-        <div className={styles.content_container}>
-          <ContentHeader />
-          <ContentIntro
-            intro={sanitizedIntro}
-            fontSize={fontSize}
-            textAlign={textAlign}
-          />
-          <ContentSummary summary={sanitizedSummary} fontSize={fontSize} />
-          <ContentMiddle
-            middle={sanitizedMiddle}
-            fontSize={fontSize}
-            textAlign={textAlign}
-          />
-          <ContentFinal
-            final={sanitizedFinal}
-            fontSize={fontSize}
-            textAlign={textAlign}
-          />
-          <ContentFooter footer={sanitizedFooter} />
+        <div className={styles.paper_container}>
+          <div onMouseUp={handleContainerMouseUp} className={styles.content_container}>
+            <ContentHeader />
+            <ContentIntro
+              intro={sanitizedIntro}
+              fontSize={fontSize}
+              textAlign={textAlign}
+            />
+            <ContentSummary summary={sanitizedSummary} fontSize={fontSize} />
+            <ContentMiddle
+              middle={sanitizedMiddle}
+              fontSize={fontSize}
+              textAlign={textAlign}
+            />
+            <ContentFinal
+              final={sanitizedFinal}
+              fontSize={fontSize}
+              textAlign={textAlign}
+            />
+            <ContentFooter footer={sanitizedFooter} />
+          </div>
         </div>
-      </div>
     </ResizeContextProvider>
   );
 }
