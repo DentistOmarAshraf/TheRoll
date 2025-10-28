@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 
 const TextOptionContext = createContext(null);
 
@@ -8,6 +8,7 @@ export default function TextOptionProvider({ children }) {
     position: { x: 0, y: 0 },
     selection: null,
   });
+  const textOptRef = useRef(null);
 
   const showTextOpt = (selection, rect) => {
     setTextOptState({
@@ -29,6 +30,10 @@ export default function TextOptionProvider({ children }) {
     const handleGlobalMouseDown = (event) => {
       const selection = window.getSelection();
 
+      if (textOptRef.current && textOptRef.current.contains(event.target)) {
+        return;
+      }
+
       if (selection.isCollapsed) {
         hideTextOpt();
       }
@@ -42,7 +47,7 @@ export default function TextOptionProvider({ children }) {
 
   return (
     <TextOptionContext.Provider
-      value={{ ...textOptState, showTextOpt, hideTextOpt }}
+      value={{ ...textOptState, showTextOpt, hideTextOpt, textOptRef }}
     >
       {children}
     </TextOptionContext.Provider>

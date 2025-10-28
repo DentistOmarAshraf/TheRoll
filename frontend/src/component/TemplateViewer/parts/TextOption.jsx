@@ -5,7 +5,7 @@ import { FaBold, FaUnderline, FaHighlighter } from "react-icons/fa";
 import { HexColorPicker } from "react-colorful";
 
 export default function TextOption() {
-  const { isVisiable, position, selection } = useTextOption();
+  const { isVisiable, position, selection, textOptRef } = useTextOption();
   const [pickerVisible, setPickerVisible] = useState(false);
   const [color, setColor] = useState("#ffffff");
 
@@ -13,6 +13,7 @@ export default function TextOption() {
     <>
       {isVisiable && (
         <div
+          ref={textOptRef}
           style={{
             left: `${position.left + window.scrollX}px`,
             top: `${position.bottom + window.scrollY}px`,
