@@ -32,6 +32,7 @@ export default function TemplateViewer({
     
     if (selection && !selection.isCollapsed && selection.toString() !== "") {
       const rect = selection.getRangeAt(0).getBoundingClientRect();
+      // console.log(selection.getRangeAt(0).commonAncestorContainer.parentNode.nodeName)
       showTextOpt(selection, rect);
     } else {
       hideTextOpt();
