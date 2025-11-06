@@ -1,7 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "./TextOption.module.css";
 import { useTextOption } from "../context/TextOptionTooltipContext";
-import { FaBold, FaUnderline, FaHighlighter } from "react-icons/fa";
+import {
+  FaBold,
+  FaUnderline,
+  FaHighlighter,
+  FaAngleDown,
+} from "react-icons/fa";
 import { HexColorPicker } from "react-colorful";
 
 export default function TextOption() {
@@ -16,10 +21,15 @@ export default function TextOption() {
   const handleTextDecoration = (e) => {
     const decoration = e.currentTarget.dataset.format;
     const element = document.createElement(decoration);
+    if (decoration === "mark") {
+      element.style.background = color;
+    }
     const range = selection.getRangeAt(0);
+    // console.log(range);
 
     // this the first case -> if selected text include html element that means its decorated already
     const childNodes = Array.from(range.cloneContents().childNodes);
+    console.log(childNodes);
 
     const firstCondation = childNodes.some(
       (n) => n.nodeName == decoration.toUpperCase()
@@ -56,16 +66,15 @@ export default function TextOption() {
         });
       }
       selection.removeAllRanges();
+      selection.addRange(range);
       return;
     }
 
-    try {
-      range.surroundContents(element);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    } catch (e) {
-      selection.removeAllRanges();
-    }
+    const content = range.extractContents();
+    element.appendChild(content);
+    range.insertNode(element);
+    selection.removeAllRanges();
+    selection.addRange(range);
   };
 
   return (
@@ -80,8 +89,20 @@ export default function TextOption() {
           className={styles.text_option}
         >
           <ul className={styles.option_container}>
-            <li onClick={() => setPickerVisible((v) => !v)}>
-              <FaHighlighter size={20} color="white" />
+            <li onMouseDown={handleMouseDown}>
+              <FaAngleDown
+                color="white"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPickerVisible((v) => !v);
+                }}
+              />
+              <FaHighlighter
+                size={20}
+                color="white"
+                data-format="mark"
+                onClick={handleTextDecoration}
+              />
             </li>
             <li
               data-format="u"
@@ -101,7 +122,11 @@ export default function TextOption() {
 
           {pickerVisible && (
             <div className={styles.color_picker}>
-              <HexColorPicker color={color} onChange={setColor} />
+              <HexColorPicker
+                color={color}
+                onChange={setColor}
+                onMouseDown={handleMouseDown}
+              />
             </div>
           )}
         </div>
