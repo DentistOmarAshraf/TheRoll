@@ -6,65 +6,82 @@ import {
   FaUnderline,
   FaHighlighter,
   FaAngleDown,
+  FaItalic,
 } from "react-icons/fa";
 import { HexColorPicker } from "react-colorful";
 
 export default function TextOption() {
   const { isVisiable, position, selection, textOptRef } = useTextOption();
   const [pickerVisible, setPickerVisible] = useState(false);
-  const [color, setColor] = useState("#ffffff");
+  const [color, setColor] = useState("#f6ff51");
+
+  function hexToRgba(hex, alpha = 1) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
 
   const handleMouseDown = (e) => {
     e.preventDefault();
+  };
+
+  const checkChilds = (range, decoration) => {
+    const content = range.commonAncestorContainer;
+    let found = false;
+    try {
+      const list = content.querySelectorAll(decoration);
+      list.forEach((n) => {
+        if (
+          n.nodeName === decoration.toUpperCase() &&
+          range.intersectsNode(n)
+        ) {
+          const parent = n.parentNode;
+          while (n.firstChild) {
+            parent.insertBefore(n.firstChild, n);
+          }
+          n.remove();
+          found = true;
+        }
+      });
+    } catch (e) {}
+
+    return found;
+  };
+
+  const checkParent = (range, decoration) => {
+    let found = false;
+    let node = range.commonAncestorContainer;
+    while (node.nodeName !== "P") {
+      if (node.nodeName === decoration.toUpperCase()) {
+        const parent = node.parentNode;
+        while (node.firstChild) {
+          parent.insertBefore(node.firstChild, node);
+        }
+        found = true;
+        node.remove();
+        break;
+      }
+      node = node.parentNode;
+    }
+    return found;
   };
 
   const handleTextDecoration = (e) => {
     const decoration = e.currentTarget.dataset.format;
     const element = document.createElement(decoration);
     if (decoration === "mark") {
-      element.style.background = color;
+      element.style.background = hexToRgba(color, 0.85);
+      setPickerVisible(false);
     }
     const range = selection.getRangeAt(0);
-    // console.log(range);
+    if (checkChilds(range, decoration)) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      return;
+    }
 
-    // this the first case -> if selected text include html element that means its decorated already
-    const childNodes = Array.from(range.cloneContents().childNodes);
-    console.log(childNodes);
-
-    const firstCondation = childNodes.some(
-      (n) => n.nodeName == decoration.toUpperCase()
-    );
-    // -> end of first condition
-
-    // this is to know if selected text is inside decorated text
-    const secCondation =
-      range.commonAncestorContainer.parentNode.nodeName ==
-      decoration.toUpperCase();
-    // -> end of sec condition
-
-    if (firstCondation || secCondation) {
-      if (secCondation) {
-        console.log("secCond");
-        const node = range.commonAncestorContainer.parentNode;
-        const parent = node.parentNode;
-        while (node.firstChild) {
-          parent.insertBefore(node.firstChild, node);
-        }
-        node.remove();
-      }
-
-      if (firstCondation) {
-        console.log("firstCond");
-        const parent = range.commonAncestorContainer;
-        parent.childNodes.forEach((node) => {
-          if (node.nodeName === decoration.toUpperCase()) {
-            while (node.firstChild) {
-              parent.insertBefore(node.firstChild, node);
-            }
-            node.remove();
-          }
-        });
-      }
+    if (checkParent(range, decoration)) {
       selection.removeAllRanges();
       selection.addRange(range);
       return;
@@ -103,6 +120,13 @@ export default function TextOption() {
                 data-format="mark"
                 onClick={handleTextDecoration}
               />
+            </li>
+            <li
+              data-format="em"
+              onClick={handleTextDecoration}
+              onMouseDown={handleMouseDown}
+            >
+              <FaItalic size={20} color="white" />
             </li>
             <li
               data-format="u"
