@@ -8,12 +8,27 @@ import {
   FaAngleDown,
   FaItalic,
 } from "react-icons/fa";
-import { HexColorPicker } from "react-colorful";
 
 export default function TextOption() {
   const { isVisiable, position, selection, textOptRef } = useTextOption();
   const [pickerVisible, setPickerVisible] = useState(false);
-  const [color, setColor] = useState("#f6ff51");
+  const [color, setColor] = useState("#ffef5cff");
+  const colorPallete = [
+    { color: "#ffef5cff", gridArea: "1/5/2/4" },
+    { color: "#69fd82ff", gridArea: "1/4/2/3" },
+    { color: "#2fedffff", gridArea: "1/3/2/2" },
+    { color: "#ae2de5ff", gridArea: "1/2/2/1" },
+    { color: "#2b07f2ff", gridArea: "2/5/3/4" },
+    { color: "#ff0606ff", gridArea: "2/4/3/3" },
+    { color: "#0a0265ff", gridArea: "2/3/3/2" },
+    { color: "#138c92ff", gridArea: "2/2/3/1" },
+    { color: "#0c8631ff", gridArea: "3/5/4/4" },
+    { color: "#4b0787ff", gridArea: "3/4/4/3" },
+    { color: "#9b0303ff", gridArea: "3/3/4/2" },
+    { color: "#a6ae0fff", gridArea: "3/2/4/1" },
+    { color: "#626667ff", gridArea: "4/4/5/3" },
+    { color: "#0b0b0bff", gridArea: "4/3/5/2" },
+  ];
 
   function hexToRgba(hex, alpha = 1) {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -71,7 +86,7 @@ export default function TextOption() {
     const decoration = e.currentTarget.dataset.format;
     const element = document.createElement(decoration);
     if (decoration === "mark") {
-      element.style.background = hexToRgba(color, 0.85);
+      element.style.background = hexToRgba(color, 0.9);
       setPickerVisible(false);
     }
     const range = selection.getRangeAt(0);
@@ -92,6 +107,12 @@ export default function TextOption() {
     range.insertNode(element);
     selection.removeAllRanges();
     selection.addRange(range);
+  };
+
+  const handleColorChoise = (e) => {
+    const color = e.currentTarget.dataset.format;
+    setColor(color);
+    setPickerVisible(false);
   };
 
   return (
@@ -116,7 +137,7 @@ export default function TextOption() {
               />
               <FaHighlighter
                 size={20}
-                color="white"
+                color={color}
                 data-format="mark"
                 onClick={handleTextDecoration}
               />
@@ -146,11 +167,19 @@ export default function TextOption() {
 
           {pickerVisible && (
             <div className={styles.color_picker}>
-              <HexColorPicker
-                color={color}
-                onChange={setColor}
-                onMouseDown={handleMouseDown}
-              />
+              <ul>
+                {colorPallete.map((item, ind) => (
+                  <li
+                    key={ind}
+                    data-format={item.color}
+                    style={{ gridArea: item.gridArea }}
+                    onClick={handleColorChoise}
+                    onMouseDown={handleMouseDown}
+                  >
+                    <div style={{ background: item.color }}></div>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>

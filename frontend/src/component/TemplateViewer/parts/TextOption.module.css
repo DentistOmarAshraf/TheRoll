@@ -33,7 +33,8 @@
   width: 40%;
 }
 
-.option_container li:hover {
+.option_container li:hover,
+.color_picker li:hover {
   cursor: pointer;
   transition: background 0.3s ease, color 0.7s ease;
   background-color: #3169AF;
@@ -41,6 +42,40 @@
   color: #ccc;
 }
 
-.option_container li:active {
+.option_container li:active,
+.color_picker li:active {
   transform: scale(0.95);
+}
+
+.color_picker {
+  height: 130px;
+  width: 140px;
+  /* border: 1px solid red; */
+
+}
+
+.color_picker ul {
+  padding: 0;
+  margin: 0;
+  /* border: 1px solid green; */
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-rows: repeat(3, 25%);
+  background-color: #363f4e;
+  border-radius: 5px;
+}
+
+.color_picker li {
+  list-style: none;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color_picker div {
+  height: 60%;
+  width: 60%;
 }
