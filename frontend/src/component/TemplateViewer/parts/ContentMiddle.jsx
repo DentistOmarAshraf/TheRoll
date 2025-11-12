@@ -14,6 +14,7 @@ export default function ContentMiddle({
     >
       <p
         ref={midParaRef}
+        contentEditable="true"
         dangerouslySetInnerHTML={{ __html: middle }}
         style={{ "--font-size": `${fontSize}cqw`, "--text-align": textAlign }}
       ></p>

@@ -14,6 +14,7 @@ export default function ContentFinal({
     >
       <p
         ref={finParaRef}
+        contentEditable="true"
         dangerouslySetInnerHTML={{ __html: final }}
         style={{ "--font-size": `${fontSize}cqw`, "--text-align": textAlign }}
       ></p>
