@@ -82,11 +82,12 @@ export default function TextOption() {
     return found;
   };
 
-  const handleTextDecoration = (e) => {
+  const handleTextDecoration = (e, passedColor) => {
     const decoration = e.currentTarget.dataset.format;
     const element = document.createElement(decoration);
     if (decoration === "mark") {
-      element.style.background = hexToRgba(color, 0.9);
+      let choise = passedColor || color;
+      element.style.background = hexToRgba(choise, 0.9);
       setPickerVisible(false);
     }
     const range = selection.getRangeAt(0);
@@ -110,9 +111,10 @@ export default function TextOption() {
   };
 
   const handleColorChoise = (e) => {
-    const color = e.currentTarget.dataset.format;
-    setColor(color);
-    setPickerVisible(false);
+    const color = e.currentTarget.dataset.color;
+    setColor((prev) => color);
+    setPickerVisible((prev) => false);
+    handleTextDecoration(e, color);
   };
 
   return (
@@ -171,7 +173,8 @@ export default function TextOption() {
                 {colorPallete.map((item, ind) => (
                   <li
                     key={ind}
-                    data-format={item.color}
+                    data-format="mark"
+                    data-color={item.color}
                     style={{ gridArea: item.gridArea }}
                     onClick={handleColorChoise}
                     onMouseDown={handleMouseDown}
