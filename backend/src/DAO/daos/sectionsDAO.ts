@@ -1,8 +1,8 @@
-import { Sections } from "../../models/schemas/sections.js";
-import type { ISections } from "../../models/interfaces/ISections.js";
-import type { ISectionsDAO } from "../interfaces/ISectionsDAO.js";
+import { Sections } from "../../models/sections.js";
+import type { ISections } from "../../interfaces/sections/ISections.js";
+import type { ISectionsDTO } from "../../interfaces/sections/ISections.js";
 import { Types } from "mongoose";
-import { Templates } from "../../models/schemas/tmeplates.js";
+import { Templates } from "../../models/tmeplates.js";
 import NotFoundError from "../../errors/NotFoundError.js";
 
 class SectionDAO {
@@ -21,7 +21,7 @@ class SectionDAO {
     return listOfSections;
   }
 
-  async createNewSection(name: ISectionsDAO): Promise<ISections | null> {
+  async createNewSection(name: ISectionsDTO): Promise<ISections | null> {
     const newSection = await Sections.create(name);
     return newSection;
   }
@@ -37,7 +37,7 @@ class SectionDAO {
 
   async updateSectionById(
     id: string | Types.ObjectId,
-    newData: ISectionsDAO
+    newData: ISectionsDTO
   ): Promise<ISections | null> {
     const updated = await Sections.findByIdAndUpdate(id, newData, {
       new: true,

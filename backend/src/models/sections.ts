@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import type { Model } from "mongoose";
-import type { ISections } from "../interfaces/ISections.js";
+import type { ISections } from "../interfaces/sections/ISections.js";
 
 const sectionsSchema = new Schema<ISections>({
   name: { type: String, required: true, unique: true },

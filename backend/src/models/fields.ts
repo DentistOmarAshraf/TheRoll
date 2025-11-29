@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import type { Model } from "mongoose";
-import type { ISubField, IField } from "../interfaces/IField.ts";
+import type { IField, ISubField } from "../interfaces/fields/IField.js";
 
 const SubFieldSchema = new Schema<ISubField>({
   name: { type: String, required: true },

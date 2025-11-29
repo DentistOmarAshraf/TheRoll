@@ -1,6 +1,6 @@
-import { Fields } from "../../models/schemas/fields.js";
-import type { IFieldDAO } from "../interfaces/IFieldDAO.js";
-import type { IField } from "../../models/interfaces/IField.js";
+import { Fields } from "../../models/fields.js";
+import type { IFieldDTO } from "../../interfaces/fields/IField.js";
+import type { IField } from "../../interfaces/fields/IField.js";
 import type { Types } from "mongoose";
 import NotFoundError from "../../errors/NotFoundError.js";
 
@@ -24,7 +24,7 @@ class FieldDAO {
     return result;
   }
 
-  async createNewField(field: IFieldDAO): Promise<IField | null> {
+  async createNewField(field: IFieldDTO): Promise<IField | null> {
     const result = await Fields.create(field);
     return result;
   }

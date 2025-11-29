@@ -1,14 +1,14 @@
-import { Templates } from "../../models/schemas/tmeplates.js";
-import { Sections } from "../../models/schemas/sections.js";
-import type { ITemplateDAO } from "../interfaces/ITemplateDAO.js";
-import type { ITemplate } from "../../models/interfaces/ITemplate.js";
+import { Templates } from "../../models/tmeplates.js";
+import { Sections } from "../../models/sections.js";
+import type { ITemplateDTO } from "../../interfaces/templates/ITemplate.js";
+import type { ITemplate } from "../../interfaces/templates/ITemplate.js";
 import type { Types } from "mongoose";
-import { Fields } from "../../models/schemas/fields.js";
+import { Fields } from "../../models/fields.js";
 import NotFoundError from "../../errors/NotFoundError.js";
 import BadRequestError from "../../errors/BadRequestError.js";
 
 class TemplateDAO {
-  async createNewTemplate(template: ITemplateDAO): Promise<ITemplate | null> {
+  async createNewTemplate(template: ITemplateDTO): Promise<ITemplate | null> {
     const sectionIsExist = await Sections.exists({ _id: template.section });
     if (!sectionIsExist) {
       throw new NotFoundError("Section is Not Exist");
@@ -63,7 +63,7 @@ class TemplateDAO {
 
   async updateTemplateById(
     id: string | Types.ObjectId,
-    newData: Partial<ITemplateDAO>
+    newData: Partial<ITemplateDTO>
   ): Promise<ITemplate | null> {
     if (newData.section) {
       const sectionIsExist = await Sections.exists({ _id: newData.section });

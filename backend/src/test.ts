@@ -1,5 +1,5 @@
-import sectionDAO from "./DAO/daos/sectionsDAO.js";
-import templateDAO from "./DAO/daos/templateDAO.js";
+// import sectionDAO from "./DAO/daos/sectionsDAO.js";
+// import templateDAO from "./DAO/daos/templateDAO.js";
 import fieldDAO from "./DAO/daos/fieldsDAO.js";
 import connectToDB from "./db.js";
 

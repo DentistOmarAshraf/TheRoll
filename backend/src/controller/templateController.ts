@@ -1,7 +1,7 @@
 import templateDAO from "../DAO/daos/templateDAO.js";
 import { isValidObjectId, Types } from "mongoose";
 import type { Request, Response } from "express";
-import type { ITemplateDAO } from "../DAO/interfaces/ITemplateDAO.js";
+import type { ITemplateDTO } from "../interfaces/templates/ITemplate.js";
 
 export default class TemplateController {
   static async getTemplateById(req: Request, res: Response) {
@@ -78,7 +78,7 @@ export default class TemplateController {
       return res.status(400).json({ error: "tags must be array of strings" });
     }
 
-    const newData: Partial<ITemplateDAO> = {};
+    const newData: Partial<ITemplateDTO> = {};
     if (section) newData.section = section;
     if (title) newData.title = title;
     if (intro) newData.intro = intro;

@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
 import type { Model } from "mongoose";
-import type { ITemplate } from "../interfaces/ITemplate.js";
+import type { ITemplate } from "../interfaces/templates/ITemplate.js";
 
 const templateSchema = new Schema<ITemplate>({
   section: { type: Types.ObjectId, ref: "Sections", required: true },
