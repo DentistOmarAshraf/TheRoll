@@ -1,7 +1,7 @@
 import type { Response, Request } from "express";
 import { isValidObjectId } from "mongoose";
-import sectionDAO from "../DAO/daos/sectionsDAO.js";
-import templateDAO from "../DAO/daos/templateDAO.js";
+import sectionDAO from "../DAO/sectionsDAO.js";
+import templateDAO from "../DAO/templateDAO.js";
 
 export default class SectionsController {
   static async getAllSections(req: Request, res: Response) {

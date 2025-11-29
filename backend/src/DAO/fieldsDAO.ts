@@ -1,8 +1,8 @@
-import { Fields } from "../../models/fields.js";
-import type { IFieldDTO } from "../../interfaces/fields/IField.js";
-import type { IField } from "../../interfaces/fields/IField.js";
+import { Fields } from "../models/fields.js";
+import type { IFieldDTO } from "../interfaces/fields/IField.js";
+import type { IField } from "../interfaces/fields/IField.js";
 import type { Types } from "mongoose";
-import NotFoundError from "../../errors/NotFoundError.js";
+import NotFoundError from "../errors/NotFoundError.js";
 
 class FieldDAO {
   async countDocument(): Promise<number> {

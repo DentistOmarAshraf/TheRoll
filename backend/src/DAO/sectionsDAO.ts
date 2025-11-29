@@ -1,9 +1,9 @@
-import { Sections } from "../../models/sections.js";
-import type { ISections } from "../../interfaces/sections/ISections.js";
-import type { ISectionsDTO } from "../../interfaces/sections/ISections.js";
+import { Sections } from "../models/sections.js";
+import type { ISections } from "../interfaces/sections/ISections.js";
+import type { ISectionsDTO } from "../interfaces/sections/ISections.js";
 import { Types } from "mongoose";
-import { Templates } from "../../models/tmeplates.js";
-import NotFoundError from "../../errors/NotFoundError.js";
+import { Templates } from "../models/tmeplates.js";
+import NotFoundError from "../errors/NotFoundError.js";
 
 class SectionDAO {
   async countDocument(): Promise<number> {

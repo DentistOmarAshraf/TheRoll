@@ -1,11 +1,11 @@
-import { Templates } from "../../models/tmeplates.js";
-import { Sections } from "../../models/sections.js";
-import type { ITemplateDTO } from "../../interfaces/templates/ITemplate.js";
-import type { ITemplate } from "../../interfaces/templates/ITemplate.js";
+import { Templates } from "../models/tmeplates.js";
+import { Sections } from "../models/sections.js";
+import type { ITemplateDTO } from "../interfaces/templates/ITemplate.js";
+import type { ITemplate } from "../interfaces/templates/ITemplate.js";
 import type { Types } from "mongoose";
-import { Fields } from "../../models/fields.js";
-import NotFoundError from "../../errors/NotFoundError.js";
-import BadRequestError from "../../errors/BadRequestError.js";
+import { Fields } from "../models/fields.js";
+import NotFoundError from "../errors/NotFoundError.js";
+import BadRequestError from "../errors/BadRequestError.js";
 
 class TemplateDAO {
   async createNewTemplate(template: ITemplateDTO): Promise<ITemplate | null> {

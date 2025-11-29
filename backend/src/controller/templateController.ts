@@ -1,4 +1,4 @@
-import templateDAO from "../DAO/daos/templateDAO.js";
+import templateDAO from "../DAO/templateDAO.js";
 import { isValidObjectId, Types } from "mongoose";
 import type { Request, Response } from "express";
 import type { ITemplateDTO } from "../interfaces/templates/ITemplate.js";

@@ -1,4 +1,4 @@
-import fieldDAO from "../DAO/daos/fieldsDAO.js";
+import fieldDAO from "../DAO/fieldsDAO.js";
 import type { Request, Response } from "express";
 
 export default class FieldController {
