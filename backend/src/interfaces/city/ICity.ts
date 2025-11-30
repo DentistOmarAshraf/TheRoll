@@ -8,3 +8,7 @@ export interface ICity {
   neighborhoods: (Types.ObjectId | INeighborhood)[];
   universities: (Types.ObjectId | IUniversity)[];
 }
+
+export interface ICityDTO {
+  name: string,
+}
