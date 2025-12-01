@@ -11,6 +11,7 @@ import type { UpdateQuery } from "mongoose";
 export default class NeighborhoodDAO {
   // Create
   static async create(data: INeighborhoodDTO): Promise<INeighborhood> {
+    if ("_id" in data) delete data._id;
     const neighborhood = await NeighborhoodModel.create(data);
     return neighborhood.toObject();
   }
@@ -44,6 +45,7 @@ export default class NeighborhoodDAO {
     id: string,
     data: Partial<INeighborhoodDTO>
   ): Promise<INeighborhood | null> {
+    if ("_id" in data) delete data._id;
     const result = await NeighborhoodModel.findByIdAndUpdate(id, data, {
       new: true,
     }).exec();

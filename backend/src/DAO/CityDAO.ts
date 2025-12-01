@@ -7,8 +7,9 @@ import type { UpdateQuery } from "mongoose";
  */
 export default class CityDAO {
   // Create
-  static async create(cityData: ICityDTO): Promise<ICity> {
-    const city = await CityModel.create(cityData);
+  static async create(data: ICityDTO): Promise<ICity> {
+    if ("_id" in data) delete data._id;
+    const city = await CityModel.create(data);
     return city.toObject();
   }
 
@@ -33,6 +34,7 @@ export default class CityDAO {
     id: string,
     data: Partial<ICity>
   ): Promise<ICity | null> {
+    if ("_id" in data) delete data._id;
     const updated = await CityModel.findByIdAndUpdate(id, data, {
       new: true,
     }).exec();
