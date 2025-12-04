@@ -1,6 +1,9 @@
-import type { Model, UpdateQuery } from "mongoose";
-import type { ICity, ICityDTO } from "../interfaces/city/ICity.js";
-import { CityModel } from "../models/city.js";
+import {
+  isValidObjectId,
+  type FilterQuery,
+  type Model,
+  type UpdateQuery,
+} from "mongoose";
 
 export default class BaseDAO<T, DTO, UpdateDTO> {
   protected model: Model<T>;
@@ -26,6 +29,7 @@ export default class BaseDAO<T, DTO, UpdateDTO> {
 
   // Read
   async getById(id: string): Promise<T | null> {
+    if (!isValidObjectId(id)) return null;
     const result = await this.model.findById(id).lean().exec();
     return result as T;
   }
@@ -41,13 +45,13 @@ export default class BaseDAO<T, DTO, UpdateDTO> {
     return result as T[];
   }
 
-  async getOneByQuery(obj: Partial<T>): Promise<T | null> {
+  async getOneByQuery(obj: FilterQuery<T>): Promise<T | null> {
     const data = await this.model.findOne(obj).lean().exec();
     return data ? (data as T) : null;
   }
 
   async getListByQuery(
-    obj: Partial<T>,
+    obj: FilterQuery<T>,
     page: number,
     limit: number
   ): Promise<T[]> {
@@ -63,6 +67,7 @@ export default class BaseDAO<T, DTO, UpdateDTO> {
 
   // Update
   async updateById(id: string, obj: UpdateDTO): Promise<T | null> {
+    if (!isValidObjectId(id)) return null;
     const data = this.sanitizeDTO(obj);
     const result = await this.model.findByIdAndUpdate(id, data as Partial<T>, {
       new: true,
@@ -72,15 +77,17 @@ export default class BaseDAO<T, DTO, UpdateDTO> {
   }
 
   async atomicUpdate(id: string, obj: UpdateQuery<T>): Promise<T | null> {
+    if (!isValidObjectId(id)) return null;
     const result = await this.model.findByIdAndUpdate(id, obj).exec();
     return result ? result.toObject() : null;
   }
 
   // Delete
   async deleteById(id: string): Promise<boolean> {
+    if (!isValidObjectId(id)) return false;
     const result = await this.model.findByIdAndDelete(id);
     return !!result;
   }
 }
 
-export const CityDAO = new BaseDAO<ICity, ICityDTO, ICityDTO>(CityModel);
+// city : "6931c1a59f439625e65e7d95"
