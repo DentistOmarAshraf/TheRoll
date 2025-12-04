@@ -6,6 +6,7 @@ const citySchema = new Schema<ICity>(
     name: {
       type: String,
       required: [true, "City Name is Requierd"],
+      unique: [true, "City Name must be unique"],
     },
     neighborhoods: [
       { type: Types.ObjectId, ref: "Neighborhood", select: false },

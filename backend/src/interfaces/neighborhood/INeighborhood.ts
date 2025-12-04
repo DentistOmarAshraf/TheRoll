@@ -13,3 +13,8 @@ export interface INeighborhoodDTO {
   name: string;
   policeName: string;
 }
+
+export interface INeighborhoodUpdateDTO {
+  name?: string;
+  policeName: string;
+}

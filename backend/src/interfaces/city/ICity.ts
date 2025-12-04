@@ -12,3 +12,7 @@ export interface ICity extends IBase {
 export interface ICityDTO {
   name: string;
 }
+
+export interface ICityUpdateDTO {
+  name: string;
+}

@@ -1,12 +1,8 @@
 import connectToDB from "./db.js";
-import CityDAO from "./DAO/CityDAO.js";
+import { CityDAO } from "./DAO/BaseDAO.js";
 
 (async () => {
-  try {
-    await connectToDB();
-    const x = await CityDAO.getById("692d6840ce1a0e4b5245b6d6");
-    console.log(typeof x?.createdAt);
-  } catch (e) {
-    console.log(e);
-  }
+  await connectToDB();
+  const x = await CityDAO.updateById("692f1eacd2cb5ba75b71d164", {name: "Monera"});
+  console.log(x);
 })();
