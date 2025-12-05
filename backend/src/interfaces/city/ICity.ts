@@ -16,3 +16,5 @@ export interface ICityDTO {
 export interface ICityUpdateDTO {
   name: string;
 }
+
+export type ICityRelation = "neighborhoods" | "universities";

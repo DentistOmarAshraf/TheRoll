@@ -3,9 +3,16 @@ import {
   type FilterQuery,
   type Model,
   type UpdateQuery,
+  type Query,
+  type PopulateOptions,
 } from "mongoose";
 
-export default class BaseDAO<T, DTO, UpdateDTO> {
+export default class BaseDAO<
+  T,
+  DTO,
+  UpdateDTO,
+  relations extends PopulateOptions | string = string
+> {
   protected model: Model<T>;
   constructor(model: Model<T>) {
     this.model = model;
@@ -32,6 +39,19 @@ export default class BaseDAO<T, DTO, UpdateDTO> {
     if (!isValidObjectId(id)) return null;
     const result = await this.model.findById(id).lean().exec();
     return result as T;
+  }
+
+  async getByIdWithOption(
+    id: string,
+    populate?: relations | relations[]
+  ): Promise<T | null> {
+    if (!isValidObjectId(id)) return null;
+
+    let query: Query<T | null, T> = this.model.findById(id);
+    if (populate) query.populate(populate as any);
+
+    const result = await query.lean().exec();
+    return result as unknown as T | null;
   }
 
   async getList(page: number, limit: number): Promise<T[]> {

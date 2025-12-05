@@ -20,8 +20,12 @@ import type {
   ILawyerUserDTO,
   IStudentUserUpdateDTO,
   ILawyerUserUpdateDTO,
+  IUserRelation,
+  IStudentUserRelation,
+  ILawyerUserRelation,
 } from "../interfaces/user/IUser.js";
 import type {
+  ICityRelation,
   ICity,
   ICityDTO,
   ICityUpdateDTO,
@@ -30,39 +34,53 @@ import type {
   INeighborhood,
   INeighborhoodDTO,
   INeighborhoodUpdateDTO,
+  INeighborhoodRelation,
 } from "../interfaces/neighborhood/INeighborhood.js";
 import type {
   IUniversity,
   IUniversityDTO,
+  IUniversityRelation,
 } from "../interfaces/university/IUniversity.js";
 import type { IUniversityUpdateDTO } from "../interfaces/university/IUniversity.js";
 
-export const UserDAO = new BaseDAO<IUser, IBaseUserDTO, IBaseUserUpdateDTO>(
-  UserModel
-);
+export const UserDAO = new BaseDAO<
+  IUser,
+  IBaseUserDTO,
+  IBaseUserUpdateDTO,
+  IUserRelation
+>(UserModel);
 
 export const UserStudentDAO = new BaseDAO<
   IStudentUser,
   IStudentUserDTO,
-  IStudentUserUpdateDTO
+  IStudentUserUpdateDTO,
+  IStudentUserRelation
 >(UserStudentModel);
 
 export const UserLawyerDAO = new BaseDAO<
   ILawyerUser,
   ILawyerUserDTO,
-  ILawyerUserUpdateDTO
+  ILawyerUserUpdateDTO,
+  ILawyerUserRelation
 >(UserLawyerModel);
 
-export const CityDAO = new BaseDAO<ICity, ICityDTO, ICityUpdateDTO>(CityModel);
+export const CityDAO = new BaseDAO<
+  ICity,
+  ICityDTO,
+  ICityUpdateDTO,
+  ICityRelation
+>(CityModel);
 
 export const NeighborhoodDAO = new BaseDAO<
   INeighborhood,
   INeighborhoodDTO,
-  INeighborhoodUpdateDTO
+  INeighborhoodUpdateDTO,
+  INeighborhoodRelation
 >(NeighborhoodModel);
 
 export const UniversityDAO = new BaseDAO<
   IUniversity,
   IUniversityDTO,
-  IUniversityUpdateDTO
+  IUniversityUpdateDTO,
+  IUniversityRelation
 >(UniversityModel);

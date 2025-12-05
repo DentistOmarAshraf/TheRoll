@@ -15,3 +15,5 @@ export interface IUniversityDTO {
 export interface IUniversityUpdateDTO {
   name?: string;
 }
+
+export type IUniversityRelation = "city"

@@ -68,3 +68,9 @@ export interface ILawyerUserUpdateDTO extends IBaseUserUpdateDTO {
 }
 
 export type IUser = IStudentUser | ILawyerUser;
+
+export type IUserRelation = "city" | "neighborhood" | "offices";
+
+export type ILawyerUserRelation = IUserRelation;
+
+export type IStudentUserRelation = IUserRelation | "university";

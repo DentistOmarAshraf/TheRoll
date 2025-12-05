@@ -18,3 +18,5 @@ export interface INeighborhoodUpdateDTO {
   name?: string;
   policeName: string;
 }
+
+export type INeighborhoodRelation = "city"
