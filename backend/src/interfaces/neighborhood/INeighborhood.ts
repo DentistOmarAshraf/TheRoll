@@ -9,14 +9,15 @@ export interface INeighborhood extends IBase {
 }
 
 export interface INeighborhoodDTO {
-  city: Types.ObjectId | ICity;
+  city: string | Types.ObjectId;
   name: string;
   policeName: string;
 }
 
 export interface INeighborhoodUpdateDTO {
+  _id: string;
   name?: string;
-  policeName: string;
+  policeName?: string;
 }
 
-export type INeighborhoodRelation = "city"
+export type INeighborhoodRelation = "city";

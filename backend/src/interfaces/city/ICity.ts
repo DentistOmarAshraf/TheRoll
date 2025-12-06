@@ -14,6 +14,7 @@ export interface ICityDTO {
 }
 
 export interface ICityUpdateDTO {
+  _id: string;
   name: string;
 }
 

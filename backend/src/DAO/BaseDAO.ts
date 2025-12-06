@@ -1,10 +1,13 @@
 import {
   isValidObjectId,
+  type ClientSession,
   type FilterQuery,
   type Model,
   type UpdateQuery,
   type Query,
   type PopulateOptions,
+  type HydratedDocument,
+  Types,
 } from "mongoose";
 
 export default class BaseDAO<
@@ -29,9 +32,14 @@ export default class BaseDAO<
   }
 
   // Create
-  async create(object: DTO): Promise<T> {
-    const result = await this.model.create(object);
-    return result.toObject();
+  async create(object: DTO, session?: ClientSession): Promise<T | null> {
+    const sanitizied = this.sanitizeDTO(object);
+    const result = await this.model.create([sanitizied], {
+      session: session || null,
+    });
+    const toRet = result[0];
+    if (!toRet) return null;
+    return (toRet as HydratedDocument<T>).toObject();
   }
 
   // Read
@@ -86,28 +94,41 @@ export default class BaseDAO<
   }
 
   // Update
-  async updateById(id: string, obj: UpdateDTO): Promise<T | null> {
+  async updateById(
+    id: string,
+    obj: UpdateDTO,
+    session?: ClientSession
+  ): Promise<T | null> {
     if (!isValidObjectId(id)) return null;
     const data = this.sanitizeDTO(obj);
     const result = await this.model.findByIdAndUpdate(id, data as Partial<T>, {
       new: true,
       runValidators: true,
+      session: session || null,
     });
     return result as T;
   }
 
-  async atomicUpdate(id: string, obj: UpdateQuery<T>): Promise<T | null> {
+  async atomicUpdate(
+    id: string | Types.ObjectId,
+    obj: UpdateQuery<T>,
+    session?: ClientSession
+  ): Promise<T | null> {
     if (!isValidObjectId(id)) return null;
-    const result = await this.model.findByIdAndUpdate(id, obj).exec();
+    const result = await this.model
+      .findByIdAndUpdate(id, obj, {
+        session: session || null,
+      })
+      .exec();
     return result ? result.toObject() : null;
   }
 
   // Delete
-  async deleteById(id: string): Promise<boolean> {
+  async deleteById(id: string, session?: ClientSession): Promise<boolean> {
     if (!isValidObjectId(id)) return false;
-    const result = await this.model.findByIdAndDelete(id);
+    const result = await this.model.findByIdAndDelete(id, {
+      session: session || null,
+    });
     return !!result;
   }
 }
-
-// city : "6931c1a59f439625e65e7d95"
