@@ -4,4 +4,9 @@ const redisClient = Redis.createClient(); // Production should add {uri:} in fir
 
 redisClient.on("error", (error) => console.log(error));
 
+process.on("SIGTERM", async () => {
+  await redisClient.quit();
+  process.exit(0);
+});
+
 export default redisClient;
