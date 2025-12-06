@@ -8,12 +8,13 @@ export interface IUniversity extends IBase {
 }
 
 export interface IUniversityDTO {
-  city: Types.ObjectId | ICity;
+  city: string | Types.ObjectId | ICity;
   name: string;
 }
 
 export interface IUniversityUpdateDTO {
+  _id: string;
   name?: string;
 }
 
-export type IUniversityRelation = "city"
+export type IUniversityRelation = "city";

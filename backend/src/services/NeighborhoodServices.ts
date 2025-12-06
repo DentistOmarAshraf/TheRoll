@@ -29,13 +29,16 @@ export default class NeighborhoodServices {
         },
         session
       );
-      await CityDAO.atomicUpdate(
+      const updated = await CityDAO.atomicUpdate(
         city.toString(),
         {
           $push: { neighborhoods: neighborhood },
         },
         session
       );
+      if (!updated) {
+        throw new BadRequestError("City is not updated");
+      }
       await session.commitTransaction();
       return neighborhood ? neighborhood : null;
     } catch (e) {
@@ -89,7 +92,7 @@ export default class NeighborhoodServices {
     try {
       await session.startTransaction();
       const deleted = await NeighborhoodDAO.deleteById(neId, session);
-      if (!deleted) throw new BadRequestError("Transaction error");
+      if (!deleted) throw new BadRequestError("Neighborhood not found");
       await CityDAO.atomicUpdate(
         neighborhood.city._id,
         {

@@ -7,6 +7,7 @@ const universitySchema = new Schema<IUniversity>(
     name: {
       type: String,
       required: [true, "University Name is required"],
+      unique: [true, "University Name is unique"],
     },
     city: {
       type: Types.ObjectId,

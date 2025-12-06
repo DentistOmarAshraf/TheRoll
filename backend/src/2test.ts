@@ -1,5 +1,7 @@
 import connectToDB from "./db.js";
 import NeighborhoodServices from "./services/NeighborhoodServices.js";
+import CityServices from "./services/CityServices.js";
+import UniversityServices from "./services/UniversityServices.js";
 // import { NeighborhoodDAO } from "./DAO/ModelDAO.js";
 
 (async () => {
@@ -14,12 +16,8 @@ import NeighborhoodServices from "./services/NeighborhoodServices.js";
   //   console.log(e);
   // }
   // process.exit(1);
-
-  // @ts-ignore
-  const ne = await NeighborhoodServices.updateNeighborhood({
-    _id: "693458b4f74fae29dca1cff7",
-    policeName: "e"
-  });
-  console.log(ne);
-  process.exit();
+  const univ = await UniversityServices.deleteUniversity(
+    "6934750de1c8c725b2f17cba"
+  );
+  console.log(univ);
 })();

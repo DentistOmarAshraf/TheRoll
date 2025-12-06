@@ -117,6 +117,7 @@ export default class BaseDAO<
     if (!isValidObjectId(id)) return null;
     const result = await this.model
       .findByIdAndUpdate(id, obj, {
+        new: true,
         session: session || null,
       })
       .exec();
