@@ -34,18 +34,20 @@ export interface IBaseUserDTO {
   email: string;
   password: string;
   phone: string;
-  city: Types.ObjectId | ICity;
-  neighborhood: Types.ObjectId | INeighborhood;
+  city: string | Types.ObjectId;
+  neighborhood: string | Types.ObjectId;
   offices?: Types.ObjectId[];
 }
 
 export interface IStudentUserDTO extends IBaseUserDTO {
-  university: Types.ObjectId | IUniversity;
+  type: "Student";
+  university: string | Types.ObjectId;
   grade: string;
   syndicateId?: never;
 }
 
 export interface ILawyerUserDTO extends IBaseUserDTO {
+  type: "Lawyer";
   syndicateId: string;
   university?: never;
   grade?: never;

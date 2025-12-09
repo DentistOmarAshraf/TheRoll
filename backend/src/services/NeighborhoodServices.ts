@@ -100,6 +100,7 @@ export default class NeighborhoodServices {
         },
         session
       );
+      return deleted;
       await session.commitTransaction();
     } catch (e) {
       await session.abortTransaction();

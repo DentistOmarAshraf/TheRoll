@@ -8,6 +8,12 @@ import sectionsRoutes from "./routes/sectionsRoutes.js";
 import templateRoutes from "./routes/templateRoutes.js";
 import gloablErrorHandler from "./middlewares/GloablErrorHandler.js";
 import notFoundHandler from "./middlewares/NotFoundHandler.js";
+import type { Request, Response } from "express";
+import ServerError from "./errors/ServerError.js";
+import {
+  SendConfirmEmail,
+  SendForgetPassEmail,
+} from "./workers/email/EmailProducer.js";
 
 // Setup Express server
 const app = express();
@@ -32,30 +38,30 @@ templateRoutes(app);
 // Testing Email concept here
 // This will be in controller
 
-// app.get("/test", async (req: Request, res: Response) => {
-//   try {
-//     await SendConfirmEmail({
-//       userName: "omar ashraf",
-//       userEmail: "omar_ashraf@msn.com",
-//       token: "1234",
-//     });
-//   } catch (e) {
-//     throw new ServerError(`server error: ${e}`);
-//   }
-//   return res.status(200).json({ hi: "there" });
-// });
+app.get("/test", async (req: Request, res: Response) => {
+  try {
+    await SendConfirmEmail({
+      userName: "omar ashraf",
+      userEmail: "omar_ashraf@msn.com",
+      token: "1234",
+    });
+  } catch (e) {
+    throw new ServerError(`server error: ${e}`);
+  }
+  return res.status(200).json({ hi: "there" });
+});
 
-// app.get("/forget", async (req: Request, res: Response) => {
-//   try {
-//     await SendForgetPassEmail({
-//       userEmail: "omar_ashraf@live.com",
-//       token: "1234",
-//     });
-//   } catch (e) {
-//     throw new ServerError(`server error: ${e}`);
-//   }
-//   return res.status(200).json({ hi: "there 2" });
-// });
+app.get("/forget", async (req: Request, res: Response) => {
+  try {
+    await SendForgetPassEmail({
+      userEmail: "omar_ashraf@live.com",
+      token: "1234",
+    });
+  } catch (e) {
+    throw new ServerError(`server error: ${e}`);
+  }
+  return res.status(200).json({ hi: "there 2" });
+});
 
 // Not Found method
 app.use(notFoundHandler);
