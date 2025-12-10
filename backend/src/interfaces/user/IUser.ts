@@ -30,6 +30,7 @@ export interface ILawyerUser extends IBaseUser {
 }
 
 export interface IBaseUserDTO {
+  type: "Student" | "Lawyer"
   fullName: string;
   email: string;
   password: string;
@@ -40,30 +41,30 @@ export interface IBaseUserDTO {
 }
 
 export interface IStudentUserDTO extends IBaseUserDTO {
-  type: "Student";
   university: string | Types.ObjectId;
   grade: string;
   syndicateId?: never;
 }
 
 export interface ILawyerUserDTO extends IBaseUserDTO {
-  type: "Lawyer";
   syndicateId: string;
   university?: never;
   grade?: never;
 }
 
 export type IBaseUserUpdateDTO = Partial<
-  Omit<IBaseUserDTO, "email" | "password">
+  Omit<IBaseUserDTO, "email" > & { _id: string }
 >;
 
 export interface IStudentUserUpdateDTO extends IBaseUserUpdateDTO {
+  type: "Student";
   university?: Types.ObjectId | IUniversity; // Optional fields
   grade?: string;
   syndicateId?: undefined;
 }
 
 export interface ILawyerUserUpdateDTO extends IBaseUserUpdateDTO {
+  type: "Lawyer";
   syndicateId?: string;
   university?: undefined;
   grade?: undefined;

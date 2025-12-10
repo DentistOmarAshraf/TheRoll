@@ -1,6 +1,6 @@
 import redisClient from "../cashClient.js";
 
-export default class CashServices {
+export default class CasheServices {
   static async setData(
     type: string,
     key: string,
@@ -16,6 +16,10 @@ export default class CashServices {
       dt = await redisClient.set(`${type}:${key}`, value);
     }
     return dt;
+  }
+
+  static async deleteKey(type: string, key: string) {
+    return await redisClient.del(`${type}:${key}`);
   }
 
   static async getData(type: string, key: string) {
