@@ -1,0 +1,15 @@
+.input_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_container label {
+  display: flex;
+  justify-content: space-between;
+}
+
+:global(.fa-eye),
+:global(.fa-eye-slash) {
+  color: red;
+  cursor: pointer;
+}
