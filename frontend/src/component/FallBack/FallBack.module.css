@@ -1,0 +1,25 @@
+.fadeInFallback {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.7s forwards;
+}
+
+.fadeInIcon {
+  width: 80%;
+  height: auto;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

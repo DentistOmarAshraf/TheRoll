@@ -99,3 +99,20 @@
   width: 60px;
   height: 35px;
 }
+
+.sign_up__button--student,
+.sign_up__button--lawyer {
+  width: 35%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 20px;
+}
+
+/* .sign_up__button--back {} */
+
+.sign_up__button--back.hidden {
+  display: none;
+}
