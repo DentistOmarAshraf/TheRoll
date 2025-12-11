@@ -2,8 +2,8 @@ import styles from "./Inputs.module.css";
 import { useSignUp } from "../context/SignUpContext";
 import { useState } from "react";
 
-export default function LawyerInputs({ className = "", ...rest }) {
-  const { lawyer, setLawyer } = useSignUp();
+export default function StudentInputs({ className = "", ...rest }) {
+  const { student, setStudent } = useSignUp();
   const [passVisibility, setPassVisibility] = useState(true);
   const [city, setCity] = useState([
     { name: "القاهره", id: "1" },
@@ -13,6 +13,12 @@ export default function LawyerInputs({ className = "", ...rest }) {
     { id: "01", name: "المقطم" },
     { id: "02", name: "السيده عائشه" },
   ]);
+
+  const [university, setUniversity] = useState([
+    { id: "11", name: "جامعه القاهره" },
+    { id: "22", name: "جامعه الاسكندريه" },
+  ]);
+
   const classes = className
     .split(" ")
     .map((c) => styles[c] || "")
@@ -20,8 +26,8 @@ export default function LawyerInputs({ className = "", ...rest }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(lawyer);
-    setLawyer((prev) => ({ ...lawyer, [name]: value }));
+    console.log(student);
+    setStudent((prev) => ({ ...student, [name]: value }));
   };
 
   const handlePassVisibility = (e) => {
@@ -33,7 +39,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
         الاسم
         <input
           name="fullName"
-          value={lawyer.fullName}
+          value={student.fullName}
           onChange={handleChange}
           type="text"
         />
@@ -42,7 +48,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
         البريد الالكتروني
         <input
           name="email"
-          value={lawyer.email}
+          value={student.email}
           onChange={handleChange}
           type="email"
         />
@@ -52,7 +58,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
         <div>
           <input
             name="password"
-            value={lawyer.password}
+            value={student.password}
             onChange={handleChange}
             type={passVisibility ? "password" : "text"}
           />
@@ -63,7 +69,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
         <div>
           <input
             name="confirmPass"
-            value={lawyer.confirmPass}
+            value={student.confirmPass}
             onChange={handleChange}
             type={passVisibility ? "password" : "text"}
           />
@@ -78,15 +84,15 @@ export default function LawyerInputs({ className = "", ...rest }) {
         موبايل
         <div>
           <input
-            className={styles.phone_input}
+            className={student.phone_input}
             name="phone"
-            value={lawyer.phone}
+            value={student.phone}
             onChange={handleChange}
             type="text"
           />
           <select
             name="countryCode"
-            defaultValue={lawyer.countryCode}
+            defaultValue={student.countryCode}
             onChange={handleChange}
           >
             <option value="+2">2+</option>
@@ -95,8 +101,8 @@ export default function LawyerInputs({ className = "", ...rest }) {
       </label>
       <label>
         المحافظه
-        <select name="city" value={lawyer.city} onChange={handleChange}>
-          {!lawyer.city && (
+        <select name="city" value={student.city} onChange={handleChange}>
+          {!student.city && (
             <option value="" disabled>
               اختر المحافظه
             </option>
@@ -112,10 +118,10 @@ export default function LawyerInputs({ className = "", ...rest }) {
         حي / قسم
         <select
           name="neighborhood"
-          value={lawyer.neighborhood}
+          value={student.neighborhood}
           onChange={handleChange}
         >
-          {!lawyer.neighborhood && (
+          {!student.neighborhood && (
             <option value="" disabled>
               اختر حي / قسم
             </option>
@@ -128,13 +134,33 @@ export default function LawyerInputs({ className = "", ...rest }) {
         </select>
       </label>
       <label>
-        رقم كارنيه النقابه
-        <input
-          name="syndicateId"
-          value={lawyer.syndicateId}
+        الجامعه
+        <select
+          name="university"
+          value={student.university}
           onChange={handleChange}
-          type="text"
-        />
+        >
+          {!student.university && (
+            <option value="" disabled>
+              اختر الجامعه
+            </option>
+          )}
+          {university.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        السنه
+        <select name="grade" value={student.grade} onChange={handleChange}>
+          {[1, 2, 3, 4].map((grade) => (
+            <option key={grade} value={grade}>
+              {grade}
+            </option>
+          ))}
+        </select>
       </label>
     </div>
   );

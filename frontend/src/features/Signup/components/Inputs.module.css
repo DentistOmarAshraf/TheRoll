@@ -13,3 +13,7 @@
   color: red;
   cursor: pointer;
 }
+
+.phone_input {
+  direction: ltr;
+}
