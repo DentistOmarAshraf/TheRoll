@@ -1,5 +1,6 @@
 body {
-    direction: rtl;
+  direction: rtl;
+  background-color: #0E2746;
 }
 
 #root {

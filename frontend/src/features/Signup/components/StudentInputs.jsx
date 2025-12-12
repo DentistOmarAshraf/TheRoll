@@ -35,8 +35,9 @@ export default function StudentInputs({ className = "", ...rest }) {
   };
   return (
     <div className={`${styles.input_container} ${classes}`}>
+      <h1>تسجيل حساب طالب</h1>
       <label>
-        الاسم
+        <span className={styles.labelText}>الاسم</span>
         <input
           name="fullName"
           value={student.fullName}
@@ -45,7 +46,7 @@ export default function StudentInputs({ className = "", ...rest }) {
         />
       </label>
       <label>
-        البريد الالكتروني
+        <span className={styles.labelText}>البريد الالكتروني</span>
         <input
           name="email"
           value={student.email}
@@ -54,20 +55,19 @@ export default function StudentInputs({ className = "", ...rest }) {
         />
       </label>
       <label>
-        كلمه المرور
-        <div>
-          <input
-            name="password"
-            value={student.password}
-            onChange={handleChange}
-            type={passVisibility ? "password" : "text"}
-          />
-        </div>
+        <span className={styles.labelText}>كلمه المرور</span>
+        <input
+          name="password"
+          value={student.password}
+          onChange={handleChange}
+          type={passVisibility ? "password" : "text"}
+        />
       </label>
       <label>
-        تأكيد كلمه المرور
+        <span className={styles.labelText}>تأكيد كلمه المرور</span>
         <div>
           <input
+            className={styles.custom_input}
             name="confirmPass"
             value={student.confirmPass}
             onChange={handleChange}
@@ -81,16 +81,17 @@ export default function StudentInputs({ className = "", ...rest }) {
         </div>
       </label>
       <label>
-        موبايل
+        <span className={styles.labelText}>موبايل</span>
         <div>
           <input
-            className={student.phone_input}
+            className={`${styles.custom_input} ${styles.phone_input}`}
             name="phone"
             value={student.phone}
             onChange={handleChange}
             type="text"
           />
           <select
+            className={styles.phone_option}
             name="countryCode"
             defaultValue={student.countryCode}
             onChange={handleChange}
@@ -100,7 +101,7 @@ export default function StudentInputs({ className = "", ...rest }) {
         </div>
       </label>
       <label>
-        المحافظه
+        <span className={styles.labelText}>المحافظه</span>
         <select name="city" value={student.city} onChange={handleChange}>
           {!student.city && (
             <option value="" disabled>
@@ -115,7 +116,7 @@ export default function StudentInputs({ className = "", ...rest }) {
         </select>
       </label>
       <label>
-        حي / قسم
+        <span className={styles.labelText}>الحي</span>
         <select
           name="neighborhood"
           value={student.neighborhood}
@@ -134,7 +135,7 @@ export default function StudentInputs({ className = "", ...rest }) {
         </select>
       </label>
       <label>
-        الجامعه
+        <span className={styles.labelText}>الجامعه</span>
         <select
           name="university"
           value={student.university}
@@ -153,7 +154,7 @@ export default function StudentInputs({ className = "", ...rest }) {
         </select>
       </label>
       <label>
-        السنه
+        <span className={styles.labelText}>السنه</span>
         <select name="grade" value={student.grade} onChange={handleChange}>
           {[1, 2, 3, 4].map((grade) => (
             <option key={grade} value={grade}>
