@@ -1,6 +1,7 @@
 import styles from "./Inputs.module.css";
 import { useSignUp } from "../context/SignUpContext";
 import { useState } from "react";
+import Select from "react-select";
 
 export default function StudentInputs({ className = "", ...rest }) {
   const { student, setStudent } = useSignUp();
@@ -65,7 +66,7 @@ export default function StudentInputs({ className = "", ...rest }) {
       </label>
       <label>
         <span className={styles.labelText}>تأكيد كلمه المرور</span>
-        <div>
+        <div className={styles.field_custom_container}>
           <input
             className={styles.custom_input}
             name="confirmPass"
@@ -82,86 +83,110 @@ export default function StudentInputs({ className = "", ...rest }) {
       </label>
       <label>
         <span className={styles.labelText}>موبايل</span>
-        <div>
-          <input
-            className={`${styles.custom_input} ${styles.phone_input}`}
-            name="phone"
-            value={student.phone}
-            onChange={handleChange}
-            type="text"
-          />
-          <select
-            className={styles.phone_option}
-            name="countryCode"
-            defaultValue={student.countryCode}
-            onChange={handleChange}
-          >
-            <option value="+2">2+</option>
-          </select>
-        </div>
+        <input
+          className={`${styles.phone_input}`}
+          name="phone"
+          value={student.phone}
+          onChange={handleChange}
+          type="tel"
+        />
       </label>
       <label>
         <span className={styles.labelText}>المحافظه</span>
-        <select name="city" value={student.city} onChange={handleChange}>
-          {!student.city && (
-            <option value="" disabled>
-              اختر المحافظه
-            </option>
-          )}
-          {city.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+        <Select
+          placeholder="اختر المحافظه"
+          options={city.map((item) => ({ value: item.id, label: item.name }))}
+          onChange={(opt) => {
+            setStudent((prev) => ({ ...prev, city: opt.value }));
+          }}
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              borderColor: state.isFocused ? "#B0B3B7" : "#9ca1a8ff",
+              "&:hover": {
+                borderColor: "#B0B3B7",
+              },
+              boxShadow: state.isFocused ? "0 0 0 1px #B0B3B7" : base.boxShadow,
+            }),
+          }}
+          className="input_select"
+          classNamePrefix="input_select"
+        />
       </label>
       <label>
         <span className={styles.labelText}>الحي</span>
-        <select
-          name="neighborhood"
-          value={student.neighborhood}
-          onChange={handleChange}
-        >
-          {!student.neighborhood && (
-            <option value="" disabled>
-              اختر حي / قسم
-            </option>
-          )}
-          {neighborhood.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+        <Select
+          placeholder="اختر الحي/القسم"
+          options={neighborhood.map((item) => ({
+            value: item.id,
+            label: item.name,
+          }))}
+          onChange={(opt) => {
+            setStudent((prev) => ({ ...prev, city: opt.value }));
+          }}
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              borderColor: state.isFocused ? "#B0B3B7" : "#9ca1a8ff",
+              "&:hover": {
+                borderColor: "#B0B3B7",
+              },
+              boxShadow: state.isFocused ? "0 0 0 1px #B0B3B7" : base.boxShadow,
+            }),
+          }}
+          className="input_select"
+          classNamePrefix="input_select"
+        />
       </label>
       <label>
         <span className={styles.labelText}>الجامعه</span>
-        <select
-          name="university"
-          value={student.university}
-          onChange={handleChange}
-        >
-          {!student.university && (
-            <option value="" disabled>
-              اختر الجامعه
-            </option>
-          )}
-          {university.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+        <Select
+          placeholder="اختر الجامعه"
+          options={university.map((item) => ({
+            value: item.id,
+            label: item.name,
+          }))}
+          onChange={(opt) => {
+            setStudent((prev) => ({ ...prev, city: opt.value }));
+          }}
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              borderColor: state.isFocused ? "#B0B3B7" : "#9ca1a8ff",
+              "&:hover": {
+                borderColor: "#B0B3B7",
+              },
+              boxShadow: state.isFocused ? "0 0 0 1px #B0B3B7" : base.boxShadow,
+            }),
+          }}
+          className="input_select"
+          classNamePrefix="input_select"
+        />
       </label>
       <label>
         <span className={styles.labelText}>السنه</span>
-        <select name="grade" value={student.grade} onChange={handleChange}>
-          {[1, 2, 3, 4].map((grade) => (
-            <option key={grade} value={grade}>
-              {grade}
-            </option>
-          ))}
-        </select>
+        <Select
+          placeholder="اختر العام الدراسي"
+          options={[{ id: 1, name: "الأول" }].map((item) => ({
+            value: item.id,
+            label: item.name,
+          }))}
+          onChange={(opt) => {
+            setStudent((prev) => ({ ...prev, city: opt.value }));
+          }}
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              borderColor: state.isFocused ? "#B0B3B7" : "#9ca1a8ff",
+              "&:hover": {
+                borderColor: "#B0B3B7",
+              },
+              boxShadow: state.isFocused ? "0 0 0 1px #B0B3B7" : base.boxShadow,
+            }),
+          }}
+          className="input_select"
+          classNamePrefix="input_select"
+        />
       </label>
     </div>
   );

@@ -1,6 +1,7 @@
 import styles from "./Inputs.module.css";
 import { useSignUp } from "../context/SignUpContext";
 import { useState } from "react";
+import Select from "react-select";
 
 export default function LawyerInputs({ className = "", ...rest }) {
   const { lawyer, setLawyer } = useSignUp();
@@ -29,8 +30,9 @@ export default function LawyerInputs({ className = "", ...rest }) {
   };
   return (
     <div className={`${styles.input_container} ${classes}`}>
+      <h1>تسجيل حساب محامي</h1>
       <label>
-        الاسم
+        <span className={styles.labelText}>الاسم</span>
         <input
           name="fullName"
           value={lawyer.fullName}
@@ -39,7 +41,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
         />
       </label>
       <label>
-        البريد الالكتروني
+        <span className={styles.labelText}>البريد الالكتروني</span>
         <input
           name="email"
           value={lawyer.email}
@@ -48,20 +50,19 @@ export default function LawyerInputs({ className = "", ...rest }) {
         />
       </label>
       <label>
-        كلمه المرور
-        <div>
-          <input
-            name="password"
-            value={lawyer.password}
-            onChange={handleChange}
-            type={passVisibility ? "password" : "text"}
-          />
-        </div>
+        <span className={styles.labelText}>كلمه المرور</span>
+        <input
+          name="password"
+          value={lawyer.password}
+          onChange={handleChange}
+          type={passVisibility ? "password" : "text"}
+        />
       </label>
       <label>
-        تأكيد كلمه المرور
-        <div>
+        <span className={styles.labelText}>تأكيد كلمه المرور</span>
+        <div className={styles.field_custom_container}>
           <input
+            className={styles.custom_input}
             name="confirmPass"
             value={lawyer.confirmPass}
             onChange={handleChange}
@@ -75,60 +76,64 @@ export default function LawyerInputs({ className = "", ...rest }) {
         </div>
       </label>
       <label>
-        موبايل
-        <div>
-          <input
-            className={styles.phone_input}
-            name="phone"
-            value={lawyer.phone}
-            onChange={handleChange}
-            type="text"
-          />
-          <select
-            name="countryCode"
-            defaultValue={lawyer.countryCode}
-            onChange={handleChange}
-          >
-            <option value="+2">2+</option>
-          </select>
-        </div>
-      </label>
-      <label>
-        المحافظه
-        <select name="city" value={lawyer.city} onChange={handleChange}>
-          {!lawyer.city && (
-            <option value="" disabled>
-              اختر المحافظه
-            </option>
-          )}
-          {city.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        حي / قسم
-        <select
-          name="neighborhood"
-          value={lawyer.neighborhood}
+        <span className={styles.labelText}>موبايل</span>
+        <input
+          className={styles.phone_input}
+          name="phone"
+          value={lawyer.phone}
           onChange={handleChange}
-        >
-          {!lawyer.neighborhood && (
-            <option value="" disabled>
-              اختر حي / قسم
-            </option>
-          )}
-          {neighborhood.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+          type="text"
+        />
       </label>
       <label>
-        رقم كارنيه النقابه
+        <span className={styles.labelText}>المحافظه</span>
+        <Select
+          placeholder="اختر المحافظه"
+          options={city.map((item) => ({ value: item.id, label: item.name }))}
+          onChange={(opt) => {
+            setStudent((prev) => ({ ...prev, city: opt.value }));
+          }}
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              borderColor: state.isFocused ? "#B0B3B7" : "#9ca1a8ff",
+              "&:hover": {
+                borderColor: "#B0B3B7",
+              },
+              boxShadow: state.isFocused ? "0 0 0 1px #B0B3B7" : base.boxShadow,
+            }),
+          }}
+          className="input_select"
+          classNamePrefix="input_select"
+        />
+      </label>
+      <label>
+        <span className={styles.labelText}>الحي</span>
+        <Select
+          placeholder="اختر الحي/القسم"
+          options={neighborhood.map((item) => ({
+            value: item.id,
+            label: item.name,
+          }))}
+          onChange={(opt) => {
+            setStudent((prev) => ({ ...prev, city: opt.value }));
+          }}
+          styles={{
+            control: (base, state) => ({
+              ...base,
+              borderColor: state.isFocused ? "#B0B3B7" : "#9ca1a8ff",
+              "&:hover": {
+                borderColor: "#B0B3B7",
+              },
+              boxShadow: state.isFocused ? "0 0 0 1px #B0B3B7" : base.boxShadow,
+            }),
+          }}
+          className="input_select"
+          classNamePrefix="input_select"
+        />
+      </label>
+      <label>
+        <span className={styles.labelText}>رقم كارنيه النقابه</span>
         <input
           name="syndicateId"
           value={lawyer.syndicateId}

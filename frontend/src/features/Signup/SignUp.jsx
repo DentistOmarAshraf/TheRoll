@@ -42,18 +42,18 @@ export default function SignUp() {
         {!type && (
           <div className={style.sign_up_choise}>
             <Button
-              className={`sign_up__button--student`}
-              onClick={() => setType("Student")}
-            >
-              <GraduationCap className={style.button_icon} strokeWidth={1} />
-              طالب
-            </Button>
-            <Button
               className={`sign_up__button--lawyer`}
               onClick={() => setType("Lawyer")}
             >
               <Scale className={style.button_icon} strokeWidth={1} />
               محامي
+            </Button>
+            <Button
+              className={`sign_up__button--student`}
+              onClick={() => setType("Student")}
+            >
+              <GraduationCap className={style.button_icon} strokeWidth={1} />
+              طالب
             </Button>
           </div>
         )}
