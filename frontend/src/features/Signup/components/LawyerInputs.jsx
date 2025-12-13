@@ -91,7 +91,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
           placeholder="اختر المحافظه"
           options={city.map((item) => ({ value: item.id, label: item.name }))}
           onChange={(opt) => {
-            setStudent((prev) => ({ ...prev, city: opt.value }));
+            setLawyer((prev) => ({ ...prev, city: opt.value }));
           }}
           styles={{
             control: (base, state) => ({
@@ -116,7 +116,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
             label: item.name,
           }))}
           onChange={(opt) => {
-            setStudent((prev) => ({ ...prev, city: opt.value }));
+            setLawyer((prev) => ({ ...prev, city: opt.value }));
           }}
           styles={{
             control: (base, state) => ({

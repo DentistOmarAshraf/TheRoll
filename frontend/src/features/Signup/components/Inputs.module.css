@@ -6,7 +6,7 @@
   font-family: "Cairo", cursive;
   font-weight: 650;
   font-style: normal;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .input_container h1 {
@@ -15,8 +15,9 @@
   text-align: center;
   height: 12%;
   padding: 0;
-  margin: 0;
+  margin: 10px;
   background-color: #CCDAF9;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .input_container label {

@@ -111,8 +111,12 @@
   font-size: 20px;
 }
 
-/* .sign_up__button--back {} */
+/* sign up submition*/
+.sign_up__button--submit, .sign_up__button--cancel {
+  width: 30%;
+}
 
-.sign_up__button--back.hidden {
-  display: none;
+.sign_up__button--submit {
+  color: white;
+  background-color: rgb(15, 159, 15);
 }

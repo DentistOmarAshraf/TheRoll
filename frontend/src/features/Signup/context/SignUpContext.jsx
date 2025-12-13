@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 const SignUpContext = createContext();
 
 export default function SignUpContextProvider({ children }) {
+  const [type, setType] = useState("");
   const [lawyer, setLawyer] = useState({
     fullName: "",
     email: "",
@@ -30,6 +31,8 @@ export default function SignUpContextProvider({ children }) {
   return (
     <SignUpContext.Provider
       value={{
+        type,
+        setType,
         lawyer,
         student,
         setLawyer,
