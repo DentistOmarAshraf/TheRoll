@@ -116,7 +116,7 @@ export default function LawyerInputs({ className = "", ...rest }) {
             label: item.name,
           }))}
           onChange={(opt) => {
-            setLawyer((prev) => ({ ...prev, city: opt.value }));
+            setLawyer((prev) => ({ ...prev, neighborhood: opt.value }));
           }}
           styles={{
             control: (base, state) => ({

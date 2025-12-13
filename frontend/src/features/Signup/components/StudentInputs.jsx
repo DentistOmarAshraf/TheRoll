@@ -122,7 +122,7 @@ export default function StudentInputs({ className = "", ...rest }) {
             label: item.name,
           }))}
           onChange={(opt) => {
-            setStudent((prev) => ({ ...prev, city: opt.value }));
+            setStudent((prev) => ({ ...prev, neighborhood: opt.value }));
           }}
           styles={{
             control: (base, state) => ({
@@ -147,7 +147,7 @@ export default function StudentInputs({ className = "", ...rest }) {
             label: item.name,
           }))}
           onChange={(opt) => {
-            setStudent((prev) => ({ ...prev, city: opt.value }));
+            setStudent((prev) => ({ ...prev, university: opt.value }));
           }}
           styles={{
             control: (base, state) => ({
@@ -167,12 +167,12 @@ export default function StudentInputs({ className = "", ...rest }) {
         <span className={styles.labelText}>السنه</span>
         <Select
           placeholder="اختر العام الدراسي"
-          options={[{ id: 1, name: "الأول" }].map((item) => ({
+          options={[{ id: "1", name: "الأول" }].map((item) => ({
             value: item.id,
             label: item.name,
           }))}
           onChange={(opt) => {
-            setStudent((prev) => ({ ...prev, city: opt.value }));
+            setStudent((prev) => ({ ...prev, grade: opt.value }));
           }}
           styles={{
             control: (base, state) => ({
