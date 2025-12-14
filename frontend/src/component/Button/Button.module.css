@@ -109,14 +109,30 @@
   align-items: center;
   justify-content: space-evenly;
   font-size: 20px;
+  border-radius: 30px;
 }
 
 /* sign up submition*/
-.sign_up__button--submit, .sign_up__button--cancel {
+.sign_up__button--submit,
+.sign_up__button--cancel {
   width: 30%;
 }
 
 .sign_up__button--submit {
   color: white;
   background-color: rgb(15, 159, 15);
+}
+
+.sign_in__button--submit {
+  color: #FFFFFF;
+  background-color: #14B8A6;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.sign_in__button--submit:hover {
+  color: #FFFFFF;
+  background-color: #118c7d;
 }

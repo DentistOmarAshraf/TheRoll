@@ -30,7 +30,6 @@ export default function LawyerInputs({ className = "", ...rest }) {
   };
   return (
     <div className={`${styles.input_container} ${classes}`}>
-      <h1>تسجيل حساب محامي</h1>
       <label>
         <span className={styles.labelText}>الاسم</span>
         <input

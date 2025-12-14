@@ -1,30 +1,28 @@
 .input_container {
   height: 87%;
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   font-family: "Cairo", cursive;
   font-weight: 650;
   font-style: normal;
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
 }
 
 .input_container h1 {
-  /* border: 1px solid red; */
-  border-radius: 5px;
+  border: 1px solid red;
   text-align: center;
   height: 12%;
   padding: 0;
   margin: 10px;
-  background-color: #CCDAF9;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .input_container label {
   /* border: 1px solid red; */
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  /* align-items: center; */
   width: 100%;
   height: 10%;
 }
@@ -32,20 +30,33 @@
 
 .labelText {
   /* border: 1px solid blue; */
-  width: 40%;
-  text-align: center;
+  padding-right: 3%;
+  /* width: 40%; */
+  /* text-align: center; */
+
 }
 
 .input_container input {
+  margin: 0;
+  padding-left: 5%;
+  padding-right: 5%;
   border: 1px solid #B0B3B7;
+  background-color: #F3F6FB;
   border-radius: 5px;
   height: 60%;
-  width: 40%;
-  padding: 4px;
+  width: 90%;
   font-family: "Cairo", cursive;
   font-weight: 600;
   font-style: normal;
 }
+
+.input_container input:focus {
+  outline: none;
+  border: 1px solid #B0B3B7;
+  border-radius: 5px;
+  background-color: #F3F6FB;
+}
+
 
 .input_container .phone_input {
   direction: ltr;
@@ -158,13 +169,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.input_container input:focus {
-  outline: none;
-  border: 1px solid #8A8D93;
-  border-radius: 5px;
-  background-color: #8a8d9349;
 }
 
 :global(.fa-eye),
