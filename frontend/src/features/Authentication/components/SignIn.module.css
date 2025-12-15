@@ -27,9 +27,27 @@
   padding-left: 15px;
   padding-right: 15px;
   margin-top: 10px;
+  
+}
+
+.input_field.error{
+  border: 2px solid red;
+}
+
+.input_field input:-webkit-autofill,
+.input_field input:-webkit-autofill:hover,
+.input_field input:-webkit-autofill:focus,
+.input_field input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #F3F6FB inset !important;
+  -webkit-text-fill-color: #000000 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .input_field input {
+  font-family: "Cairo", cursive !important;
+  font-weight: 650 !important;
+  font-style: normal !important;
+  font-size: medium !important;
   padding: 0;
   margin: 0;
   border: 0;
@@ -37,16 +55,16 @@
   width: 90%;
   margin-right: 10px;
   background-color: #F3F6FB;
-  font-family: "Cairo", cursive;
-  font-weight: 650;
-  font-style: normal;
-  font-size: medium;
 }
 
 .input_field input:focus {
   outline: none;
   /* border: 1px solid #B0B3B7; */
   /* background-color: #14B8A6; */
+}
+
+.input_field .show_pass {
+  cursor: pointer;
 }
 
 .remeber_group {
@@ -86,7 +104,14 @@
   padding-left: 40px;
   padding-right: 40px;
 }
+
 .sign_up_container .button_icon {
   width: 60%;
   height: auto;
+}
+
+:global(.form_select) {
+  width: 96%;
+  height: 100%;
+  margin-right: 13px;
 }
