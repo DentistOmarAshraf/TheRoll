@@ -1,4 +1,5 @@
-.sign_in_container {
+.sign_in_container,
+.sign_up_container {
   /* border: 1px solid blue; */
   padding: 30px;
   text-align: unset;
@@ -73,4 +74,19 @@
 .submit_group {
   /* border: 1px solid black; */
   height: 55px
+}
+
+
+/*Sign up css*/
+.sign_up_container .user_type_group {
+  /* border: 1px solid green; */
+  display: flex;
+  height: 160px;
+  justify-content: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.sign_up_container .button_icon {
+  width: 60%;
+  height: auto;
 }

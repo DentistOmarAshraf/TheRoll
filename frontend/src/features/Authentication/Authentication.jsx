@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./Authentication.module.css";
 import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 // <SignUpContextProvider>
 //   <SignUpDecision />
@@ -37,6 +38,7 @@ export default function Authentication() {
         </div>
       </div>
       {tab === "sign_in" && <SignIn />}
+      {tab === "sign_up" && <SignUp />}
     </div>
   );
 }

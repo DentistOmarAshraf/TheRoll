@@ -100,29 +100,30 @@
   height: 35px;
 }
 
-.sign_up__button--student,
-.sign_up__button--lawyer {
-  width: 35%;
-  height: 20%;
+.sign_up__button--choise {
+  min-width: 145px;
+  width: 37%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   font-size: 20px;
   border-radius: 30px;
+  background-color: #FFFFFF;
+  box-shadow: none;
+  border: 3px solid #14B8A6;
+  color: #14B8A6;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-/* sign up submition*/
+.sign_up__button--choise:hover {
+  color: #FFFFFF;
+  background-color: #14B8A6;
+}
+
 .sign_up__button--submit,
-.sign_up__button--cancel {
-  width: 30%;
-}
-
-.sign_up__button--submit {
-  color: white;
-  background-color: rgb(15, 159, 15);
-}
-
 .sign_in__button--submit {
   color: #FFFFFF;
   background-color: #14B8A6;
@@ -132,6 +133,7 @@
   font-size: 18px;
 }
 
+.sign_up__button--submit:hover,
 .sign_in__button--submit:hover {
   color: #FFFFFF;
   background-color: #118c7d;
