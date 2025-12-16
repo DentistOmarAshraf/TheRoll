@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../component/Button";
 import styles from "./SignIn.module.css";
 import { SignUpSelectStyle } from "./selectStyle";
@@ -13,13 +13,20 @@ import {
   Smartphone,
   IdCard,
   University,
+  Check,
+  Hourglass,
+  CircleX,
 } from "lucide-react";
+import ProgressBar from "../../../component/ProgressBar";
 import Select from "react-select";
+import axios from "axios";
 
 export default function SignUp() {
   const [userType, setUserType] = useState("");
   const [isPassVisiable, setPassVisiable] = useState(false);
   const [isConfVisiable, setConfVisiable] = useState(false);
+  const [state, setState] = useState("ready");
+  const [progress, setProgress] = useState(0);
   const [user, setUser] = useState({
     fullName: "",
     email: "",
@@ -29,6 +36,7 @@ export default function SignUp() {
     university: "",
     grade: "",
     syndicateId: "",
+    file: "",
   });
 
   // Temporary
@@ -42,6 +50,13 @@ export default function SignUp() {
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = async (e) => {
+    const { files } = e.target;
+    if (!files.length) return;
+    setUser((prev) => ({ ...prev, file: files[0] }));
+    setState((prev) => "uploading");
+  };
+
   const handleShowPass = () => {
     setPassVisiable((v) => !v);
   };
@@ -49,6 +64,31 @@ export default function SignUp() {
   const handleShowConf = () => {
     setConfVisiable((v) => !v);
   };
+
+  useEffect(() => {
+    (async () => {
+      if (!user.file) return;
+      const fromData = new FormData();
+      fromData.append("file", user.file);
+      try {
+        const res = await axios.post("http://localhost:5000/echo", fromData, {
+          headers: { "Content-Type": "multipart/form-data" },
+          timeout: 30000,
+          onUploadProgress: (progressEvent) => {
+            const progress = progressEvent.total
+              ? Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              : 0;
+            setProgress((prev) => progress);
+          },
+        });
+        console.log(res);
+        setState((prve) => "done");
+      } catch (e) {
+        setState((prev) => "error");
+        console.error(e);
+      }
+    })();
+  }, [user.file]);
 
   return (
     <div className={styles.sign_up_container}>
@@ -181,15 +221,39 @@ export default function SignUp() {
                 </div>
               </div>
               <div className={styles.input_group}>
-                <label>صوره كارنيه الجامعه</label>
+                <label htmlFor="file-upload">صوره كارنيه الجامعه</label>
                 <div className={styles.input_field}>
                   <IdCard />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    placeholder="رقم كارنيه الجامعه"
-                  />
+                  <div className={styles.custom_file_container}>
+                    <div className={styles.custom_file_upload}>
+                      <span>اختر صوره الكارنيه</span>
+                    </div>
+                    <input
+                      id="file-upload"
+                      name="file"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                    />
+                  </div>
                 </div>
+                <div
+                  className={`${styles.photo_info_container} ${
+                    !user.file ? styles.hidden : ""
+                  }`}
+                >
+                  {user.file && <p>{user.file.name}</p>}
+                  <div>
+                    <p className={styles.upload_state}>
+                      {state !== "ready" && state}
+                      &nbsp;
+                      {state === "done" && <Check color="blue" />}
+                      {state === "uploading" && <Hourglass />}
+                      {state === "error" && <CircleX color="red" />}
+                    </p>
+                  </div>
+                </div>
+                {user.file && <ProgressBar value={progress} />}
               </div>
             </>
           )}

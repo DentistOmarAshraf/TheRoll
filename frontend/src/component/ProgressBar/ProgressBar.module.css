@@ -1,0 +1,51 @@
+/* ---------------------------------------------------- */
+/* A. Standard Styling (The Bar Container)              */
+/* ---------------------------------------------------- */
+.progressBar {
+  /* Required: Override default browser appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Custom Look */
+  width: 100%;
+  height: 15px;
+  /* Control the thickness/height */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  /* Rounded corners for the container */
+  background-color: #e0e0e0;
+  /* Background color (empty part) */
+}
+
+/* ---------------------------------------------------- */
+/* B. WebKit Browsers (Chrome, Safari, Edge)            */
+/* Targets the inner track and the filled bar.       */
+/* ---------------------------------------------------- */
+
+/* Target the track (the background/empty part of the bar) */
+.progressBar::-webkit-progress-bar {
+  background-color: #F3F6FB;
+  border-radius: 8px;
+}
+
+/* Target the value (the colored fill/progress itself) */
+.progressBar::-webkit-progress-value {
+  background-color: #14B8A6;
+  /* Primary Blue color for the fill */
+  border-radius: 8px;
+  /* Optional: Smooth transition for fill movement */
+  transition: width 0.3s ease;
+}
+
+
+/* ---------------------------------------------------- */
+/* C. Mozilla Firefox                                   */
+/* Targets only the filled bar, as the default       */
+/* styling of the container is usually cleaner.      */
+/* ---------------------------------------------------- */
+.progressBar::-moz-progress-bar {
+  background-color: #007bff;
+  /* Primary Blue color for the fill */
+  border-radius: 8px;
+}
