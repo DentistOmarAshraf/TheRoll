@@ -14,6 +14,9 @@ import {
   SendConfirmEmail,
   SendForgetPassEmail,
 } from "./workers/email/EmailProducer.js";
+import multer from "multer";
+
+const upload = multer();
 
 // Setup Express server
 const app = express();
@@ -34,6 +37,15 @@ app.use(cors({ origin: ["http://localhost:8080"] }));
 filedRoutes(app);
 sectionsRoutes(app);
 templateRoutes(app);
+
+// This is temp echo of photo upload
+app.post("/echo", upload.any(), (req: Request, res: Response) => {
+  res.json({
+    headers: req.header,
+    body: req.body,
+    files: req.files,
+  });
+});
 
 // Testing Email concept here
 // This will be in controller
