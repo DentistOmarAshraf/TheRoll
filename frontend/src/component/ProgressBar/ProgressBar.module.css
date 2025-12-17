@@ -45,7 +45,7 @@
 /* styling of the container is usually cleaner.      */
 /* ---------------------------------------------------- */
 .progressBar::-moz-progress-bar {
-  background-color: #007bff;
+  background-color: #14B8A6;
   /* Primary Blue color for the fill */
   border-radius: 8px;
 }

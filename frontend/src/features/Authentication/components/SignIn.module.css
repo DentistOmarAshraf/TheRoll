@@ -17,6 +17,11 @@
   margin-right: 5px;
 }
 
+.input_group p.error_msg {
+  color: red;
+  font-size: smaller;
+}
+
 .input_field {
   /* border: 1px solid green; */
   border-radius: 10px;
@@ -117,7 +122,7 @@
 }
 
 .photo_info_container> :first-child {
-  width: 40%;
+  max-width: 40%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
