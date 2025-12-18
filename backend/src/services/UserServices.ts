@@ -2,8 +2,7 @@ import { v4 as uuid4 } from "uuid";
 import BaseDAO from "../DAO/BaseDAO.js";
 import CasheServices from "./CacheServices.js";
 import {
-  CityDAO,
-  NeighborhoodDAO,
+  UniversityDAO,
   UserDAO,
   UserLawyerDAO,
   UserStudentDAO,
@@ -130,10 +129,13 @@ export default class UserServices {
     >;
     if (await UserDAO.getOneByQuery({ email: data.email }))
       throw new BadRequestError("Email exists");
-    if (!(await CityDAO.getById(data.city as string)))
-      throw new BadRequestError("City Id is incorrect");
-    if (!(await NeighborhoodDAO.getById(data.neighborhood as string)))
-      throw new BadRequestError("Neighborhood not found");
+    if (
+      data.type == "Student" &&
+      !(await UniversityDAO.getById(data.university))
+    )
+      throw new BadRequestError("University not Found");
+
+    // will add logic to check photoId upload by AWS S3
 
     const session = await mongoose.startSession();
     try {
@@ -195,25 +197,56 @@ export default class UserServices {
   static async updateUser<T extends keyof UserUpdateDTO>(
     data: UserUpdateDTO[T]
   ): Promise<UserModelMap[T]> {
-    const DAO = this.userTypeDAO[data.type] as unknown as BaseDAO<
-      UserModelMap[T],
-      UserDTOMap[T],
-      UserUpdateDTO[T],
-      UserRelationMap[T]
-    >;
-
+    // const DAO = this.userTypeDAO[data.type] as unknown as BaseDAO<
+    //   UserModelMap[T],
+    //   UserDTOMap[T],
+    //   UserUpdateDTO[T],
+    //   UserRelationMap[T]
+    // >;
     const session = await mongoose.startSession();
     try {
       await session.startTransaction();
-      const updated = await DAO.updateById(data._id as string, data, session);
+      const updated = await UserDAO.updateById(
+        data._id as string,
+        data,
+        session
+      );
       if (!updated) throw new NotFoundError("User Not Found");
       await session.commitTransaction();
-      return updated;
+      return updated as any;
     } catch (e) {
       await session.abortTransaction();
       throw e;
     } finally {
       await session.endSession();
+    }
+  }
+
+  static async transitionStudentToLawyer(data: {
+    id: string;
+    syndicateId: string;
+  }) {
+    const { id, syndicateId } = data;
+    const user = await UserDAO.getById(id);
+    if (!user) throw new NotFoundError("User Not Found");
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _id, photoId, university, ...rest } = user;
+    const newLawyer = { ...rest, syndicateId, type: "Lawyer" };
+
+    const session = await mongoose.startSession();
+    try {
+      session.startTransaction();
+      const result = await UserDAO.replace(id, newLawyer, session);
+      if (result.modifiedCount == 0)
+        throw new ServerError("something went wrong");
+      await session.commitTransaction();
+      return await UserDAO.getById(id);
+    } catch (e) {
+      await session.abortTransaction();
+      throw e;
+    } finally {
+      session.endSession();
     }
   }
 

@@ -39,11 +39,9 @@ const userSchema = new Schema<IUser>(
     },
     city: {
       type: Types.ObjectId,
-      required: [true, "City id is required"],
     },
     neighborhood: {
       type: Types.ObjectId,
-      required: [true, "Neighborhood id is required"],
     },
   },
   { timestamps: true, discriminatorKey: "type" }
@@ -54,9 +52,9 @@ const studentSchema = new Schema<IStudentUser>({
     type: Types.ObjectId,
     required: [true, "University is required"],
   },
-  grade: {
+  photoId: {
     type: String,
-    required: [true, "Grade is required"],
+    required: [true, "University id is required"],
   },
 });
 

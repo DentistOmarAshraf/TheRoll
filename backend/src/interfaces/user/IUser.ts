@@ -10,15 +10,16 @@ interface IBaseUser extends IBase {
   password: string;
   phone: string;
   isConfirmed: boolean;
-  city: Types.ObjectId | ICity;
-  neighborhood: Types.ObjectId | INeighborhood;
+  isBanned: boolean;
+  city?: Types.ObjectId | ICity;
+  neighborhood?: Types.ObjectId | INeighborhood;
   offices?: Types.ObjectId[]; // must be changed after creating office
 }
 
 export interface IStudentUser extends IBaseUser {
   type: "Student";
   university: Types.ObjectId | IUniversity;
-  grade: string;
+  photoId: string;
   syndicateId?: never;
 }
 
@@ -26,40 +27,43 @@ export interface ILawyerUser extends IBaseUser {
   type: "Lawyer";
   syndicateId: string;
   university?: never;
-  grade?: never;
+  photoId?: never;
 }
 
 export interface IBaseUserDTO {
-  type: "Student" | "Lawyer"
   fullName: string;
   email: string;
   password: string;
   phone: string;
-  city: string | Types.ObjectId;
-  neighborhood: string | Types.ObjectId;
-  offices?: Types.ObjectId[];
+  city?: string;
+  neighborhood?: string;
+  offices?: string[];
 }
 
 export interface IStudentUserDTO extends IBaseUserDTO {
-  university: string | Types.ObjectId;
-  grade: string;
+  type: "Student";
+  university: string;
+  photoId: string;
   syndicateId?: never;
 }
 
 export interface ILawyerUserDTO extends IBaseUserDTO {
+  type: "Lawyer";
   syndicateId: string;
   university?: never;
-  grade?: never;
+  photoId?: never;
 }
 
 export type IBaseUserUpdateDTO = Partial<
-  Omit<IBaseUserDTO, "email" > & { _id: string }
+  Omit<IBaseUserDTO, "email"> & {
+    _id: string;
+  }
 >;
 
 export interface IStudentUserUpdateDTO extends IBaseUserUpdateDTO {
   type: "Student";
-  university?: Types.ObjectId | IUniversity; // Optional fields
-  grade?: string;
+  university?: string;
+  photoId?: string;
   syndicateId?: undefined;
 }
 
@@ -67,7 +71,7 @@ export interface ILawyerUserUpdateDTO extends IBaseUserUpdateDTO {
   type: "Lawyer";
   syndicateId?: string;
   university?: undefined;
-  grade?: undefined;
+  photoId?: undefined;
 }
 
 export type IUser = IStudentUser | ILawyerUser;

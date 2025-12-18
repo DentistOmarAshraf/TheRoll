@@ -118,10 +118,27 @@ export default class BaseDAO<
     const result = await this.model
       .findByIdAndUpdate(id, obj, {
         new: true,
+        runValidators: true,
         session: session || null,
       })
       .exec();
     return result ? result.toObject() : null;
+  }
+
+  async replace(
+    id: string,
+    newObject: any,
+    session: ClientSession
+  ): Promise<any> {
+    if (!isValidObjectId(id)) return null;
+    const result = await this.model
+      .replaceOne({ _id: id }, newObject, {
+        session,
+        overwriteDiscriminatorKey: true,
+        runValidators: true,
+      })
+      .exec();
+    return result;
   }
 
   // Delete

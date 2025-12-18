@@ -54,10 +54,23 @@ import type { IStudentUser } from "./interfaces/user/IUser.js";
   // console.log(chk);
   // const user = await UserServices.deleteUser("69386f39e858b5b154933463");
   // console.log(user);
-  const u = await UserServices.confirmUser({
-    token: "089935f1-f3fb-4869-b669-2605b54d7b74",
-  });
-  console.log(u);
 
+  // const user = await UserServices.createUser({
+  //   type: "Student",
+  //   fullName: "عمر اشرف",
+  //   email: "omar_ashraf@live.com",
+  //   password: "1234",
+  //   phone: "01017815609",
+  //   university: "693821a043f65f377d3579b6",
+  //   photoId: "someString",
+  //   // syndicateId: "123",
+  // });
+
+  const user = await UserServices.transitionStudentToLawyer({
+    id: "69444cdf2f8f78fcb347bb5e",
+    syndicateId: "12345",
+  });
+
+  console.log(user);
   process.exit();
 })();
