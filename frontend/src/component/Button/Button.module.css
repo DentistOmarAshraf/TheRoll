@@ -143,7 +143,7 @@
 
 .side_bar__button {
   width: 100%;
-  height: 60px;
+  height: 55px;
   display: flex;
   align-items: center;
   background-color: white;
@@ -173,7 +173,7 @@
   color: white;
 }
 
-.side_bar__button.active {
+.side_bar__button.active, .Info_header__button.active {
   background: linear-gradient(92deg, #13807F 0%, #2EB2ED 99.66%);
   color: white;
 }
@@ -183,8 +183,9 @@
   align-items: center;
   justify-content: center;
   background-color: #FFFFFF;
+  color: #13807F;
   box-shadow: 0 0 0 0;
   border: 0;
-  width: 40%;
+  width: 35%;
   height: 80%
 }

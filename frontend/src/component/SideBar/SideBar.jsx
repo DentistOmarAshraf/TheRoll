@@ -12,25 +12,15 @@ import News from "../Icons/News";
 
 export default function SideBar() {
   const { isSideOpen, setSideOpen } = useUI();
-  const [active, setActive] = useState("control_pannel");
+  const [active, setActive] = useState("");
 
   const handleNavigate = (e) => {
     const { name } = e.currentTarget.dataset;
     setActive((prev) => name);
   };
 
-  const handleMouseEnter = (e) => {
-    setSideOpen((prev) => true);
-  };
-
-  const handleMouseLeave = (e) => {
-    setSideOpen((prev) => false);
-  };
-
   return (
     <aside
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       className={`${styles.side_bar} ${isSideOpen ? styles.open : ""}`}
     >
       <Button

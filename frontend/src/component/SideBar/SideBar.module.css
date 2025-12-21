@@ -1,7 +1,7 @@
 .side_bar {
   /* border: 1px solid red; */
   height: 100%;
-  width: 88px;
+  width: 80px;
   grid-area: sidebar;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
 }
 
 .side_bar.open {
-  width: 238px
+  width: 230px
 }
 
 .side_bar.overlap {
