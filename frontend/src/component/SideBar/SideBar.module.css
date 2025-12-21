@@ -1,0 +1,46 @@
+.side_bar {
+  /* border: 1px solid red; */
+  height: 100%;
+  width: 88px;
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 32px;
+  padding-left: 16px;
+  will-change: width;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.side_bar.open {
+  width: 238px
+}
+
+.side_bar.overlap {
+  position: absolute;
+}
+
+.side_label {
+  padding-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 16px;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.side_label.open {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.side_label.closed {
+  width: 0;
+  height: 0;
+  padding: 0;
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+}

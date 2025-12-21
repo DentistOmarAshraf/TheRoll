@@ -2,7 +2,8 @@ import styles from "./Test.module.css";
 
 export default function Test() {
   return (
-    <div className={styles.container}>
+    <>
+      <div className={styles.header}>Header</div>
       <div className={styles.element}>This is some elment</div>
       <div className={styles.element}>This is some elment</div>
       <div className={styles.element}>This is some elment</div>
@@ -14,6 +15,6 @@ export default function Test() {
       <div className={styles.element}>This is some elment</div>
       <div className={styles.element}>This is some elment</div>
       <div className={styles.element}>This is some elment</div>
-    </div>
+    </>
   );
 }

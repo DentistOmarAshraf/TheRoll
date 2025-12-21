@@ -26,7 +26,8 @@ export default function SignUp() {
   const [userType, setUserType] = useState("");
   const [isPassVisiable, setPassVisiable] = useState(false);
   const [isConfVisiable, setConfVisiable] = useState(false);
-  const [state, setState] = useState("ready");
+  const [state, setState] = useState("ready"); //upload State
+  const [uploadKey, setUploadKey] = useState({}); // WILL BE A REAL KEY WHEN TESTING WITH AMAZON
   const [progress, setProgress] = useState(0);
   const [user, dispatch] = useReducer(formReducer, formData);
   const [errors, setErrors] = useState({});
@@ -51,14 +52,14 @@ export default function SignUp() {
 
   const validateForm = (user, userType) => {
     const errors = {};
+    const phoneRegex = /^01[0125]\d{8}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (!user.fullName) errors.fullName = "الاسم مطلوب";
 
     if (!user.email) {
       errors.email = "البريد الالكتروني مطلوب";
-    } else if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(user.email)
-    ) {
+    } else if (!emailRegex.test(user.email)) {
       errors.email = "البريد الالكتروني غير صالح";
     }
 
@@ -76,13 +77,14 @@ export default function SignUp() {
 
     if (!user.phone) {
       errors.phone = "رقم الموبايل مطلوب";
-    } else if (user.phone.length > 11) {
+    } else if (!phoneRegex.test(user.phone)) {
       errors.phone = "رقم الموبايل غير صالح";
     }
 
     if (userType === "Student") {
       if (!user.university) errors.university = "يجب اختيار الجامعه";
       if (!user.file) errors.file = "صوره كارنيه الجامعه مطلوبه";
+      if (user.file && !user.photoId) errors.file = "اعد تحميل الصفحه";
     }
 
     if (userType === "Lawyer") {
@@ -98,8 +100,12 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     const errors = validateForm(user, userType);
-    console.log(errors);
-    if (errors != {}) setErrors((prev) => ({ ...prev, ...errors }));
+    // console.log(errors);
+    if (Object.keys(errors).length > 0) {
+      setErrors((prev) => ({ ...prev, ...errors }));
+      return;
+    }
+    console.log(user);
   };
 
   const handleShowPass = () => {
@@ -113,24 +119,51 @@ export default function SignUp() {
   // This will be cleaned later on deployment
   useEffect(() => {
     (async () => {
+      try {
+        // I am trying to mimic the request from S3
+        // To upload photo
+        // This will be refactored when deploying
+        const res = await axios.post(
+          "http://localhost:5000/upload/universityid"
+        );
+        // the respons is {url: url of upload, key: generated in back}
+        setUploadKey(res.data);
+      } catch (e) {
+        setErrors((prev) => ({ ...prev, file: "الرجاء المحاوله في وقت لاحق" }));
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
       if (!user.file) return;
       const fromData = new FormData();
       fromData.append("file", user.file);
       try {
-        const res = await axios.post("http://localhost:5000/echo", fromData, {
-          headers: { "Content-Type": "multipart/form-data" },
-          timeout: 30000,
-          onUploadProgress: (progressEvent) => {
-            const progress = progressEvent.total
-              ? Math.round((progressEvent.loaded * 100) / progressEvent.total)
-              : 0;
-            setProgress((prev) => progress);
+        const res = await axios.post(
+          uploadKey.url, // here is the url that I get from back (to upload the photo on it)
+          {
+            key: uploadKey.key, // that is the key of uploading
+            ...fromData,
           },
-        });
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            timeout: 30000,
+            onUploadProgress: (progressEvent) => {
+              const progress = progressEvent.total
+                ? Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                : 0;
+              setProgress((prev) => progress);
+            },
+          }
+        );
         console.log(res);
+        dispatch({ type: "CHANGE", name: "photoId", value: uploadKey.key });
         setState((prve) => "done");
       } catch (e) {
         setState((prev) => "error");
+        setProgress((prev) => 0);
+        setErrors((prev) => ({ ...prev, file: "هناك  خطأ" }));
         console.error(e);
       }
     })();
@@ -340,6 +373,7 @@ export default function SignUp() {
                       name="file"
                       type="file"
                       accept="image/*"
+                      disabled={!!user.file} // if the file is already uploaded so user have to reload
                       onChange={handleFileChange}
                     />
                   </div>
@@ -352,9 +386,7 @@ export default function SignUp() {
                     !user.file ? styles.hidden : ""
                   }`}
                 >
-                  {user.file && (
-                    <p>{user.file.name}</p>
-                  )}
+                  {user.file && <p>{user.file.name}</p>}
                   <div>
                     <p className={styles.upload_state}>
                       {state !== "ready" && state}

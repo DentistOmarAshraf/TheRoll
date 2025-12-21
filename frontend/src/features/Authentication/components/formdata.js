@@ -7,6 +7,7 @@ export const formData = {
   university: "",
   grade: "",
   syndicateId: "",
+  photoId: "",
   file: null,
 };
 

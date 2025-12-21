@@ -1,0 +1,23 @@
+.info_header {
+  grid-area: search;
+  height: 56px;
+  display: flex;
+  /* border: 1px solid blue; */
+  padding-right: 20px;
+}
+
+.logo_container {
+  display: flex;
+  /* border: 1px solid green; */
+  justify-content: space-between;
+  width: 10%;
+  align-items: center;
+}
+
+.logo_container p {
+  color: #13807F;
+  font-family: "Cairo", cursive;
+  font-weight: 650;
+  font-style: normal;
+  font-size: 32px;
+}
