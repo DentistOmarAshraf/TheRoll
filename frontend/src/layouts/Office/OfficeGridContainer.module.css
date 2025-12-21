@@ -1,0 +1,22 @@
+.main_container {
+  width: 100%;
+  display: grid;
+  transition: grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  grid-template-rows: auto auto 1fr auto;
+
+  grid-template-areas:
+    "search  search"
+    "sidebar header"
+    "sidebar main"
+    "footer  footer";
+}
+
+.main_container[data-sidebar-pinned="false"] {
+  grid-template-columns: 96px 1fr;
+}
+
+/* Pinned / Expanded State (256px) */
+.main_container[data-sidebar-pinned="true"] {
+  grid-template-columns: 246px 1fr;
+}

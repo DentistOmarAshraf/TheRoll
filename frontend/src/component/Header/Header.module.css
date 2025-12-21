@@ -8,8 +8,8 @@
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(142deg, #108478 16.28%, #01312C 57.44%);
   backdrop-filter: blur(1.6199992895126343px);
   justify-content: center;
-  border-top-right-radius: 30px;
-  grid-row: header;
+  border-top-right-radius: 35px;
+  grid-area: header;
   /* padding-right: 10%; */
 }
 

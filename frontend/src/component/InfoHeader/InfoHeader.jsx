@@ -1,4 +1,4 @@
-import { useUI } from "../../context/UIContext";
+import { useUI } from "../../layouts/Office/OfficeUIContext";
 import styles from "./InfoHeader.module.css";
 import Button from "../Button";
 import { Menu } from "lucide-react";

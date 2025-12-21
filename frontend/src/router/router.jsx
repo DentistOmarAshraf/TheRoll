@@ -1,14 +1,28 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import Admin from "../layout/AdminPanel/Admin";
-import TemplateCreation from "../layout/TemplateCreation";
+import OfficeLayout from "../layouts/Office/OfficeLayout";
+import Authentication from "../features/Authentication";
 
 const Router = createBrowserRouter([
   {
-    path: "/dashboard",
-    element: <Admin />,
+    path: "/office",
+    element: <OfficeLayout />,
     children: [
-      { path: "", element: <Admin />},
-      { path: "template", element: <TemplateCreation /> },
+      {
+        path: "",
+        element: (
+          <div
+            style={{
+              background: "#F7F9FC",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gridArea: "main"
+            }}
+          >
+            <Authentication />
+          </div>
+        ),
+      },
     ],
   },
 ]);
