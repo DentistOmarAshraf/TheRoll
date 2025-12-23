@@ -173,7 +173,8 @@
   color: white;
 }
 
-.side_bar__button.active, .Info_header__button.active {
+.side_bar__button.active,
+.Info_header__button.active {
   background: linear-gradient(92deg, #13807F 0%, #2EB2ED 99.66%);
   color: white;
 }
@@ -188,4 +189,19 @@
   border: 0;
   width: 35%;
   height: 80%
+}
+
+.rbc__toolbar__button {
+  display: flex !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  width: 100%;
+  background-color: #07A694 !important;
+  color: #FFFFFF !important;
+  border-radius: 30px !important;
+  border: 1px solid #13807F !important;
+}
+
+.rbc__toolbar__button:hover {
+  background-color: #13807F !important;
 }
