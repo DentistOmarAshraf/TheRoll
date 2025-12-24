@@ -32,6 +32,15 @@ dayjs.updateLocale("ar", {
   // 3. Min names (Used on small mobile screens)
   weekdaysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
 });
+// const formats = {
+//   timeGutterFormat: (date, culture, localizer) =>
+//     localizer.format(date, "h A", culture), // 'A' turns into صباحاً/مساءً
+
+//   eventTimeRangeFormat: ({ start, end }, culture, localizer) =>
+//     localizer.format(start, "h A", culture) +
+//     " - " +
+//     localizer.format(end, "h A", culture),
+// };
 
 dayjs.locale("ar");
 
@@ -45,12 +54,43 @@ const myArabicMessages = {
   week: "أسبوع",
   day: "يوم",
   agenda: "جدول أعمال",
+  date: "تاريخ",
+  time: "الوقت",
+  event: "الحدث",
+  allDay: "طوال اليوم",
+  noEventsInRange: "لا توجد أحداث في هذه الفترة",
 };
 
 const someEvent = {
+  taskName: "قضيه عبدالله السعيد اسمها طويل شويه",
+  startDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 24, 14, 0),
+  priorty: "high",
+};
+
+const otherEvent = {
   taskName: "تحربه",
-  startDate: new Date(2025, 11, 23, 12, 0),
-  endDate: new Date(2025, 11, 23, 12, 0),
+  startDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 24, 12, 0),
+  priorty: "middle",
+};
+
+const thrd = {
+  taskName: "تحربه",
+  startDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 24, 12, 0),
+  priorty: "normal",
+};
+
+const frth = {
+  taskName: "تحربه",
+  startDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 24, 12, 0),
+  priorty: "normal",
+};
+
+const eventStyleGetter = (event) => {
+  return { className: `event-priority-${event.priorty}` };
 };
 
 export default function RollCalendar() {
@@ -58,7 +98,9 @@ export default function RollCalendar() {
     <div className="calendar_container">
       <Calendar
         localizer={localizer}
-        events={[someEvent]}
+        // formats={formats}
+        events={[someEvent, otherEvent, thrd]}
+        eventPropGetter={eventStyleGetter}
         messages={myArabicMessages}
         rtl={true}
         culture="ar"
@@ -68,6 +110,7 @@ export default function RollCalendar() {
         components={{
           toolbar: ToolBar,
         }}
+        // dayLayoutAlgorithm="compact"
       />
     </div>
   );

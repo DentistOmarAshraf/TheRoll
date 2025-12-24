@@ -1,5 +1,5 @@
 import Button from "../../Button";
-import { Plus } from "lucide-react";
+import { Plus, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ToolBar(props) {
   const {
@@ -32,13 +32,14 @@ export default function ToolBar(props) {
       </span>
       <span className="rbc-btn-group">
         <button type="button" onClick={() => navigate("PREV")}>
-          {messages.previous || "السابق"}
+          {/* {messages.previous || "السابق"} */}
+          <ChevronRight />
         </button>
         <button type="button" onClick={() => navigate("TODAY")}>
           {messages.today || "اليوم"}
         </button>
         <button type="button" onClick={() => navigate("NEXT")}>
-          {messages.next || "التالي"}
+          <ChevronLeft />
         </button>
       </span>
 

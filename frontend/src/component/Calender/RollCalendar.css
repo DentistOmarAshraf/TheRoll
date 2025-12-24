@@ -1,6 +1,6 @@
 .calendar_container {
-  border: 2px solid red;
-  width: 1288px;
+  /* border: 2px solid red; */
+  width: 1200px;
   height: 757px;
   margin-top: 20px;
   font-family: "Cairo", cursive;
@@ -8,9 +8,10 @@
   font-style: normal;
 }
 
+/** Customizing ToolBar **/
 div.calendar_container .rbc-toolbar {
   position: relative;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   height: 10%;
 }
 
@@ -28,4 +29,171 @@ div.calendar_container .rbc-btn-abs {
   display: flex;
   align-items: center;
   margin-right: 10px;
+}
+
+div.calendar_container .rbc-btn-group {
+  /* height: 100%; */
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 25px;
+}
+
+div.calendar_container .rbc-btn-group button {
+  /* width: 80px; */
+  height: 50px;
+  font-family: "Cairo", cursive;
+  font-weight: 650;
+  font-style: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 0;
+}
+
+div.calendar_container span.rbc-btn-group button:first-child {
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+}
+
+div.calendar_container span.rbc-btn-group button:last-child {
+  border-top-left-radius: 25px !important;
+  border-bottom-left-radius: 25px !important;
+}
+
+div.calendar_container .rbc-btn-group button:hover {
+  transition: background 0.7s ease, color 0.7s ease;
+  background-color: #07A694;
+  color: white;
+}
+
+div.calendar_container .rbc-btn-group .rbc-active {
+  background-color: #07A694;
+  color: white;
+}
+
+/** Month view */
+div.calendar_container .rbc-month-view,
+div.calendar_container .rbc-time-view,
+div.calendar_container .rbc-agenda-view {
+  /* Time view  and agenda view container is the same as month view*/
+  border: 0;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  padding-bottom: 20px;
+  background-color: white;
+  border-radius: 25px;
+}
+
+div.calendar_container .rbc-month-header {
+  height: 4%;
+}
+
+/* header (div where days in)*/
+
+div.calendar_container .rbc-header {
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: none !important;
+}
+
+div.calendar_container .rbc-date-cell {
+  /* background-color: red; */
+  padding: 0;
+  margin-bottom: 4px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+
+div.calendar_container .rbc-today {
+  background-color: transparent !important;
+}
+
+
+div.calendar_container .rbc-now button {
+  background-color: #07A694 !important;
+  color: white !important;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  /* margin: 4px; */
+}
+
+/** event */
+div.calendar_container .rbc-event {
+  text-align: center;
+  padding-right: 15px;
+  padding-left: 15px;
+  font-size: 12px;
+  /* height: 50%; */
+  border-radius: 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+div.calendar_container .rbc-event:not(.rbc-event-continues-prior) {
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+}
+
+div.calendar_container .rbc-event:not(.rbc-event-continues-after) {
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+}
+
+/*marquee animation will be setted*/
+
+div.calendar_container .event-priority-high {
+  background-color: #F9DFC8;
+  color: #D92D20;
+}
+
+div.calendar_container .event-priority-middle {
+  background-color: #FEEE9F;
+  color: #F79009;
+}
+
+div.calendar_container .event-priority-normal {
+  background-color: #A7FFD8;
+  color: #12B76A;
+}
+
+div.calendar_container button.rbc-show-more {
+  width: 100%;
+  height: 25px;
+  border-radius: 20px;
+  background-color: #F9DFC9;
+  color: #D92D20;
+}
+
+
+/** END OF MONTH VIEW **/
+
+/** Agenda view **/
+
+div.calendar_container .rbc-agenda-table thead tr {
+  width: 100% !important;
+  display: table !important;
+  table-layout: fixed !important;
+}
+
+div.calendar_container .rbc-agenda-table thead tr {
+  display: table-row !important;
+  width: 100% !important;
+}
+
+div.calendar_container .rbc-agenda-table .rbc-header {
+  display: table-cell !important;
+  /* This puts them back in a row */
+  width: 30px !important;
+  /* Adjust your width here */
+  vertical-align: middle;
+  text-align: center;
 }
