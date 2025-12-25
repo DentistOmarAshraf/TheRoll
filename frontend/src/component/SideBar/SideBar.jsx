@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUI } from "../../layouts/Office/OfficeUIContext";
 import styles from "./SideBar.module.css";
 import Button from "../Button";
@@ -11,13 +12,15 @@ import Tools from "../Icons/Tools";
 import News from "../Icons/News";
 
 export default function SideBar() {
+  const navigate = useNavigate();
   const { isSideOpen, setSideOpen } = useUI();
   const [active, setActive] = useState("");
   const [hover, setHover] = useState(false);
 
   const handleNavigate = (e) => {
-    const { name } = e.currentTarget.dataset;
+    const { name, path } = e.currentTarget.dataset;
     setActive((prev) => name);
+    navigate(path);
   };
 
   const handleMouseEnter = (e) => {
@@ -38,10 +41,11 @@ export default function SideBar() {
         }`}
       >
         <Button
-          data-name="control_pannel"
-          className={`side_bar__button ${
-            active == "control_pannel" ? "active" : ""
-          } ${isSideOpen || hover ? "" : "closed"}`}
+          data-path="/office"
+          data-name="office"
+          className={`side_bar__button ${active == "office" ? "active" : ""} ${
+            isSideOpen || hover ? "" : "closed"
+          }`}
           onClick={handleNavigate}
         >
           <ControlPannel />
@@ -73,6 +77,7 @@ export default function SideBar() {
         </Button>
 
         <Button
+          data-path="/office/calendar"
           data-name="calendar"
           className={`side_bar__button ${
             active == "calendar" ? "active" : ""

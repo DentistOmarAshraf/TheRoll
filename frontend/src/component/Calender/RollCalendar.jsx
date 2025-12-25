@@ -64,28 +64,35 @@ const myArabicMessages = {
 const someEvent = {
   taskName: "قضيه عبدالله السعيد اسمها طويل شويه",
   startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 24, 14, 0),
+  endDate: new Date(2025, 11, 28, 13, 0),
   priorty: "high",
 };
 
 const otherEvent = {
   taskName: "تحربه",
   startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 28, 14, 0),
   priorty: "middle",
 };
 
 const thrd = {
   taskName: "تحربه",
   startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 28, 14, 0),
   priorty: "normal",
 };
 
 const frth = {
   taskName: "تحربه",
   startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 28, 14, 0),
+  priorty: "normal",
+};
+
+const fifth = {
+  taskName: "تحربه",
+  startDate: new Date(2025, 11, 24, 12, 0),
+  endDate: new Date(2025, 11, 28, 14, 0),
   priorty: "normal",
 };
 
@@ -99,7 +106,7 @@ export default function RollCalendar() {
       <Calendar
         localizer={localizer}
         // formats={formats}
-        events={[someEvent, otherEvent, thrd]}
+        events={[thrd, someEvent,otherEvent, frth, fifth]}
         eventPropGetter={eventStyleGetter}
         messages={myArabicMessages}
         rtl={true}
@@ -110,6 +117,8 @@ export default function RollCalendar() {
         components={{
           toolbar: ToolBar,
         }}
+        min={new Date(0, 0, 0, 6, 0, 0)} // 6:00 AM
+        max={new Date(0, 0, 0, 20, 0, 0)} // 8:00 PM
         // dayLayoutAlgorithm="compact"
       />
     </div>

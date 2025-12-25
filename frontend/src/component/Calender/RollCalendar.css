@@ -91,7 +91,7 @@ div.calendar_container .rbc-month-header {
 
 /* header (div where days in)*/
 
-div.calendar_container .rbc-header {
+div.calendar_container .rbc-month-view .rbc-header {
   /* background-color: red; */
   display: flex;
   justify-content: center;
@@ -108,13 +108,18 @@ div.calendar_container .rbc-date-cell {
   justify-content: center;
 }
 
+div.calendar_container .rbc-month-view .rbc-button-link {
+  font-family: "Cairo", cursive;
+  font-weight: 650;
+  font-style: normal;
+}
 
-div.calendar_container .rbc-today {
+div.calendar_container .rbc-month-view .rbc-today {
   background-color: transparent !important;
 }
 
 
-div.calendar_container .rbc-now button {
+div.calendar_container .rbc-month-view .rbc-now button {
   background-color: #07A694 !important;
   color: white !important;
   width: 20px;
@@ -175,6 +180,54 @@ div.calendar_container button.rbc-show-more {
 
 
 /** END OF MONTH VIEW **/
+
+/*Week View*/
+div.calendar_container .rbc-time-view .rbc-time-header-cell {
+  /* padding-top: 10px; */
+  height: 70px
+}
+
+div.calendar_container .rbc-time-view .rbc-button-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Cairo", cursive;
+  font-weight: 650;
+  font-style: normal;
+}
+
+div.calendar_container .rbc-time-view .rbc-time-header-cell span {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cairo", cursive;
+  font-weight: 650;
+  font-style: normal;
+  border-radius: 40px;
+}
+
+div.calendar_container .rbc-time-header-cell .rbc-today span {
+  background-color: #07A694;
+  color: white;
+}
+
+/*END*/
+/*day view*/
+div.calendar_container .rbc-day-slot .rbc-event:hover {
+  z-index: 9999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+
+div.calendar_container .rbc-events-container {
+  overflow-x: hidden;
+}
 
 /** Agenda view **/
 
