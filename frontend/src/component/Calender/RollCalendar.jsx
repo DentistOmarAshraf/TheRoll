@@ -63,36 +63,36 @@ const myArabicMessages = {
 
 const someEvent = {
   taskName: "قضيه عبدالله السعيد اسمها طويل شويه",
-  startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 28, 13, 0),
+  startDate: new Date(2025, 11, 26, 12, 0),
+  endDate: new Date(2025, 11, 26, 13, 0),
   priorty: "high",
 };
 
 const otherEvent = {
   taskName: "تحربه",
-  startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 28, 14, 0),
+  startDate: new Date(2025, 11, 26, 12, 30),
+  endDate: new Date(2025, 11, 26, 14, 0),
   priorty: "middle",
 };
 
 const thrd = {
   taskName: "تحربه",
-  startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 28, 14, 0),
+  startDate: new Date(2025, 11, 26, 12, 10),
+  endDate: new Date(2025, 11, 26, 15, 0),
   priorty: "normal",
 };
 
 const frth = {
   taskName: "تحربه",
-  startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 28, 14, 0),
+  startDate: new Date(2025, 11, 26, 11, 0),
+  endDate: new Date(2025, 11, 26, 13, 30),
   priorty: "normal",
 };
 
 const fifth = {
-  taskName: "تحربه",
-  startDate: new Date(2025, 11, 24, 12, 0),
-  endDate: new Date(2025, 11, 28, 14, 0),
+  taskName: "قضيه تانيه ليها اسم برضو طويل ",
+  startDate: new Date(2025, 11, 26, 12, 0),
+  endDate: new Date(2025, 11, 26, 13, 0),
   priorty: "normal",
 };
 
@@ -106,7 +106,7 @@ export default function RollCalendar() {
       <Calendar
         localizer={localizer}
         // formats={formats}
-        events={[thrd, someEvent,otherEvent, frth, fifth]}
+        events={[someEvent, otherEvent, thrd, frth, fifth]}
         eventPropGetter={eventStyleGetter}
         messages={myArabicMessages}
         rtl={true}
@@ -117,8 +117,10 @@ export default function RollCalendar() {
         components={{
           toolbar: ToolBar,
         }}
-        min={new Date(0, 0, 0, 6, 0, 0)} // 6:00 AM
-        max={new Date(0, 0, 0, 20, 0, 0)} // 8:00 PM
+        length={5}
+        scrollToTime={new Date()}
+        // min={new Date(0, 0, 0, 6, 0, 0)} // 6:00 AM
+        // max={new Date(0, 0, 0, 20, 0, 0)} // 8:00 PM
         // dayLayoutAlgorithm="compact"
       />
     </div>
