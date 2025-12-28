@@ -9,8 +9,8 @@ class EmailServices {
       host: "smtp.ethereal.email",
       port: 587,
       auth: {
-        user: "harold3@ethereal.email",
-        pass: "1ttNxkSD5F6jR7wdta",
+        user: "izaiah.conroy92@ethereal.email",
+        pass: "vayd16UzK68RvfnPrj",
       },
     });
   }
@@ -24,7 +24,7 @@ class EmailServices {
       // and the front should send token to api and then get
       // response that user is confirmed and go to sign in page
       html: `confirm link\n
-            <a href="http://localhost:5000/confirmEmail/${token}">CLICK HERE</a>`,
+            <a href="http://localhost:5000/confirm/${token}">CLICK HERE</a>`,
     };
     await this.transporter.sendMail(message);
   }

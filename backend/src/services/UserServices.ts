@@ -18,6 +18,7 @@ import type {
   IStudentUserRelation,
   ILawyerUserRelation,
   IUser,
+  IBaseUserUpdateDTO,
 } from "../interfaces/user/IUser.js";
 import mongoose, { isValidObjectId } from "mongoose";
 import ServerError from "../errors/ServerError.js";
@@ -195,22 +196,17 @@ export default class UserServices {
 
   // U
   static async updateUser<T extends keyof UserUpdateDTO>(
-    data: UserUpdateDTO[T]
+    id: string,
+    data: IBaseUserUpdateDTO
   ): Promise<UserModelMap[T]> {
-    // const DAO = this.userTypeDAO[data.type] as unknown as BaseDAO<
-    //   UserModelMap[T],
-    //   UserDTOMap[T],
-    //   UserUpdateDTO[T],
-    //   UserRelationMap[T]
-    // >;
+    const user = await UserDAO.getById(id);
+    if (!user) throw new NotFoundError("لم نجد مستخدم");
+    if (!user.isConfirmed)
+      throw new BadRequestError("يجب تأكيد البريد الالكتروني");
     const session = await mongoose.startSession();
     try {
       await session.startTransaction();
-      const updated = await UserDAO.updateById(
-        data._id as string,
-        data,
-        session
-      );
+      const updated = await UserDAO.updateById(id, data, session);
       if (!updated) throw new NotFoundError("User Not Found");
       await session.commitTransaction();
       return updated as any;
@@ -258,7 +254,11 @@ export default class UserServices {
     const session = await mongoose.startSession();
     try {
       await session.startTransaction();
-      const updated = await UserDAO.updateById(userId, { password }, session);
+      const updated = await UserDAO.updateById(
+        userId,
+        { password } as IBaseUserUpdateDTO,
+        session
+      );
       if (!updated) throw new NotFoundError("user Not Found");
       await CasheServices.deleteKey(this.FrogetToken, token);
       await session.commitTransaction();

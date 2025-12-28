@@ -1,8 +1,16 @@
+import z from "zod";
 import type { Types } from "mongoose";
 import type { IUniversity } from "../university/IUniversity.js";
 import type { ICity } from "../city/ICity.js";
 import type { INeighborhood } from "../neighborhood/INeighborhood.js";
 import type { IBase } from "../IBase.js";
+import {
+  zUserLawyer,
+  zUpdateUserLawyer,
+  zUserStudent,
+  zUpdateUserStudent,
+  zUserUpdateSchema,
+} from "../../schemas/user.schema.js";
 
 interface IBaseUser extends IBase {
   fullName: string;
@@ -40,39 +48,15 @@ export interface IBaseUserDTO {
   offices?: string[];
 }
 
-export interface IStudentUserDTO extends IBaseUserDTO {
-  type: "Student";
-  university: string;
-  photoId: string;
-  syndicateId?: never;
-}
+export type IStudentUserDTO = z.infer<typeof zUserStudent>;
 
-export interface ILawyerUserDTO extends IBaseUserDTO {
-  type: "Lawyer";
-  syndicateId: string;
-  university?: never;
-  photoId?: never;
-}
+export type ILawyerUserDTO = z.infer<typeof zUserLawyer>;
 
-export type IBaseUserUpdateDTO = Partial<
-  Omit<IBaseUserDTO, "email"> & {
-    _id: string;
-  }
->;
+export type IStudentUserUpdateDTO = z.infer<typeof zUpdateUserStudent>;
 
-export interface IStudentUserUpdateDTO extends IBaseUserUpdateDTO {
-  type: "Student";
-  university?: string;
-  photoId?: string;
-  syndicateId?: undefined;
-}
+export type ILawyerUserUpdateDTO = z.infer<typeof zUpdateUserLawyer>;
 
-export interface ILawyerUserUpdateDTO extends IBaseUserUpdateDTO {
-  type: "Lawyer";
-  syndicateId?: string;
-  university?: undefined;
-  photoId?: undefined;
-}
+export type IBaseUserUpdateDTO = z.infer<typeof zUserUpdateSchema>;
 
 export type IUser = IStudentUser | ILawyerUser;
 
