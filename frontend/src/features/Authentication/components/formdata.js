@@ -5,7 +5,6 @@ export const formData = {
   confirmPass: "",
   phone: "",
   university: "",
-  grade: "",
   syndicateId: "",
   photoId: "",
   file: null,

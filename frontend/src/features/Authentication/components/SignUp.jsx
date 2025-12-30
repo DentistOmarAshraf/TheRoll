@@ -1,5 +1,5 @@
 import { useEffect, useState, useReducer, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import Button from "../../../component/Button";
 import styles from "./SignIn.module.css";
 import { SignUpSelectStyle } from "./selectStyle";
@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 import ProgressBar from "../../../component/ProgressBar";
 import { formData, formReducer } from "./formdata";
 import { registerUser } from "../../../api/userClient";
+import { getUniversities } from "../../../api/universityClient";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -37,10 +38,7 @@ export default function SignUp() {
   const [agreePolicy, setAgreement] = useState(false);
   const [alert, setAlert] = useState({ status: "no_alert", message: "" });
   const [errors, setErrors] = useState({});
-  const university = [
-    { _id: "144", name: "جامعه القاهره" },
-    { _id: "255", name: "جامعه الاسكندريه" },
-  ];
+  const [university, setUniversities] = useState([]);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -122,9 +120,12 @@ export default function SignUp() {
       setAlert((prev) => ({ ...prev, status: "no_alert", message: "" }));
     }
     let userFinalData;
+    if (userType == "Student") {
+      const { file, syndicateId, confirmPass, ...studentData } = user;
+      userFinalData = { type: userType, ...studentData };
+    }
     if (userType == "Lawyer") {
-      const { file, grade, photoId, university, confirmPass, ...lawyerData } =
-        user;
+      const { file, photoId, university, confirmPass, ...lawyerData } = user;
       userFinalData = { type: userType, ...lawyerData };
     }
     try {
@@ -137,8 +138,8 @@ export default function SignUp() {
     } catch (e) {
       setAlert((prev) => ({
         ...prev,
-        status: e.response.data.status || "error",
-        message: e.response.data.error || "حدث خطأ",
+        status: e.response?.data?.status || "error",
+        message: e.response?.data?.error || "حدث خطأ",
       }));
     }
   };
@@ -151,9 +152,30 @@ export default function SignUp() {
     setConfVisiable((v) => !v);
   };
 
+  // fetch universites from db
+  useEffect(() => {
+    (async () => {
+      if (userType !== "Student") {
+        return;
+      }
+      try {
+        const result = await getUniversities();
+        setUniversities((prev) => result.data);
+      } catch (e) {
+        setErrors((prev) => ({
+          ...prev,
+          university: "الرجاء المحاوله في وقت لاحق",
+        }));
+      }
+    })();
+  }, [userType]);
+
   // This will be cleaned later on deployment
   useEffect(() => {
     (async () => {
+      if (userType != "Student") {
+        return;
+      }
       try {
         // I am trying to mimic the request from S3
         // To upload photo
@@ -167,7 +189,7 @@ export default function SignUp() {
         setErrors((prev) => ({ ...prev, file: "الرجاء المحاوله في وقت لاحق" }));
       }
     })();
-  }, []);
+  }, [userType]);
 
   useEffect(() => {
     (async () => {
