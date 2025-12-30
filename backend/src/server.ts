@@ -68,18 +68,6 @@ app.post("/s3uploadreplica", upload.any(), (req: Request, res: Response) => {
 // Testing Email concept here
 // This will be in controller
 
-app.get("/test", async (req: Request, res: Response) => {
-  try {
-    await SendConfirmEmail({
-      userName: "omar ashraf",
-      userEmail: "omar_ashraf@msn.com",
-      token: "1234",
-    });
-  } catch (e) {
-    throw new ServerError(`server error: ${e}`);
-  }
-  return res.status(200).json({ hi: "there" });
-});
 
 app.get("/forget", async (req: Request, res: Response) => {
   try {

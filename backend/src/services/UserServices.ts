@@ -170,7 +170,7 @@ export default class UserServices {
   static async confirmUser(obj: { token: string }): Promise<IUser> {
     const { token } = obj;
     const userId = await CasheServices.getData(this.ConfirmToken, token);
-    if (!userId) throw new BadRequestError("Token is wrong or expired");
+    if (!userId) throw new BadRequestError("الرابط غير صالح او منتهي الصلاحيه");
 
     const session = await mongoose.startSession();
     try {

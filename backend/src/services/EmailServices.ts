@@ -24,7 +24,7 @@ class EmailServices {
       // and the front should send token to api and then get
       // response that user is confirmed and go to sign in page
       html: `confirm link\n
-            <a href="http://localhost:5000/confirm/${token}">CLICK HERE</a>`,
+            <a target="_blank" href="http://localhost:8080/auth/confirm/${token}">CLICK HERE</a>`,
     };
     await this.transporter.sendMail(message);
   }
