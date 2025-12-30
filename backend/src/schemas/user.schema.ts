@@ -57,6 +57,7 @@ export const zUserLawyer = zBaseUser.extend({
 export const zUserStudent = zBaseUser.extend({
   type: z.literal("Student"),
   university: z.string("يجب اختيار الجامعه"),
+  photoId: z.string("يجب رفع صوره الكارنيه"), // in deployment i will cahnge the validation here to match path regex or uuid
 });
 
 export const zUserRegSchema = z.discriminatedUnion("type", [

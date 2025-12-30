@@ -45,6 +45,14 @@ export default class UniversityServices {
   }
 
   // R
+  static async getAllUniversities(
+    page = 1,
+    limit = 50
+  ): Promise<IUniversity[]> {
+    const universities = await UniversityDAO.getList(page, limit);
+    return universities;
+  }
+
   static async getUniversitiesOfCity(
     cityId: string,
     page = 1,

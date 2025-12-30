@@ -54,7 +54,7 @@ const studentSchema = new Schema<IStudentUser>({
   },
   photoId: {
     type: String,
-    required: [true, "University id is required"],
+    required: [true, "Photo id is required"],
   },
 });
 

@@ -7,6 +7,7 @@ import filedRoutes from "./routes/fieldRoutes.js";
 import sectionsRoutes from "./routes/sectionsRoutes.js";
 import templateRoutes from "./routes/templateRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import universityRoutes from "./routes/universityRoutes.js";
 import gloablErrorHandler from "./middlewares/GloablErrorHandler.js";
 import notFoundHandler from "./middlewares/NotFoundHandler.js";
 import type { Request, Response } from "express";
@@ -40,6 +41,7 @@ filedRoutes(app);
 sectionsRoutes(app);
 templateRoutes(app);
 userRoutes(app);
+universityRoutes(app);
 
 // Memic what will be on S3 amazon
 // generating key and upload of url
@@ -67,7 +69,6 @@ app.post("/s3uploadreplica", upload.any(), (req: Request, res: Response) => {
 
 // Testing Email concept here
 // This will be in controller
-
 
 app.get("/forget", async (req: Request, res: Response) => {
   try {
