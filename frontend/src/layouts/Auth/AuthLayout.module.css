@@ -1,0 +1,10 @@
+.main_container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  background-color: #F7F9FC;
+  min-height: 90vh;
+  height: max-content;
+  padding-top: 5vh;
+  padding-bottom: 5vh
+}
