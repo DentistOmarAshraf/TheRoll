@@ -129,7 +129,9 @@ export default class UserServices {
       UserRelationMap[T]
     >;
     if (await UserDAO.getOneByQuery({ email: data.email }))
-      throw new BadRequestError("Email exists");
+      throw new BadRequestError(
+        "البريد الإلكتروني مسجل بالفعل"
+      );
     if (
       data.type == "Student" &&
       !(await UniversityDAO.getById(data.university))
