@@ -1,4 +1,5 @@
 import { useEffect, useState, useReducer, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../../component/Button";
 import styles from "./SignIn.module.css";
 import { SignUpSelectStyle } from "./selectStyle";
@@ -17,12 +18,15 @@ import {
   Hourglass,
   CircleX,
 } from "lucide-react";
-import ProgressBar from "../../../component/ProgressBar";
 import Select from "react-select";
 import axios from "axios";
+import toast from "react-hot-toast";
+import ProgressBar from "../../../component/ProgressBar";
 import { formData, formReducer } from "./formdata";
+import { registerUser } from "../../../api/userClient";
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [userType, setUserType] = useState("");
   const [isPassVisiable, setPassVisiable] = useState(false);
   const [isConfVisiable, setConfVisiable] = useState(false);
@@ -30,6 +34,8 @@ export default function SignUp() {
   const [uploadKey, setUploadKey] = useState({}); // WILL BE A REAL KEY WHEN TESTING WITH AMAZON
   const [progress, setProgress] = useState(0);
   const [user, dispatch] = useReducer(formReducer, formData);
+  const [agreePolicy, setAgreement] = useState(false);
+  const [alert, setAlert] = useState({ status: "no_alert", message: "" });
   const [errors, setErrors] = useState({});
   const university = [
     { _id: "144", name: "جامعه القاهره" },
@@ -98,14 +104,43 @@ export default function SignUp() {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     const errors = validateForm(user, userType);
     // console.log(errors);
     if (Object.keys(errors).length > 0) {
       setErrors((prev) => ({ ...prev, ...errors }));
       return;
     }
-    console.log(user);
+    if (!agreePolicy) {
+      setAlert((prev) => ({
+        ...prev,
+        status: "error",
+        message: "يجب الموافقه على شروط الاستخدام",
+      }));
+      return;
+    } else {
+      setAlert((prev) => ({ ...prev, status: "no_alert", message: "" }));
+    }
+    let userFinalData;
+    if (userType == "Lawyer") {
+      const { file, grade, photoId, university, confirmPass, ...lawyerData } =
+        user;
+      userFinalData = { type: userType, ...lawyerData };
+    }
+    try {
+      const result = await registerUser(userFinalData);
+      const { fullName } = result.data;
+      toast.success(
+        `اهلا بك ${fullName} .. تم ارسال رابط التأكيد الى البريد الالكتروني بنجاح`
+      );
+      navigate("/office/calendar");
+    } catch (e) {
+      setAlert((prev) => ({
+        ...prev,
+        status: e.response.data.status || "error",
+        message: e.response.data.error || "حدث خطأ",
+      }));
+    }
   };
 
   const handleShowPass = () => {
@@ -403,11 +438,20 @@ export default function SignUp() {
           )}
           <div className={styles.remeber_group}>
             <div>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={agreePolicy}
+                onChange={(e) => {
+                  setAgreement(e.target.checked);
+                }}
+              />
               <label>
                 موافق على <a href="http://google.com">شروط الاستخدام</a>
               </label>
             </div>
+          </div>
+          <div className={`${styles.server_response} ${styles[alert.status]}`}>
+            {alert.message}
           </div>
           <div className={styles.submit_group}>
             <Button

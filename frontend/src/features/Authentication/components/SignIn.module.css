@@ -142,6 +142,31 @@
   align-items: center;
 }
 
+.server_response {
+  border-radius: 8px;
+  height: 30px;
+  padding: 10px;
+  text-align: center;
+}
+
+.server_response.no_alert {
+  display: none;
+}
+
+.server_response.success {
+  display: block;
+  border: 3px solid #badbcc;
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.server_response.error {
+  display: block;
+  border: #FCA5A5;
+  background-color: #FEF2F2;
+  color: #991B1B;
+}
+
 .remeber_group input[type="checkbox"] {
   cursor: pointer;
   width: 20px;
