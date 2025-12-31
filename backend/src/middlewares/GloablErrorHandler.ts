@@ -20,7 +20,9 @@ export default function gloablErrorHandler(
 
   // Handle Errors related to CRUD of DAOS
   if (err instanceof AppErrors) {
-    return res.status(err.status).json({ status: "error", error: err.message });
+    return res
+      .status(err.status)
+      .json({ status: "error", message: err.message });
   }
   // Handle duplicate key error
   if (err.code === 11000) {
