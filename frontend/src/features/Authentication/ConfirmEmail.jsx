@@ -3,12 +3,15 @@ import { useRef, useEffect, useState } from "react";
 import { confirmUserEmail } from "../../api/userClient";
 import styles from "./Authentication.module.css";
 import { Loader } from "lucide-react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function ConfirmEmail() {
   const { token } = useParams();
   const hasCalled = useRef(false); // The "Lock"
   const [status, setStatus] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -30,6 +33,10 @@ export default function ConfirmEmail() {
           (prev) =>
             `اهلا بك أ. ${data.data.fullName} تم تأكيد البريد الالكتروني`
         );
+        toast.success("تم تأكيد البريد الالكتروني");
+        setTimeout(() => {
+          navigate("/auth");
+        }, 3000);
       } catch (err) {
         setStatus((prev) => err.response.data.status);
         setMessage(

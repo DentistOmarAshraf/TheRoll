@@ -139,7 +139,7 @@ export default function SignUp() {
       setAlert((prev) => ({
         ...prev,
         status: e.response?.data?.status || "error",
-        message: e.response?.data?.error || "حدث خطأ",
+        message: e.response?.data?.message || "حدث خطأ",
       }));
     }
   };
