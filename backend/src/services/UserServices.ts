@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from "uuid";
+import { v4 as uuid4, v4 } from "uuid";
 import BaseDAO from "../DAO/BaseDAO.js";
 import CasheServices from "./CacheServices.js";
 import {
@@ -23,11 +23,14 @@ import type {
 import mongoose, { isValidObjectId } from "mongoose";
 import ServerError from "../errors/ServerError.js";
 import NotFoundError from "../errors/NotFoundError.js";
+import Unauthorized from "../errors/Unauthorized.js";
 import {
   SendConfirmEmail,
   SendForgetPassEmail,
 } from "../workers/email/EmailProducer.js";
 import bcrypt from "bcrypt";
+import { signJwt } from "../utils/tokenizer.js";
+import ForbiddenError from "../errors/Forbidden.js";
 
 type UserDTOMap = {
   Student: IStudentUserDTO;
@@ -56,19 +59,63 @@ export default class UserServices {
   };
   private static ConfirmToken = "user-confirm";
   private static FrogetToken = "user-froget";
+  private static RefreshToken = "refres-token";
 
   // R
-  static async checkUserPass(
+  static async loginUser(
     obj: Pick<IUser, "email" | "password">
-  ): Promise<boolean> {
+  ): Promise<{ accToken: string; refToken: string }> {
     const { email, password } = obj;
 
     const user = await UserDAO.getOneByQuery({ email });
-    if (!user) throw new BadRequestError("Email is not registered");
+    if (!user) throw new Unauthorized("البريد الالكتروني غير مسجل");
+
+    if (!user.isConfirmed)
+      throw new Unauthorized("يجب تأكيد البريد الالكتروني اولا");
 
     const isValid = await bcrypt.compare(password, user.password);
-    if (!isValid) throw new BadRequestError("Password is incorrect");
-    return isValid;
+    if (!isValid) throw new Unauthorized("كلمه المرور غير صحيحه");
+
+    const refToken = v4();
+    CasheServices.setData(
+      this.RefreshToken,
+      refToken,
+      user._id.toString(),
+      60 * 24 * 15 // 15 days -- in CachServices I multiply any time by 60
+    );
+    const accToken = await signJwt({
+      _id: user._id.toString(),
+      email: user.email,
+      fullName: user.fullName,
+    });
+    return { refToken, accToken };
+  }
+
+  static async reproduceJWT(obj: { refToken: string }) {
+    const userId = await CasheServices.getData(this.RefreshToken, obj.refToken);
+    if (!userId) throw new ForbiddenError("يجب تسجيل الدخول");
+    const user = await UserDAO.getById(userId);
+    if (!user) throw new ForbiddenError("يجب تسجيل الدخول");
+    const accToken = await signJwt({
+      _id: user._id.toString(),
+      email: user.email,
+      fullName: user.fullName,
+    });
+    return { accToken };
+  }
+
+  static async userDetails(id: string) {
+    const user = await UserDAO.getById(id);
+    if (!user) throw new Unauthorized();
+    return {
+      type: user.type,
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phone,
+      photoId: user.photoId,
+      syndicateId: user.syndicateId,
+    };
   }
 
   static async reRequestConfirm(obj: Pick<IUser, "email">) {
@@ -129,9 +176,7 @@ export default class UserServices {
       UserRelationMap[T]
     >;
     if (await UserDAO.getOneByQuery({ email: data.email }))
-      throw new BadRequestError(
-        "البريد الإلكتروني مسجل بالفعل"
-      );
+      throw new BadRequestError("البريد الإلكتروني مسجل بالفعل");
     if (
       data.type == "Student" &&
       !(await UniversityDAO.getById(data.university))
@@ -184,8 +229,8 @@ export default class UserServices {
         },
         session
       );
-      if (!updated) throw new NotFoundError("User Not Found");
       await CasheServices.deleteKey(this.ConfirmToken, token);
+      if (!updated) throw new NotFoundError("الحساب لم يعد مسجل");
       await session.commitTransaction();
       return updated as unknown as IUser;
     } catch (e) {

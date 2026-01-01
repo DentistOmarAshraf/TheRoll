@@ -72,3 +72,22 @@ export const zUserUpdateSchema = z.discriminatedUnion("type", [
   zUpdateUserLawyer.extend({ type: z.literal("Lawyer") }),
   zUpdateUserStudent.extend({ type: z.literal("Student") }),
 ]);
+
+export const zLoginSchema = z.object({
+  email: z
+    .string({
+      error: (iss) =>
+        iss.input === undefined
+          ? "البريد الالكترني مطلوب"
+          : "البريد الالكتروني يجب ان يكون نصا",
+    })
+    .trim()
+    .email("الايميل غير صالح"),
+  password: z.string({
+    error: (iss) =>
+      iss.input === undefined
+        ? "كلمه المرور مطلوبه"
+        : "كلمه المرور يجب ان تكون نصا",
+  }),
+  remember: z.boolean("remember me is missing")
+});

@@ -2,6 +2,7 @@ import connectToDB from "./db.js";
 import redisClient from "./cashClient.js";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 // import rateLimit from "express-rate-limit";
 import filedRoutes from "./routes/fieldRoutes.js";
 import sectionsRoutes from "./routes/sectionsRoutes.js";
@@ -24,6 +25,7 @@ const upload = multer();
 // Setup Express server
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({ origin: ["http://localhost:8080"] }));
 
 // const limiter = rateLimit({

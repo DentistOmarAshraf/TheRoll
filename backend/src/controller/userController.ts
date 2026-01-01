@@ -1,8 +1,13 @@
 import type { Request, Response } from "express";
 import UserServices from "../services/UserServices.js";
 import validate from "../utils/validateSchema.js";
-import { zUserRegSchema, zUserUpdateSchema } from "../schemas/user.schema.js";
+import {
+  zUserRegSchema,
+  zUserUpdateSchema,
+  zLoginSchema,
+} from "../schemas/user.schema.js";
 import BadRequestError from "../errors/BadRequestError.js";
+import ForbiddenError from "../errors/Forbidden.js";
 
 export default class UserController {
   /** Creating New User Controller */
@@ -34,16 +39,49 @@ export default class UserController {
     });
   }
 
+  static async loginUser(req: Request, res: Response) {
+    const userData = validate(zLoginSchema, req.body);
+    const { refToken, accToken } = await UserServices.loginUser(userData);
+    const cookieOption: any = {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      path: "/user/refresh",
+    };
+    if (userData.remember) {
+      cookieOption.maxAge = 1000 * 60 * 60 * 24 * 15;
+    }
+    res.cookie("refToken", refToken, cookieOption);
+    res.status(200).json({ status: "success", data: { accToken } });
+  }
+
+  static async refreshAccessToken(req: Request, res: Response) {
+    const { refToken } = req.cookies;
+    if (!refToken) throw new ForbiddenError("يجب تسجيل الدخول");
+    try {
+      const accToken = await UserServices.reproduceJWT({ refToken });
+      return res.status(200).json({ status: "success", data: accToken });
+    } catch (err) {
+      res.clearCookie("refToken", {
+        path: "/user/refresh",
+        httpOnly: true,
+        secure: true,
+      });
+      throw err;
+    }
+  }
+
+  static async UserDetails(req: Request, res: Response) {
+    const { user } = req as any;
+    const data = await UserServices.userDetails(user.payload._id);
+    return res.status(200).json({ status: "success", data });
+  }
+
   static async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) throw new BadRequestError("معرف غير صالح");
     const data = validate(zUserUpdateSchema, req.body);
     const updated = await UserServices.updateUser(id, data);
     return res.status(201).json(updated);
-  }
-
-  static async chk(req: Request, res: Response) {
-    const chk = await UserServices.checkUserPass(req.body);
-    return res.status(200).json({ passIsCorrect: chk });
   }
 }
