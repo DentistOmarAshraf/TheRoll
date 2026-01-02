@@ -41,12 +41,15 @@ export default class UserController {
 
   static async loginUser(req: Request, res: Response) {
     const userData = validate(zLoginSchema, req.body);
-    const { refToken, accToken } = await UserServices.loginUser(userData);
+    const { refToken, accToken } = await UserServices.loginUser(
+      userData,
+      req.cookies.refToken // if there is a token saved in redis it should be cleared
+    );
     const cookieOption: any = {
       httpOnly: true,
       sameSite: "strict",
       secure: true,
-      path: "/user/refresh",
+      path: "/user",
     };
     if (userData.remember) {
       cookieOption.maxAge = 1000 * 60 * 60 * 24 * 15;
@@ -63,7 +66,7 @@ export default class UserController {
       return res.status(200).json({ status: "success", data: accToken });
     } catch (err) {
       res.clearCookie("refToken", {
-        path: "/user/refresh",
+        path: "/user",
         httpOnly: true,
         secure: true,
       });
@@ -75,6 +78,31 @@ export default class UserController {
     const { user } = req as any;
     const data = await UserServices.userDetails(user.payload._id);
     return res.status(200).json({ status: "success", data });
+  }
+
+  static async logoutUser(req: Request, res: Response) {
+    const { refToken } = req.cookies;
+    if (!refToken) throw new BadRequestError("No Cookie");
+    await UserServices.logoutUser({ refToken });
+    res.clearCookie("refToken", {
+      path: "/user",
+      httpOnly: true,
+      secure: true,
+    });
+    return res.status(200).json({ status: "success", message: "logged out" });
+  }
+
+  static async logoutUserAllDevices(req: Request, res: Response) {
+    const { refToken } = req.cookies;
+    if (!refToken) throw new BadRequestError("Cookies is missing");
+    const userId = refToken.split(":")[0];
+    const deleted = await UserServices.logoutUserAllDevices(userId);
+    res.clearCookie("refToken", {
+      path: "/user",
+      httpOnly: true,
+      secure: true,
+    });
+    return res.status(200).json({ status: "success", loggedout: deleted });
   }
 
   static async updateUser(req: Request, res: Response) {

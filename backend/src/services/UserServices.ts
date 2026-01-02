@@ -59,12 +59,17 @@ export default class UserServices {
   };
   private static ConfirmToken = "user-confirm";
   private static FrogetToken = "user-froget";
-  private static RefreshToken = "refres-token";
+  private static RefreshToken = "refresh-token";
 
   // R
   static async loginUser(
-    obj: Pick<IUser, "email" | "password">
+    obj: Pick<IUser, "email" | "password">,
+    cookie?: string
   ): Promise<{ accToken: string; refToken: string }> {
+    if (cookie) {
+      // if there is a token saved in redis it should be cleared
+      await CasheServices.deleteKey(this.RefreshToken, cookie);
+    }
     const { email, password } = obj;
 
     const user = await UserDAO.getOneByQuery({ email });
@@ -76,8 +81,8 @@ export default class UserServices {
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) throw new Unauthorized("كلمه المرور غير صحيحه");
 
-    const refToken = v4();
-    CasheServices.setData(
+    const refToken = `${user._id}:${v4()}`;
+    await CasheServices.setData(
       this.RefreshToken,
       refToken,
       user._id.toString(),
@@ -102,6 +107,18 @@ export default class UserServices {
       fullName: user.fullName,
     });
     return { accToken };
+  }
+
+  static async logoutUser(obj: { refToken: string }) {
+    await CasheServices.deleteKey(this.RefreshToken, obj.refToken);
+  }
+
+  static async logoutUserAllDevices(userId: string) {
+    const deleted = await CasheServices.deleteGroupKeys(
+      this.RefreshToken,
+      `${userId}:*`
+    );
+    return deleted;
   }
 
   static async userDetails(id: string) {

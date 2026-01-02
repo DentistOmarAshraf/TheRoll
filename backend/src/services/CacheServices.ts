@@ -25,4 +25,22 @@ export default class CasheServices {
   static async getData(type: string, key: string) {
     return await redisClient.get(`${type}:${key}`);
   }
+
+  static async deleteGroupKeys(type: string, pattern: string) {
+    let cursor = "0";
+    let deleted = 0;
+    do {
+      const res = await redisClient.scan(cursor, {
+        MATCH: `${type}:${pattern}`,
+        COUNT: 100,
+      });
+      cursor = res.cursor;
+      const keys = res.keys;
+      if (keys.length > 0) {
+        deleted += keys.length;
+        await redisClient.unlink(keys);
+      }
+    } while (cursor !== "0");
+    return deleted;
+  }
 }

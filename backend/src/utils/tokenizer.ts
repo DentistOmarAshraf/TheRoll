@@ -7,7 +7,7 @@ export const signJwt = async (data: any) => {
   const jwt = await new jose.SignJWT(data)
     .setProtectedHeader({ alg })
     .setIssuedAt()
-    .setExpirationTime("10m")
+    .setExpirationTime("5m")
     .sign(secret);
   return jwt;
 };
