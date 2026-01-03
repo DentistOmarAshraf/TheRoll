@@ -1,5 +1,4 @@
 import axios from "axios";
-import toast from "react-hot-toast";
 
 let userToken = null;
 
@@ -53,10 +52,8 @@ apiClient.interceptors.response.use(
         }
       } catch (refError) {
         setUserToken(null);
-        if (!window.location.pathname.includes("/auth")) {
-          toast.error("انتهت الجلسة");
-          window.location.replace("/auth");
-        }
+        window.dispatchEvent(new Event("auth-logout"));
+        return Promise.reject(error);
       }
     }
     return Promise.reject(error);

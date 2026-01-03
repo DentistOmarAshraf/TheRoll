@@ -133,6 +133,20 @@
   font-size: 18px;
 }
 
+.sign_in__button--submit:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.sign_in__button--submit:disabled:hover {
+  background-color: gray;
+}
+
+.sign_in__button--submit:disabled:active {
+  transform: scale(1);
+}
+
 .sign_up__button--submit:hover,
 .sign_in__button--submit:hover {
   color: #FFFFFF;

@@ -1,4 +1,10 @@
-import { createContext, useContext, useLayoutEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useState,
+  useEffect,
+} from "react";
 import { getMe } from "../api/userClient";
 
 const AuthContext = createContext(null);
@@ -18,6 +24,15 @@ export default function AuthContextProvider({ children }) {
         setIsLoadong(false);
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    const handleLogout = () => {
+      setUser(null); // Now React knows!
+    };
+
+    window.addEventListener("auth-logout", handleLogout);
+    return () => window.removeEventListener("auth-logout", handleLogout);
   }, []);
 
   return (

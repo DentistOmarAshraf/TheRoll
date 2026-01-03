@@ -16,6 +16,7 @@ export default function SignIn() {
   });
   const [errors, setErrors] = useState({});
   const [isPassVisiable, setPassVisiable] = useState(false);
+  const [islogging, setLogging] = useState(false);
   const { setUser } = useAuth();
   const navigate = useNavigate();
 
@@ -55,6 +56,7 @@ export default function SignIn() {
       toast.error("تسجيل خاطئ !");
       return;
     }
+    setLogging(true);
     try {
       const response = await login(userForm);
       if (response.status == "success") {
@@ -66,6 +68,7 @@ export default function SignIn() {
         navigate("/office");
       }
     } catch (e) {
+      setLogging(false);
       console.log(e);
       toast.error(e.response?.data?.message || "حدث خطأ");
     }
@@ -143,8 +146,12 @@ export default function SignIn() {
         <a href="http://google.com">هل نسيت كلمه المرور؟</a>
       </div>
       <div className={styles.submit_group}>
-        <Button onClick={handleSubmit} className="sign_in__button--submit">
-          تسجيــل دخول
+        <Button
+          disabled={islogging}
+          onClick={handleSubmit}
+          className="sign_in__button--submit"
+        >
+          {islogging ? "جاري تسجيل الدخول .." : "تسجيل الدخول"}
         </Button>
       </div>
     </div>
