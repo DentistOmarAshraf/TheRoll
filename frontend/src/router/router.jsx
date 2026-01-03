@@ -5,6 +5,7 @@ import Authentication from "../features/Authentication";
 import ConfirmEmail from "../features/Authentication/ConfirmEmail";
 import RollCalendar from "../component/Calender/RollCalendar";
 import AuthLayout from "../layouts/Auth/AuthLayout";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Router = createBrowserRouter([
   {
@@ -20,24 +21,30 @@ const Router = createBrowserRouter([
         ],
       },
       {
-        path: "office",
-        element: <OfficeLayout />,
+        path: "",
+        element: <ProtectedRoute />,
         children: [
           {
-            path: "calendar",
-            element: (
-              <div
-                style={{
-                  background: "#F7F9FC",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gridArea: "main",
-                }}
-              >
-                <RollCalendar />
-              </div>
-            ),
+            path: "office",
+            element: <OfficeLayout />,
+            children: [
+              {
+                path: "calendar",
+                element: (
+                  <div
+                    style={{
+                      background: "#F7F9FC",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gridArea: "main",
+                    }}
+                  >
+                    <RollCalendar />
+                  </div>
+                ),
+              },
+            ],
           },
         ],
       },
@@ -46,8 +53,6 @@ const Router = createBrowserRouter([
 ]);
 
 export default Router;
-
-
 
 // const router = createBrowserRouter([
 //   {

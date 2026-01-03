@@ -58,8 +58,13 @@ export default function SignUp() {
     const errors = {};
     const phoneRegex = /^01[0125]\d{8}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const nameRegex = /^[\u0621-\u064A\s]+$/;
 
-    if (!user.fullName) errors.fullName = "الاسم مطلوب";
+    if (!user.fullName) {
+      errors.fullName = "الاسم مطلوب";
+    } else if (!nameRegex.test(user.fullName)) {
+      errors.fullName = "الاسم يجب أن يحتوي على حروف عربية فقط";
+    }
 
     if (!user.email) {
       errors.email = "البريد الالكتروني مطلوب";
@@ -106,6 +111,11 @@ export default function SignUp() {
     const errors = validateForm(user, userType);
     // console.log(errors);
     if (Object.keys(errors).length > 0) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
       setErrors((prev) => ({ ...prev, ...errors }));
       return;
     }

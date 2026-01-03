@@ -1,17 +1,28 @@
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import toast from "react-hot-toast";
 import Button from "../../../component/Button";
 import styles from "./SignIn.module.css";
 import { useState } from "react";
+import { login } from "../../../api/userClient";
+import { useAuth } from "../../../context/AuthContext";
+import { setUserToken } from "../../../api/apiClient";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
-  const [user, setUser] = useState({ email: "", password: "" });
+  const [userForm, setUserForm] = useState({
+    email: "",
+    password: "",
+    remember: false,
+  });
   const [errors, setErrors] = useState({});
   const [isPassVisiable, setPassVisiable] = useState(false);
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors((prev) => ({ ...prev, [name]: "" }));
-    setUser((prev) => ({ ...prev, [name]: value }));
+    setUserForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = (user) => {
@@ -37,10 +48,27 @@ export default function SignIn() {
     setPassVisiable((v) => !v);
   };
 
-  const handleSubmit = () => {
-    const errors = validateForm(user);
-    setErrors((prev) => ({ ...prev, ...errors }));
-    console.log(user);
+  const handleSubmit = async () => {
+    const errors = validateForm(userForm);
+    if (Object.keys(errors).length > 0) {
+      setErrors((prev) => ({ ...prev, ...errors }));
+      toast.error("تسجيل خاطئ !");
+      return;
+    }
+    try {
+      const response = await login(userForm);
+      if (response.status == "success") {
+        setUserToken(response.data.accToken);
+        setUser(response.data.user);
+        toast.success(
+          `تم تسجيل الدخول بنجاح ... اهلا بك ${response.data.user.fullName}`
+        );
+        navigate("/office");
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(e.response?.data?.message || "حدث خطأ");
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -64,7 +92,7 @@ export default function SignIn() {
             id="email"
             type="email"
             name="email"
-            value={user.email}
+            value={userForm.email}
             onChange={handleChange}
             placeholder="example123@mail.com"
             onKeyDown={handleKeyDown}
@@ -84,7 +112,7 @@ export default function SignIn() {
             id="password"
             type={isPassVisiable ? "text" : "password"}
             name="password"
-            value={user.password}
+            value={userForm.password}
             onChange={handleChange}
             placeholder={
               isPassVisiable ? "PASSWORD IS VISIABLE" : "Your Password"
@@ -103,7 +131,13 @@ export default function SignIn() {
       </div>
       <div className={styles.remeber_group}>
         <div>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={userForm.remember}
+            onChange={(e) =>
+              setUserForm((prev) => ({ ...prev, remember: e.target.checked }))
+            }
+          />
           <label>تذكرني</label>
         </div>
         <a href="http://google.com">هل نسيت كلمه المرور؟</a>

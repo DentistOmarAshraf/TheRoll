@@ -41,7 +41,7 @@ export default function ConfirmEmail() {
         setStatus((prev) => err.response.data.status);
         setMessage(
           (prev) =>
-            err.response?.data?.error ||
+            err.response?.data?.message ||
             "حدث خطأ أثناء التأكيد. ربما انتهت صلاحية الرابط."
         );
       }
@@ -66,9 +66,10 @@ export default function ConfirmEmail() {
         <div className={styles.email_message}>
           {status === "success" && (
             <>
+              <Loader className={styles.spinner} />
               <p>{message}</p>
               <p>
-                للانتقال إلى صفحة تسجيل الدخول{" "}
+                سيتم الانتقال الى صفحه تسجيل الدخول او {" "}
                 <Link to="/auth" className={styles.nav_link}>
                   اضغط هنا
                 </Link>
