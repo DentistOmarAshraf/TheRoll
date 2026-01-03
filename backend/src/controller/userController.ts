@@ -7,7 +7,7 @@ import {
   zLoginSchema,
 } from "../schemas/user.schema.js";
 import BadRequestError from "../errors/BadRequestError.js";
-import ForbiddenError from "../errors/Forbidden.js";
+import Unauthorized from "../errors/Unauthorized.js";
 
 export default class UserController {
   /** Creating New User Controller */
@@ -41,7 +41,7 @@ export default class UserController {
 
   static async loginUser(req: Request, res: Response) {
     const userData = validate(zLoginSchema, req.body);
-    const { refToken, accToken } = await UserServices.loginUser(
+    const { refToken, accToken, user } = await UserServices.loginUser(
       userData,
       req.cookies.refToken // if there is a token saved in redis it should be cleared
     );
@@ -55,12 +55,18 @@ export default class UserController {
       cookieOption.maxAge = 1000 * 60 * 60 * 24 * 15;
     }
     res.cookie("refToken", refToken, cookieOption);
-    res.status(200).json({ status: "success", data: { accToken } });
+    res.status(200).json({
+      status: "success",
+      data: {
+        accToken,
+        user: { _id: user._id, email: user.email, fullName: user.fullName },
+      },
+    });
   }
 
   static async refreshAccessToken(req: Request, res: Response) {
     const { refToken } = req.cookies;
-    if (!refToken) throw new ForbiddenError("يجب تسجيل الدخول");
+    if (!refToken) throw new Unauthorized("يجب تسجيل الدخول");
     try {
       const accToken = await UserServices.reproduceJWT({ refToken });
       return res.status(200).json({ status: "success", data: accToken });

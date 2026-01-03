@@ -30,7 +30,6 @@ import {
 } from "../workers/email/EmailProducer.js";
 import bcrypt from "bcrypt";
 import { signJwt } from "../utils/tokenizer.js";
-import ForbiddenError from "../errors/Forbidden.js";
 
 type UserDTOMap = {
   Student: IStudentUserDTO;
@@ -65,7 +64,7 @@ export default class UserServices {
   static async loginUser(
     obj: Pick<IUser, "email" | "password">,
     cookie?: string
-  ): Promise<{ accToken: string; refToken: string }> {
+  ): Promise<{ accToken: string; refToken: string, user: IUser }> {
     if (cookie) {
       // if there is a token saved in redis it should be cleared
       await CasheServices.deleteKey(this.RefreshToken, cookie);
@@ -93,14 +92,14 @@ export default class UserServices {
       email: user.email,
       fullName: user.fullName,
     });
-    return { refToken, accToken };
+    return { refToken, accToken, user };
   }
 
   static async reproduceJWT(obj: { refToken: string }) {
     const userId = await CasheServices.getData(this.RefreshToken, obj.refToken);
-    if (!userId) throw new ForbiddenError("يجب تسجيل الدخول");
+    if (!userId) throw new Unauthorized("يجب تسجيل الدخول");
     const user = await UserDAO.getById(userId);
-    if (!user) throw new ForbiddenError("يجب تسجيل الدخول");
+    if (!user) throw new Unauthorized("يجب تسجيل الدخول");
     const accToken = await signJwt({
       _id: user._id.toString(),
       email: user.email,

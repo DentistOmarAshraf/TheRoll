@@ -26,7 +26,14 @@ const upload = multer();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ["http://localhost:8080"] }));
+app.use(
+  cors({
+    origin: ["http://localhost:8080"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // const limiter = rateLimit({
 //   windowMs: 1 * 60 * 1000,
